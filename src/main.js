@@ -7,7 +7,7 @@ import "./assets/common.css";
 import "./assets/iconfont.css";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
-import "animate.css";
+import "animate.css/animate.css";
 import "swiper/js/swiper.min.js";
 import "swiper/css/swiper.min.css";
 // 适配

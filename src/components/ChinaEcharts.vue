@@ -14,39 +14,39 @@ export default {
     return {
       //echart 配制option
       options: {
-        tooltip: {
-          triggerOn: "mousemove", //mousemove、click
-          padding: 8,
-          borderWidth: 1,
-          borderColor: "#409eff",
-          backgroundColor: "rgba(255,255,255,0.7)",
-          textStyle: {
-            color: "#000000",
-            fontSize: 13,
-          },
-          formatter: function (e, t, n) {
-            let data = e.data;
-            //模拟数据
-            data.specialImportant = (Math.random() * 1000) | 0;
-            data.import = (Math.random() * 1000) | 0;
-            data.compare = (Math.random() * 1000) | 0;
-            data.common = (Math.random() * 1000) | 0;
-            data.specail = (Math.random() * 1000) | 0;
+        // tooltip: {
+        //   triggerOn: "mousemove", //mousemove、click
+        //   padding: 8,
+        //   borderWidth: 1,
+        //   borderColor: "#409eff",
+        //   backgroundColor: "rgba(255,255,255,0.7)",
+        //   textStyle: {
+        //     color: "#000000",
+        //     fontSize: 13,
+        //   },
+        //   formatter: function (e, t, n) {
+        //     let data = e.data;
+        //     //模拟数据
+        //     data.specialImportant = (Math.random() * 1000) | 0;
+        //     data.import = (Math.random() * 1000) | 0;
+        //     data.compare = (Math.random() * 1000) | 0;
+        //     data.common = (Math.random() * 1000) | 0;
+        //     data.specail = (Math.random() * 1000) | 0;
 
-            // let context = `
-            //    <div>
-            //        <p><b style="font-size:15px;">${data.name}</b>(2020年第一季度)</p>
-            //        <p class="tooltip_style"><span class="tooltip_left">事件总数</span><span class="tooltip_right">${data.value}</span></p>
-            //        <p class="tooltip_style"><span class="tooltip_left">特别重大事件</span><span class="tooltip_right">${data.specialImportant}</span></p>
-            //        <p class="tooltip_style"><span class="tooltip_left">重大事件</span><span class="tooltip_right">${data.import}</span></p>
-            //        <p class="tooltip_style"><span class="tooltip_left">较大事件</span><span class="tooltip_right">${data.compare}</span></p>
-            //        <p class="tooltip_style"><span class="tooltip_left">一般事件</span><span class="tooltip_right">${data.common}</span></p>
-            //        <p class="tooltip_style"><span class="tooltip_left">特写事件</span><span class="tooltip_right">${data.specail}</span></p>
-            //    </div>
-            // `;
-            // return context;
-          },
-        },
+        //     let context = `
+        //        <div>
+        //            <p><b style="font-size:15px;">${data.name}</b>(2020年第一季度)</p>
+        //            <p class="tooltip_style"><span class="tooltip_left">事件总数</span><span class="tooltip_right">${data.value}</span></p>
+        //            <p class="tooltip_style"><span class="tooltip_left">特别重大事件</span><span class="tooltip_right">${data.specialImportant}</span></p>
+        //            <p class="tooltip_style"><span class="tooltip_left">重大事件</span><span class="tooltip_right">${data.import}</span></p>
+        //            <p class="tooltip_style"><span class="tooltip_left">较大事件</span><span class="tooltip_right">${data.compare}</span></p>
+        //            <p class="tooltip_style"><span class="tooltip_left">一般事件</span><span class="tooltip_right">${data.common}</span></p>
+        //            <p class="tooltip_style"><span class="tooltip_left">特写事件</span><span class="tooltip_right">${data.specail}</span></p>
+        //        </div>
+        //     `;
+        //     return context;
+        //   },
+        // },
         visualMap: {
           show: false,
           left: 26,

@@ -28,3 +28,10 @@ export function getCity(params) {
     params,
   });
 }
+export function getDesigner(params) {
+  return request({
+    url: "getDesigner",
+    method: "get",
+    params,
+  });
+}

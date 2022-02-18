@@ -43,7 +43,7 @@
       </div>
       <!-- 设计案例 -->
 
-      <div class="SwiperModelStyle" v-show="tabId == 2">
+      <div class="SwiperModelStyle" v-if="tabId == 2">
         <!-- 轮播内容-->
         <div class="swiper-container">
           <div class="swiper-wrapper">
@@ -112,7 +112,7 @@
         </div>
       </div>
       <!-- 精英 -->
-      <div class="tkzc_home" v-show="tabId == 1 && tabsonId == '1-3'">
+      <div class="tkzc_home" v-if="tabId == 1 && tabsonId == '1-3'">
         <div class="jytdswiper">
           <!-- <el-carousel
             class="carouselSyle"
@@ -138,10 +138,24 @@
               </div>
             </el-carousel-item>
           </el-carousel> -->
-          <div class="swiper-container">
+          <!-- <div class="swiper-container">
             <div class="swiper-wrapper">
-              <div class="swiper-slide" v-for="item in 5" :key="item.id">
+              <div class="swiper-slide">
                 <img class="proper" src="../assets/sjsimages/sjs.png" alt="" />
+              </div>
+              <div class="swiper-slide">
+                <img
+                  class="proper"
+                  src="../assets/sjsimages/sjs05.png"
+                  alt=""
+                />
+              </div>
+              <div class="swiper-slide">
+                <img
+                  class="proper"
+                  src="../assets/sjsimages/sjs06.png"
+                  alt=""
+                />
               </div>
             </div>
 
@@ -149,15 +163,14 @@
 
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
-          </div>
+          </div> -->
+          <SwiperModel />
         </div>
       </div>
       <!--集团动态 -->
       <div class="tkzc_home" v-show="tabId == 3">
         <!-- :src="videourl" -->
         <div class="jtdt_content">
-          <!-- <p class="jtdt_title">集团动态</p> -->
-          <!-- 动态轮播集团动态 -->
           <div class="swiper-container1">
             <div class="swiper-wrapper">
               <div class="swiper-slide" v-for="item in 10" :key="item">
@@ -210,6 +223,8 @@
 import Swiper from "swiper"; // 引入swiper依赖  在使用过程中我发现有时候开头字母大写可以成功 、有时候小写 若报错就换成另一个，两者引入取其一
 import logo from "@/assets/logo.png";
 import videourl from "@/assets/tkzc.mp4";
+import ProperModel from "@/components/ProperModel.vue";
+import SwiperModel from "@/components/SwiperModel.vue";
 
 import {
   getTopClass,
@@ -229,6 +244,8 @@ export default {
   },
   components: {
     ChinaEcharts,
+    ProperModel,
+    SwiperModel,
   },
   data() {
     return {
@@ -285,7 +302,55 @@ export default {
         //是否循环
         speed: 1000, //默认就是300毫秒
         // loopAdditionalSlides: 1,
-        loop: true,
+        loop: false,
+        observer: true,
+        observeParents: false,
+        disableOnInteraction: true,
+        lazy: {
+          loadPrevNext: true,
+          loadPrevNextAmount: 1,
+          loadOnTransitionStart: true,
+        },
+        // mousewheel: true,
+        effect: "fade", //切换效果"fade"（淡入）、"cube"（方块）、"coverflow"（3d流）、"flip"（3d翻转）、"cards"(cards)、"creative"（创意性
+        // cubeEffect: {
+        //   shadow: true,
+        //   slideShadows: true,
+        //   shadowOffset: 20,
+        //   shadowScale: 0.94,
+        // },
+        keyboard: {
+          enabled: true,
+          onlyInViewport: true,
+        },
+        fadeEffect: {
+          crossFade: true,
+        },
+        autoplay: {
+          //swiper手动滑动之后自动轮播失效的解决方法,包括触碰，拖动，点击pagination,重新启动自动播放
+          //   disableOnInteraction: false,
+          disableOnInteraction: false,
+          // 自动播放时间：毫秒
+          delay: 6000,
+        },
+        // pagination: {
+        //   //小圆点
+        //   el: ".swiper-pagination",
+        // },
+        // navigation: {
+        //   prevEl: ".el-icon-caret-left",
+        //   nextEl: ".el-icon-caret-right",
+        // },
+        navigation: {
+          prevEl: ".swiperbuttonprev",
+          nextEl: ".swiperbuttonnext",
+        },
+      },
+      swiperconfig2: {
+        //是否循环
+        speed: 1000, //默认就是300毫秒
+        // loopAdditionalSlides: 1,
+        loop: false,
         observer: true,
         observeParents: false,
         // mousewheel: true,
@@ -308,49 +373,7 @@ export default {
           //   disableOnInteraction: false,
           disableOnInteraction: false,
           // 自动播放时间：毫秒
-          delay: 6500,
-        },
-        // pagination: {
-        //   //小圆点
-        //   el: ".swiper-pagination",
-        // },
-        // navigation: {
-        //   prevEl: ".el-icon-caret-left",
-        //   nextEl: ".el-icon-caret-right",
-        // },
-        navigation: {
-          prevEl: ".swiperbuttonprev",
-          nextEl: ".swiperbuttonnext",
-        },
-      },
-      swiperconfig2: {
-        //是否循环
-        speed: 1000, //默认就是300毫秒
-        // loopAdditionalSlides: 1,
-        loop: true,
-        observer: true,
-        observeParents: false,
-        // mousewheel: true,
-        effect: "creative", //切换效果"fade"（淡入）、"cube"（方块）、"coverflow"（3d流）、"flip"（3d翻转）、"cards"(cards)、"creative"（创意性
-        // cubeEffect: {
-        //   shadow: true,
-        //   slideShadows: true,
-        //   shadowOffset: 20,
-        //   shadowScale: 0.94,
-        // },
-        keyboard: {
-          enabled: true,
-          onlyInViewport: true,
-        },
-        fadeEffect: {
-          crossFade: true,
-        },
-        autoplay: {
-          //swiper手动滑动之后自动轮播失效的解决方法,包括触碰，拖动，点击pagination,重新启动自动播放
-          //   disableOnInteraction: false,
-          disableOnInteraction: false,
-          // 自动播放时间：毫秒
-          delay: 2500,
+          delay: 6000,
         },
 
         navigation: {
@@ -360,12 +383,12 @@ export default {
       },
       navheight: null,
       jytdswiper: null,
+      swipercaeated: null,
       swipercaeated1: null,
       swipercaeated2: null,
       list: [],
       sonlist: [],
       classList: [],
-      swipercaeated: [],
       navlist: [
         {
           id: "1",
@@ -427,7 +450,7 @@ export default {
     //       (document.body || document.documentElement).requestFullscreen();
     //     };
     // document.onclick();
-    this.getBanner();
+    // this.getBanner();
   },
   methods: {
     //   输入密码
@@ -478,7 +501,6 @@ export default {
         reachEnd: function () {
           console.log("到了最后一个slide");
           let length = that.splitList.length;
-          //   that.swipercaeated.removeAllSlides();
           console.log(length, that.numindex);
           if (length > 0) {
             that.getFlimList(that.splitList[0]["id"]);
@@ -487,14 +509,13 @@ export default {
             if (that.numindex >= that.classList.length) {
               that.numindex = 0;
             }
+            that.value = that.classList[that.numindex].name;
             that.getClass(that.classList[that.numindex].pid);
           }
         },
         observerUpdate: function (Swiper) {
           console.log(Swiper, "observer监测到了不可描述的事情发生");
           //   alert("observer监测到了不可描述的事情发生");
-          that.swipercaeated.autoplay.start(); //自动播放
-          that.swipercaeated1.update();
         },
       };
       //   this.swiperconfig.onSlideChangeEnd((swiper) => {
@@ -559,19 +580,24 @@ export default {
       this.splitList = this.splitList.filter((item) => item.id != class_id);
       console.log(this.splitList, 2, this.list);
       let index = this.getRandomNumberByRange(0, this.raneffectlist.length);
-      this.swipercaeated.updateSlides(); //更新slide
-      //   this.swiperconfig["effect"] = this.raneffectlist[index]; // 随机轮播样式
-      //   this.swipercaeated.reLoop();
-      //   this.swipercaeated.autoplayStart();
-      this.swipercaeated.autoplay.start(); //自动播放
-      this.swipercaeated.setGrabCursor(); //关闭鼠标的抓手形状。 unsetGrabCursors
-      this.swipercaeated.update();
+      this.getBanner();
+      //   setTimeout(() => {
+      //     this.swipercaeated.forEach((item) => {
+      //       item.updateSlides(); //更新slide
+      //       //   this.swiperconfig["effect"] = this.raneffectlist[index]; // 随机轮播样式
+      //       //   this.swipercaeated.reLoop();
+      //       //   this.swipercaeated.autoplayStart();
+      //       item.autoplay.start(); //自动播放
+      //       item.setGrabCursor(); //关闭鼠标的抓手形状。 unsetGrabCursors
+      //       item.update();
+      //     });
+      //   }, 300);
     },
     upswiper() {
+      return;
       console.log(this.swipercaeated, "jytdswiper");
       this.swipercaeated1.updateSlides(); //更新slide
       this.swipercaeated1.autoplay.start(); //自动播放
-
       this.swipercaeated1.setGrabCursor(); //关闭鼠标的抓手形状。 unsetGrabCursors
       this.swipercaeated1.update();
     },
@@ -975,6 +1001,7 @@ export default {
 .nav {
   .menudie {
     border: none !important;
+    font-weight: 600;
     .el-submenu {
       background: rgba(0, 0, 0, 0.2);
       width: 200px;
@@ -991,6 +1018,7 @@ export default {
       font-size: 20px;
       .el-menu {
         .el-menu-item {
+          font-weight: 600;
           text-align: center;
         }
       }

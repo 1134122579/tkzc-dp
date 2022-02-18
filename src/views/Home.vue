@@ -1,6 +1,7 @@
 <template>
   <div class="page">
     <div class="home" v-if="isauto">
+      <!-- 头部 -->
       <div class="nav" ref="nav">
         <div class="logo">
           <el-image :src="logo" style="width: 100%; height: 100%"></el-image>
@@ -59,7 +60,6 @@
           <div class="swiper-pagination"></div>
           <!--分页器。如果放置在swiper-container外面，需要自定义样式。-->
           <!-- 翻页 -->
-          <!-- 翻页 -->
           <div class="dropdownStyle">
             <div class="flexStyle">
               <div class="flexStylebutton">
@@ -84,10 +84,20 @@
               </ul>
             </div>
           </div>
+          <div class="left">
+            <div class="swiperbuttonprev">
+              <div class="swiper-button-prev"></div>
+            </div>
+          </div>
+          <div class="right">
+            <div class="swiperbuttonnext">
+              <div class="swiper-button-next"></div>
+            </div>
+          </div>
         </div>
       </div>
       <!-- 天空之橙 -->
-      <div class="tkzc_home" v-show="tabId == 1">
+      <div class="tkzc_home" v-show="tabId == 1 && tabsonId == '1-1'">
         <!-- :src="videourl" -->
         <video
           src="http://video.greatorange.cn/zm_design.mp4"
@@ -101,13 +111,72 @@
           <div class="Desiginbutton" @click="goDesigin">天空之橙Desigin</div>
         </div>
       </div>
+      <!-- 精英 -->
+      <div class="tkzc_home" v-show="tabId == 1 && tabsonId == '1-3'">
+        <div class="jytdswiper">
+          <!-- <el-carousel
+            class="carouselSyle"
+            :interval="3000"
+            indicator-position="none"
+            :autoplay="true"
+            ref="carousel"
+          >
+            <el-carousel-item>
+              <div class="imgallstyle">
+                <img src="../assets/sjsimages/sjs.png" class="proper" alt="" />
+              </div>
+            </el-carousel-item>
+                <el-carousel-item>
+              <div class="imgallstyle">
+                <img src="../assets/sjsimages/sjs05.png" class="proper" alt="" />
+              </div>
+            </el-carousel-item>
+                 </el-carousel-item>
+                <el-carousel-item>
+              <div class="imgallstyle">
+                <img src="../assets/sjsimages/sjs06.png" class="proper" alt="" />
+              </div>
+            </el-carousel-item>
+          </el-carousel> -->
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="item in 5" :key="item.id">
+                <img class="proper" src="../assets/sjsimages/sjs.png" alt="" />
+              </div>
+            </div>
 
+            <div class="swiper-pagination"></div>
+
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+        </div>
+      </div>
       <!--集团动态 -->
       <div class="tkzc_home" v-show="tabId == 3">
         <!-- :src="videourl" -->
-        <p>集团动态</p>
-        <div>
+        <div class="jtdt_content">
+          <!-- <p class="jtdt_title">集团动态</p> -->
           <!-- 动态轮播集团动态 -->
+          <div class="swiper-container1">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="item in 10" :key="item">
+                <div class="jtdt_content_page">
+                  <img
+                    src="../assets/sjsimages/sjs05.png"
+                    class="jtdt_content_page_img"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+            <!--分页器。如果放置在swiper-container外面，需要自定义样式。-->
+            <!-- <div class="swiper-pagination"></div> -->
+            <!--分页器。如果放置在swiper-container外面，需要自定义样式。-->
+            <!-- 翻页 -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
         </div>
       </div>
       <!-- 联系我们 -->
@@ -115,6 +184,7 @@
         <ChinaEcharts />
       </div>
     </div>
+    <!-- 密码页 -->
     <div class="suosttyle" v-else>
       <div class="suoblock">
         <p class="title">天空之橙Desigin</p>
@@ -162,6 +232,7 @@ export default {
   },
   data() {
     return {
+      tabsonId: "1-1",
       isauto: false,
       passwordvalue: "",
       videourl,
@@ -180,7 +251,87 @@ export default {
         loop: true,
         observer: true,
         // mousewheel: true,
-        effect: "cards", //切换效果"fade"（淡入）、"cube"（方块）、"coverflow"（3d流）、"flip"（3d翻转）、"cards"(cards)、"creative"（创意性
+        effect: "fade", //切换效果"fade"（淡入）、"cube"（方块）、"coverflow"（3d流）、"flip"（3d翻转）、"cards"(cards)、"creative"（创意性
+        // cubeEffect: {
+        //   shadow: true,
+        //   slideShadows: true,
+        //   shadowOffset: 20,
+        //   shadowScale: 0.94,
+        // },
+        keyboard: {
+          enabled: true,
+          onlyInViewport: true,
+        },
+        fadeEffect: {
+          crossFade: true,
+        },
+        autoplay: {
+          //swiper手动滑动之后自动轮播失效的解决方法,包括触碰，拖动，点击pagination,重新启动自动播放
+          //   disableOnInteraction: false,
+          disableOnInteraction: false,
+          // 自动播放时间：毫秒
+          delay: 6500,
+        },
+        // pagination: {
+        //   //小圆点
+        //   el: ".swiper-pagination",
+        // },
+        navigation: {
+          prevEl: ".el-icon-caret-left",
+          nextEl: ".el-icon-caret-right",
+        },
+      },
+      swiperconfig: {
+        //是否循环
+        speed: 1000, //默认就是300毫秒
+        // loopAdditionalSlides: 1,
+        loop: true,
+        observer: true,
+        observeParents: false,
+        // mousewheel: true,
+        effect: "fade", //切换效果"fade"（淡入）、"cube"（方块）、"coverflow"（3d流）、"flip"（3d翻转）、"cards"(cards)、"creative"（创意性
+        // cubeEffect: {
+        //   shadow: true,
+        //   slideShadows: true,
+        //   shadowOffset: 20,
+        //   shadowScale: 0.94,
+        // },
+        keyboard: {
+          enabled: true,
+          onlyInViewport: true,
+        },
+        fadeEffect: {
+          crossFade: true,
+        },
+        autoplay: {
+          //swiper手动滑动之后自动轮播失效的解决方法,包括触碰，拖动，点击pagination,重新启动自动播放
+          //   disableOnInteraction: false,
+          disableOnInteraction: false,
+          // 自动播放时间：毫秒
+          delay: 6500,
+        },
+        // pagination: {
+        //   //小圆点
+        //   el: ".swiper-pagination",
+        // },
+        // navigation: {
+        //   prevEl: ".el-icon-caret-left",
+        //   nextEl: ".el-icon-caret-right",
+        // },
+        navigation: {
+          prevEl: ".swiperbuttonprev",
+          nextEl: ".swiperbuttonnext",
+        },
+      },
+      swiperconfig2: {
+        //是否循环
+        speed: 1000, //默认就是300毫秒
+        // loopAdditionalSlides: 1,
+        loop: true,
+        observer: true,
+        observeParents: false,
+        // mousewheel: true,
+        effect: "creative", //切换效果"fade"（淡入）、"cube"（方块）、"coverflow"（3d流）、"flip"（3d翻转）、"cards"(cards)、"creative"（创意性
         // cubeEffect: {
         //   shadow: true,
         //   slideShadows: true,
@@ -201,16 +352,16 @@ export default {
           // 自动播放时间：毫秒
           delay: 2500,
         },
-        // pagination: {
-        //   //小圆点
-        //   el: ".swiper-pagination",
-        // },
+
         navigation: {
-          prevEl: ".el-icon-caret-left",
-          nextEl: ".el-icon-caret-right",
+          prevEl: ".swiper-button-prev",
+          nextEl: ".swiper-button-next",
         },
       },
       navheight: null,
+      jytdswiper: null,
+      swipercaeated1: null,
+      swipercaeated2: null,
       list: [],
       sonlist: [],
       classList: [],
@@ -251,6 +402,8 @@ export default {
           children: [],
         },
       ],
+      numindex: 0,
+      splitList: [],
     };
   },
   created() {
@@ -324,10 +477,45 @@ export default {
       this.swiperconfig.on = {
         reachEnd: function () {
           console.log("到了最后一个slide");
+          let length = that.splitList.length;
+          //   that.swipercaeated.removeAllSlides();
+          console.log(length, that.numindex);
+          if (length > 0) {
+            that.getFlimList(that.splitList[0]["id"]);
+          } else {
+            that.numindex++;
+            if (that.numindex >= that.classList.length) {
+              that.numindex = 0;
+            }
+            that.getClass(that.classList[that.numindex].pid);
+          }
+        },
+        observerUpdate: function (Swiper) {
+          console.log(Swiper, "observer监测到了不可描述的事情发生");
+          //   alert("observer监测到了不可描述的事情发生");
+          that.swipercaeated.autoplay.start(); //自动播放
+          that.swipercaeated1.update();
         },
       };
+      //   this.swiperconfig.onSlideChangeEnd((swiper) => {
+      //     swiper.update();
+      //     that.swipercaeated.reLoop();
+      //     that.swipercaeated.startAutoplay();
+      //   });
+
       this.$nextTick(() => {
-        that.swipercaeated = new Swiper(".swiper-container", this.swiperconfig);
+        that.swipercaeated = new Swiper(".swiper-container", that.swiperconfig);
+        that.swipercaeated1 = new Swiper(
+          ".swiper-container1",
+          that.swiperconfig2
+        );
+
+        that.swipercaeated2 = new Swiper(
+          ".swiper-container2",
+          that.swiperconfig2
+        );
+
+        // that.jytdswiper = new Swiper(".swiper-container1", that.swiperconfig2);
       });
     },
     getdomStyle() {
@@ -343,7 +531,6 @@ export default {
     // 获取 getTopClass
     async getTopClass() {
       let res = await getTopClass();
-
       res = res.map((item) => {
         item["pid"] = item["id"];
         item["id"] = "2-" + item["id"];
@@ -352,6 +539,7 @@ export default {
       });
       let index = this.navlist.findIndex((item) => item.title == "设计案例");
       this.classList = res;
+      console.log(this.classList);
       this.$nextTick(() => {
         this.navlist[index].children = res;
       });
@@ -359,22 +547,38 @@ export default {
 
     async getClass(pid) {
       let res = await getClass({ pid });
+      this.numindex = this.classList.findIndex((item) => item.pid == pid);
       this.sonlist = res;
+      this.splitList = res;
       this.getFlimList(res[0]["id"]);
     },
     async getFlimList(class_id = "") {
       let res = await getFlimList(class_id && { class_id });
       this.list = res;
+      console.log(this.splitList, 1);
+      this.splitList = this.splitList.filter((item) => item.id != class_id);
+      console.log(this.splitList, 2, this.list);
       let index = this.getRandomNumberByRange(0, this.raneffectlist.length);
       this.swipercaeated.updateSlides(); //更新slide
-      this.swiperconfig["effect"] = this.raneffectlist[index]; // 随机轮播样式
+      //   this.swiperconfig["effect"] = this.raneffectlist[index]; // 随机轮播样式
+      //   this.swipercaeated.reLoop();
+      //   this.swipercaeated.autoplayStart();
       this.swipercaeated.autoplay.start(); //自动播放
       this.swipercaeated.setGrabCursor(); //关闭鼠标的抓手形状。 unsetGrabCursors
       this.swipercaeated.update();
     },
+    upswiper() {
+      console.log(this.swipercaeated, "jytdswiper");
+      this.swipercaeated1.updateSlides(); //更新slide
+      this.swipercaeated1.autoplay.start(); //自动播放
+
+      this.swipercaeated1.setGrabCursor(); //关闭鼠标的抓手形状。 unsetGrabCursors
+      this.swipercaeated1.update();
+    },
     // nav 切换
     handleSelect(key, keyPath) {
       this.tabId = keyPath[0];
+      this.tabsonId = key;
       if (keyPath[0] == 2) {
         let array = this.classList.filter((item) => item.id == key);
         this.getClass(key.split("-")[1]);
@@ -382,6 +586,7 @@ export default {
       } else {
         this.sonlist = [];
       }
+      this.upswiper();
     },
     // 随机整数
     getRandomNumberByRange(start, end) {
@@ -674,6 +879,53 @@ export default {
       height: 100%;
       background: #fff;
       position: relative;
+    }
+    // 精英团队
+    .jytdswiper {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      .swiper-container2 {
+        width: 100%;
+        height: 100%;
+      }
+      .el-carousel__container {
+        height: 100%;
+      }
+      .proper {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .carouselSyle {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .jtdt_content {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #0000;
+      .jtdt_title {
+        font-size: 24px;
+        font-weight: 600;
+      }
+      .swiper-container1 {
+        width: 100%;
+        height: 100%;
+        .jtdt_content_page {
+          width: 100%;
+          height: 100%;
+          background: #0000;
+          .jtdt_content_page_img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+          }
+        }
+      }
     }
   }
   // 锁屏页

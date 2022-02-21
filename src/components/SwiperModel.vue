@@ -8,12 +8,7 @@
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in list" :key="index">
           <div class="pagecontent">
-            <div
-              v-for="listitem in item.list"
-              :key="listitem.id"
-              class="man"
-              @click="lookButton(listitem)"
-            >
+            <div v-for="listitem in item.list" :key="listitem.id" class="man" @click="lookButton(listitem)">
               <div class="imastyle">
                 <img class="" :src="listitem.photos" />
               </div>
@@ -121,136 +116,137 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 @import "../assets/xkcss/style.css";
 .box {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  overflow: hidden;
-  .swiper-container {
+    position: absolute;
     width: 100%;
     height: 100%;
-    // background: #000;
-    .swiper-slide {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      .pagecontent {
-        margin-top: 100px;
-        width: 100%;
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        .man {
-          width: 25%;
-          margin-top: 40px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-          flex-shrink: 0;
-          cursor: pointer; //鼠标变小手
-          //   padding: 20px;
-          box-sizing: border-box;
-          flex-shrink: 0;
-          .imastyle {
-            width: 180px;
-            height: 180px;
-            img {
-              width: 150px;
-              height: 150px;
-              object-fit: cover;
-              border-radius: 50%;
-              overflow: hidden;
-              flex-shrink: 0;
-            }
-          }
-          &:hover img {
-            width: 180px;
-            height: 180px;
-            animation: bounceIn;
-            animation-duration: 1.2s;
-          }
-
-          .name {
-            font-size: 20px;
-            font-weight: 600;
-            color: #fff;
-            margin-top: 20px;
-          }
-        }
-      }
-    }
-  }
-  .sjsStyle {
-    width: 100%;
     background: #000;
-    box-shadow: 0 0 10px #ccc;
-    // border-radius: 10px;
-    height: 55vh;
     overflow: hidden;
-    box-sizing: border-box;
-    .content_sis {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 20px;
-      box-sizing: border-box;
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+        // background: #000;
+        .swiper-slide {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .pagecontent {
+                margin-top: 100px;
+                width: 100%;
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                .man {
+                    width: 25%;
+                    margin-top: 40px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    flex-shrink: 0;
+                    cursor: pointer; //鼠标变小手
+                    //   padding: 20px;
+                    box-sizing: border-box;
+                    flex-shrink: 0;
+                    .imastyle {
+                        width: 180px;
+                        height: 180px;
+                        img {
+                            width: 150px;
+                            height: 150px;
+                            object-fit: cover;
+                            border-radius: 50%;
+                            overflow: hidden;
+                            flex-shrink: 0;
+                        }
+                    }
+                    &:hover img {
+                        width: 180px;
+                        height: 180px;
+                        animation: bounceIn;
+                        animation-duration: 1.2s;
+                    }
 
-      .sjs_left {
-        width: 70%;
-        flex-shrink: 0;
-        color: #fff;
-        padding: 20px;
-        box-sizing: border-box;
-        flex-shrink: 0;
-        height: 100%;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        flex-direction: column;
-        .username {
-          border-bottom: 2px solid #fff;
-          font-size: 40px;
-          color: #333;
-          padding: 10px 20px;
-          border-radius: 5px;
-          text-align: left;
-          background: #fff;
+                    .name {
+                        font-size: 20px;
+                        font-weight: 600;
+                        color: #fff;
+                        margin-top: 20px;
+                    }
+                }
+            }
         }
-        p {
-          text-indent: 40px;
-          line-height: 1.8;
-          text-align: left;
-          margin-top: 20px;
-          border-top: 2px solid #fff;
-          font-size: 20px;
-        }
-      }
-      .sjs_right {
-        width: 30%;
-        height: 100%;
-        box-sizing: border-box;
-        flex-shrink: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        overflow: hidden;
-        img {
-          width: 100%;
-          display: block;
-        }
-      }
     }
-  }
+    .sjsStyle {
+        width: 100%;
+        background: #000;
+        box-shadow: 0 0 10px #ccc;
+        // border-radius: 10px;
+        height: 55vh;
+        overflow: hidden;
+        box-sizing: border-box;
+        .content_sis {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+
+            .sjs_left {
+                width: 70%;
+                flex-shrink: 0;
+                color: #fff;
+                padding: 20px;
+                box-sizing: border-box;
+                flex-shrink: 0;
+                height: 100%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+                flex-direction: column;
+                .username {
+                    border-bottom: 2px solid #fff;
+                    font-size: 40px;
+                    color: #333;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    text-align: left;
+                    background: #fff;
+                }
+                p {
+                    text-indent: 40px;
+                    line-height: 1.8;
+                    text-align: left;
+                    margin-top: 20px;
+                    border-top: 2px solid #fff;
+                    font-size: 20px;
+                }
+            }
+            .sjs_right {
+                width: 30%;
+                height: 100%;
+                box-sizing: border-box;
+                flex-shrink: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                overflow: hidden;
+                img {
+                    width: 100%;
+                    display: block;
+                }
+            }
+        }
+    }
 }
 // .swiper-container
 //   border 1px solid #0f0
@@ -261,13 +257,13 @@ export default {
 </style>
 <style>
 .el-dialog {
-  background: rgba(0, 0, 0, 1);
+    background: rgba(0, 0, 0, 1);
 }
 .el-dialog .el-dialog__header {
-  padding: 0;
+    padding: 0;
 }
 .el-dialog .el-dialog__body {
-  padding: 0;
-  background: rgba(0, 0, 0, 1);
+    padding: 0;
+    background: rgba(0, 0, 0, 1);
 }
 </style>

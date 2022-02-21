@@ -4,7 +4,7 @@
     <div id="stars2"></div>
     <div id="stars3"></div>
     <!-- 　　　　//这里往下的class类一定不要改变，改变就会报错　　　　// -->
-    <div class="swiper-container">
+    <!-- <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in list" :key="index">
           <div class="pagecontent">
@@ -21,7 +21,7 @@
       <div class="swiper-pagination"></div>
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
-    </div>
+    </div> -->
     <!-- <el-dialog :visible.sync="dialogVisible" width="80%">
       <el-image :src="headerimage" style="display: block"></el-image>
     </el-dialog> -->

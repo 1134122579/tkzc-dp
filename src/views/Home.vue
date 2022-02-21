@@ -20,24 +20,21 @@
         </el-menu>
       </div>
       <!-- 设计案例 -->
-
       <div class="SwiperModelStyle" v-if="tabId == 2">
-        <!-- 轮播内容-->
+        <!-- <Design :typeid="tabsonId" /> -->
         <div class="swiper-container">
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="item in list" :key="item.id">
               <div class="swiperContent" :style="item.img | filterBack">
-                <!-- <div class="swiperContent_text">
-                <h5>{{ item.name || "我是标题" }}</h5>
-                <p>我是内容介绍</p>
-              </div> -->
+                <div class="swiperContent_text">
+                  <h5>{{ item.name }}</h5>
+                  <p>{{item.desc}}</p>
+                </div>
               </div>
             </div>
           </div>
-          <!--分页器。如果放置在swiper-container外面，需要自定义样式。-->
+
           <div class="swiper-pagination"></div>
-          <!--分页器。如果放置在swiper-container外面，需要自定义样式。-->
-          <!-- 翻页 -->
           <div class="dropdownStyle">
             <div class="flexStyle">
               <div class="flexStylebutton">
@@ -48,9 +45,8 @@
                   <i class="el-icon-caret-right"></i>
                 </div>
               </div>
-              <!-- @click="typebutton" -->
+
               <p class="swipername">{{ value }}</p>
-              <!-- v-show="istypelist" -->
               <ul class="typeList">
                 <li v-for="item in sonlist" :key="item.id" @click="sureType(item)">
                   {{ item.name }}
@@ -138,24 +134,10 @@
       </div>
       <!-- 集团构架 -->
       <div class="tkzc_home" v-if="tabId == 1 && tabsonId == '1-2'">
-        <Group />
+        <Framework />
       </div>
       <!--集团动态 -->
       <div class="tkzc_home" v-if="tabId == 3">
-        <!-- :src="videourl" -->
-        <!-- <div class="jtdt_content">
-          <div class="swiper-container1">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide" v-for="item in 10" :key="item">
-                <div class="jtdt_content_page">
-                  <img src="../assets/sjsimages/sjs05.png" class="jtdt_content_page_img" alt="" />
-                </div>
-              </div>
-            </div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-          </div>
-        </div> -->
         <Group />
       </div>
       <!-- 联系我们 -->
@@ -184,7 +166,8 @@ import logo from "@/assets/logo.png";
 import ProperModel from "@/components/ProperModel.vue";
 import SwiperModel from "@/components/SwiperModel.vue";
 import Group from "@/components/Group.vue";
-
+import Framework from "@/components/Framework.vue";
+import Design from "@/components/Design.vue";
 
 import {
   getTopClass,
@@ -206,7 +189,9 @@ export default {
     ChinaEcharts,
     ProperModel,
     SwiperModel,
-    Group
+    Framework,
+    Group,
+    Design
   },
   data() {
     return {
@@ -345,7 +330,6 @@ export default {
       navheight: null,
       jytdswiper: null,
       swipercaeated: null,
-      swipercaeated1: null,
       swipercaeated2: null,
       list: [],
       sonlist: [],
@@ -451,13 +435,13 @@ export default {
       this.tabId = 2;
       this.value = this.classList[0].title;
       this.activeIndex = this.classList[0].id;
-      this.getBanner();
+      this.list = [];
       this.getClass(this.activeIndex.split("-")[1]);
     },
     //   切换分类
     sureType(item) {
-      this.value = item.name;
-      this.getFlimList(item.id);
+      //   this.value = item.name;
+      this.getFlimList(item.id, item);
     },
     //封装轮播函数
     getBanner() {
@@ -474,14 +458,16 @@ export default {
         transitionEnd: function() {
           // slide=this.slides.eq(this.activeIndex);
           // slide.addClass('ani-slide');
-
         },
         reachEnd: function() {
           console.log("到了最后一个slide");
           let length = that.splitList.length;
           if (length > 0) {
-            that.getFlimList(that.splitList[0]["id"]);
+            that.getFlimList(that.splitList[0]["id"], that.splitList[0]);
           } else {
+            that.splitList = that.sonlist
+            that.getFlimList(that.splitList[0]["id"], that.splitList[0]);
+            return
             that.numindex++;
             if (that.numindex >= that.classList.length) {
               that.numindex = 0;
@@ -490,31 +476,14 @@ export default {
             that.getClass(that.classList[that.numindex].pid);
           }
         },
-        observerUpdate: function(Swiper) {
-          console.log(Swiper, "observer监测到了不可描述的事情发生");
-          //   alert("observer监测到了不可描述的事情发生");
-        },
       };
-      //   this.swiperconfig.onSlideChangeEnd((swiper) => {
-      //     swiper.update();
-      //     that.swipercaeated.reLoop();
-      //     that.swipercaeated.startAutoplay();
-      //   });
-
       this.$nextTick(() => {
         that.swipercaeated = new Swiper(".swiper-container", that.swiperconfig);
-        that.swipercaeated1 = new Swiper(
-          ".swiper-container1",
-          that.swiperconfig2
-        );
-
-        that.swipercaeated2 = new Swiper(
-          ".swiper-container2",
-          that.swiperconfig2
-        );
-
-        // that.jytdswiper = new Swiper(".swiper-container1", that.swiperconfig2);
         that.swipercaeated.slideTo(0, 1000, false)
+        that.swipercaeated.updateSlides()
+        that.swipercaeated.setGrabCursor()
+        that.swipercaeated.autoplay.start()
+        that.swipercaeated.update()
       });
     },
     animateCSS(element, animation, prefix = 'animate__') {
@@ -567,36 +536,18 @@ export default {
       this.numindex = this.classList.findIndex((item) => item.pid == pid);
       this.sonlist = res;
       this.splitList = res;
-      this.getFlimList(res[0]["id"]);
+      this.getFlimList(res[0]["id"], res[0]);
     },
-    async getFlimList(class_id = "") {
+    async getFlimList(class_id = "", data) {
       let res = await getFlimList(class_id && { class_id });
+      res = res.map(item => {
+        item['desc'] = data['desc']
+        return item
+      })
+      console.log(res)
       this.list = res;
       this.splitList = this.splitList.filter((item) => item.id != class_id);
-      //   let index = this.getRandomNumberByRange(0, this.raneffectlist.length);
       this.getBanner();
-      //   this.swipercaeated.slideTo(1, 1000, false)
-      //   this.swipercaeated.reLoop();
-      //   this.swipercaeated.autoplayStart()
-      //   setTimeout(() => {
-      //     this.swipercaeated.forEach((item) => {
-      //       item.updateSlides(); //更新slide
-      //       //   this.swiperconfig["effect"] = this.raneffectlist[index]; // 随机轮播样式
-      //       //   this.swipercaeated.reLoop();
-      //       //   this.swipercaeated.autoplayStart();
-      //       item.autoplay.start(); //自动播放
-      //       item.setGrabCursor(); //关闭鼠标的抓手形状。 unsetGrabCursors
-      //       item.update();
-      //     });
-      //   }, 300);
-    },
-    upswiper() {
-      return;
-      console.log(this.swipercaeated, "jytdswiper");
-      this.swipercaeated1.updateSlides(); //更新slide
-      this.swipercaeated1.autoplay.start(); //自动播放
-      this.swipercaeated1.setGrabCursor(); //关闭鼠标的抓手形状。 unsetGrabCursors
-      this.swipercaeated1.update();
     },
     // nav 切换
     handleSelect(key, keyPath) {
@@ -609,7 +560,6 @@ export default {
       } else {
         this.sonlist = [];
       }
-      this.upswiper();
     },
     // 随机整数
     getRandomNumberByRange(start, end) {
@@ -643,6 +593,7 @@ export default {
             box-sizing: border-box;
             .logo {
                 height: 44px;
+                // height: 60px;
                 // background: rgba(0, 0, 0, 0.1);
                 // padding: 15px;
 
@@ -781,15 +732,17 @@ export default {
                             color: #fff;
                             line-height: 1.5;
                             overflow-x: hidden;
+                            font-weight: normal;
+                            font-size: 16px;
                             li {
                                 padding: 10px 0;
+                                box-sizing: border-box;
                                 overflow-x: hidden;
                                 word-wrap: normal;
                                 display: -webkit-box;
                                 -webkit-box-orient: vertical;
                                 -webkit-line-clamp: 2;
                                 overflow: hidden;
-
                                 &:hover {
                                     background: #fdb732;
                                     color: #fff;
@@ -842,15 +795,30 @@ export default {
             background-position: 50%;
             background-repeat: no-repeat;
             .swiperContent_text {
-                margin-left: 40px;
+                margin-left: 80px;
                 padding: 20px;
-                background: rgba(0, 0, 0, 0.2);
-                width: 250px;
-                height: 180px;
+                background: rgba(0, 0, 0, 0.3);
+                width: 450px;
+                max-height: 280px;
                 color: #fff;
+                border-radius: 5px;
                 font-size: 18px;
+                display: flex;
+                justify-content: flex-start;
+                flex-direction: column;
                 h5 {
-                    font-size: 30px;
+                    font-size: 26px;
+                    line-height: 1.5;
+                    width: 100%;
+                }
+                p {
+                    margin-top: 20px;
+                    flex: 1;
+                    flex-wrap: wrap;
+                    overflow-y: auto;
+                    flex-shrink: 0;
+                    text-align: left;
+                    text-indent: 36px;
                     line-height: 1.5;
                 }
             }
@@ -951,21 +919,6 @@ export default {
                 font-size: 24px;
                 font-weight: 600;
             }
-            .swiper-container1 {
-                width: 100%;
-                height: 100%;
-                .jtdt_content_page {
-                    width: 100%;
-                    height: 100%;
-                    background: #0000;
-                    .jtdt_content_page_img {
-                        width: 100%;
-                        height: 100%;
-                        display: block;
-                        object-fit: cover;
-                    }
-                }
-            }
         }
     }
     // 锁屏页
@@ -1016,13 +969,18 @@ export default {
     .menudie {
         border: none !important;
         font-weight: 600;
+        background: rgba(0, 0, 0, 0) !important;
+        .el-submenu__icon-arrow {
+            // display: none;
+        }
         .el-submenu {
-            background: rgba(0, 0, 0, 0.2);
+            // background: rgba(0, 0, 0, 0.2);
             width: 200px;
-            //   margin-right: 10px;
+            margin-right: 10px;
         }
         .el-menu-item {
-            font-size: 20px;
+            font-size: 18px;
+            margin-right: 10px;
             width: 200px;
         }
         .is-active {

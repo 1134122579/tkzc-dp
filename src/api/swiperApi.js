@@ -35,3 +35,11 @@ export function getDesigner(params) {
     params,
   });
 }
+
+export function getAbout(params) {
+  return request({
+    url: "getAbout",
+    method: "get",
+    params,
+  });
+}

@@ -1,7 +1,6 @@
 <template>
   <div class="swiper-container">
     <!-- 轮播内容-->
-
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="item in list" :key="item.id">
         <div class="swiperContent" :style="item.img | filterBack">

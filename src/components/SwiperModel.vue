@@ -1,8 +1,8 @@
 <template>
   <div class="box">
-    <div id="stars"></div>
+    <!-- <div id="stars"></div>
     <div id="stars2"></div>
-    <div id="stars3"></div>
+    <div id="stars3"></div> -->
     <!-- 　　　　//这里往下的class类一定不要改变，改变就会报错　　　　// -->
     <div class="swiper-container">
       <div class="swiper-wrapper">
@@ -123,7 +123,7 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #000;
+    background: #fafafa;
     overflow: hidden;
     .swiper-container {
         width: 100%;
@@ -164,6 +164,7 @@ export default {
                             border-radius: 50%;
                             overflow: hidden;
                             flex-shrink: 0;
+                            box-shadow: 0 0 8px #ccc;
                         }
                     }
                     &:hover img {
@@ -176,7 +177,7 @@ export default {
                     .name {
                         font-size: 20px;
                         font-weight: 600;
-                        color: #fff;
+                        color: #504e4e;
                         margin-top: 20px;
                     }
                 }

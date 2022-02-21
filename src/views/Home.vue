@@ -3,15 +3,14 @@
     <div class="home" v-if="isauto">
       <!-- 头部 -->
       <div class="nav" ref="nav">
-        <div class="logo">
-          <!-- <el-image :src="logo" fit="fit" style="height: 100%"></el-image> -->
+        <div class="logo" @click="gohome">
           <img :src="logo" style="height: 100%;display:block"></img>
         </div>
         <!-- 选项 -->
         <el-menu mode="horizontal" class="menudie" :default-active="activeIndex" @select="handleSelect" :background-color="backgroundcolor"
-                 :active-text-color="textcolor" :text-color="textcolor">
+                 :active-text-color="activetextcolor" :text-color="textcolor">
           <el-submenu popper-class="submenuStyle" v-for="item in navlist" :key="item.id" v-if="item.children.length > 0" :index="item.id">
-            <template slot="title"> {{ item.title }} </template>
+            <template slot="title"> {{ item.title }} <i class="el-icon-caret-bottom" style="color:#fff"></i></template>
             <el-menu-item v-for="childrenitem in item.children" :index="childrenitem.id" :key="childrenitem.id">{{ childrenitem.title }}
             </el-menu-item>
           </el-submenu>
@@ -21,7 +20,6 @@
       </div>
       <!-- 设计案例 -->
       <div class="SwiperModelStyle" v-if="tabId == 2">
-        <!-- <Design :typeid="tabsonId" /> -->
         <div class="swiper-container">
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="item in list" :key="item.id">
@@ -33,7 +31,6 @@
               </div>
             </div>
           </div>
-
           <div class="swiper-pagination"></div>
           <div class="dropdownStyle">
             <div class="flexStyle">
@@ -66,8 +63,8 @@
           </div>
         </div>
       </div>
-      <!-- 天空之橙 -->
-      <div class="tkzc_home" v-show="tabId == 1 && tabsonId == '1-1'">
+      <!-- 天空之橙 首页 -->
+      <div class="tkzc_home" v-show="tabId == 'home'">
         <!-- :src="videourl" -->
         <video src="http://video.greatorange.cn/zm_design.mp4" class="video" autoplay loop muted object-fit="cover"></video>
         <div class="Desigin">
@@ -76,7 +73,15 @@
           </div>
         </div>
       </div>
-      <!-- 精英 -->
+      <!-- 关于我们-->
+      <div class="tkzc_home" v-if="tabId == 1 && tabsonId == '1-1'">
+        <About />
+      </div>
+      <!-- 集团构架 -->
+      <div class="tkzc_home" v-if="tabId == 1 && tabsonId == '1-2'">
+        <Framework />
+      </div>
+      <!-- 精英 团队 -->
       <div class="tkzc_home" v-if="tabId == 1 && tabsonId == '1-3'">
         <div class="jytdswiper">
           <!-- <el-carousel
@@ -132,10 +137,6 @@
           <SwiperModel />
         </div>
       </div>
-      <!-- 集团构架 -->
-      <div class="tkzc_home" v-if="tabId == 1 && tabsonId == '1-2'">
-        <Framework />
-      </div>
       <!--集团动态 -->
       <div class="tkzc_home" v-if="tabId == 3">
         <Group />
@@ -167,6 +168,7 @@ import ProperModel from "@/components/ProperModel.vue";
 import SwiperModel from "@/components/SwiperModel.vue";
 import Group from "@/components/Group.vue";
 import Framework from "@/components/Framework.vue";
+import About from "@/components/About.vue";
 import Design from "@/components/Design.vue";
 
 import {
@@ -190,6 +192,7 @@ export default {
     ProperModel,
     SwiperModel,
     Framework,
+    About,
     Group,
     Design
   },
@@ -199,10 +202,11 @@ export default {
       isauto: false,
       passwordvalue: "",
       //   videourl,
-      tabId: 1,
+      tabId: "home",
       activeIndex: "1-1",
-      textcolor: "#fdb732",
-      backgroundcolor: "rgba(0,0,0,.3)",
+      activetextcolor: "#fff",
+      textcolor: "#fff",
+      backgroundcolor: "#B6B6B6",
       value: "",
       logo,
       type: 2,
@@ -211,7 +215,7 @@ export default {
         //是否循环
         speed: 1000, //默认就是300毫秒
         // loopAdditionalSlides: 1,
-        loop: true,
+        loop: false,
         observer: true,
         // mousewheel: true,
         effect: "fade", //切换效果"fade"（淡入）、"cube"（方块）、"coverflow"（3d流）、"flip"（3d翻转）、"cards"(cards)、"creative"（创意性
@@ -244,96 +248,16 @@ export default {
           nextEl: ".el-icon-caret-right",
         },
       },
-      swiperconfig: {
-        //是否循环
-        speed: 1000, //默认就是300毫秒
-        // loopAdditionalSlides: 1,
-        loop: false,
-        observer: true,
-        observeParents: false,
-        disableOnInteraction: true,
-        lazy: {
-          loadPrevNext: true,
-          loadPrevNextAmount: 1,
-          loadOnTransitionStart: true,
-        },
-        // mousewheel: true,
-        effect: "fade", //切换效果"fade"（淡入）、"cube"（方块）、"coverflow"（3d流）、"flip"（3d翻转）、"cards"(cards)、"creative"（创意性
-        // cubeEffect: {
-        //   shadow: true,
-        //   slideShadows: true,
-        //   shadowOffset: 20,
-        //   shadowScale: 0.94,
-        // },
-        keyboard: {
-          enabled: true,
-          onlyInViewport: true,
-        },
-        fadeEffect: {
-          crossFade: true,
-        },
-        autoplay: {
-          //swiper手动滑动之后自动轮播失效的解决方法,包括触碰，拖动，点击pagination,重新启动自动播放
-          //   disableOnInteraction: false,
-          disableOnInteraction: false,
-          // 自动播放时间：毫秒
-          delay: 6000,
-        },
-        // pagination: {
-        //   //小圆点
-        //   el: ".swiper-pagination",
-        // },
-        // navigation: {
-        //   prevEl: ".el-icon-caret-left",
-        //   nextEl: ".el-icon-caret-right",
-        // },
-        navigation: {
-          prevEl: ".swiperbuttonprev",
-          nextEl: ".swiperbuttonnext",
-        },
-      },
-      swiperconfig2: {
-        //是否循环
-        speed: 1000, //默认就是300毫秒
-        // loopAdditionalSlides: 1,
-        loop: false,
-        observer: true,
-        observeParents: false,
-        // mousewheel: true,
-        effect: "fade", //切换效果"fade"（淡入）、"cube"（方块）、"coverflow"（3d流）、"flip"（3d翻转）、"cards"(cards)、"creative"（创意性
-        // cubeEffect: {
-        //   shadow: true,
-        //   slideShadows: true,
-        //   shadowOffset: 20,
-        //   shadowScale: 0.94,
-        // },
-        keyboard: {
-          enabled: true,
-          onlyInViewport: true,
-        },
-        fadeEffect: {
-          crossFade: true,
-        },
-        autoplay: {
-          //swiper手动滑动之后自动轮播失效的解决方法,包括触碰，拖动，点击pagination,重新启动自动播放
-          //   disableOnInteraction: false,
-          disableOnInteraction: false,
-          // 自动播放时间：毫秒
-          delay: 6000,
-        },
 
-        navigation: {
-          prevEl: ".swiper-button-prev",
-          nextEl: ".swiper-button-next",
-        },
-      },
-      navheight: null,
       jytdswiper: null,
       swipercaeated: null,
       swipercaeated2: null,
-      list: [],
+      list: [{
+        img: require('../assets/fm.png')
+      }],
       sonlist: [],
       classList: [],
+      isfm: false,
       navlist: [
         {
           id: "1",
@@ -403,6 +327,9 @@ export default {
     // this.getBanner();
   },
   methods: {
+    gohome() {
+      this.tabId = "home"
+    },
     //   输入密码
     passwordchange(e) {
       if (this.passwordvalue == "tiancheng88") {
@@ -426,16 +353,18 @@ export default {
         // this.getFlimList();
       }
       if (this.activeIndex.split("-")[0] == 2) {
+
         this.getClass(this.activeIndex.split("-")[1]);
-      } else {
-        //   this.getFlimList();
       }
     },
     goDesigin() {
       this.tabId = 2;
+      this.isfm = true
       this.value = this.classList[0].title;
       this.activeIndex = this.classList[0].id;
-      this.list = [];
+      this.list = [{
+        img: require('../assets/fm.png')
+      }];
       this.getClass(this.activeIndex.split("-")[1]);
     },
     //   切换分类
@@ -539,12 +468,19 @@ export default {
       this.getFlimList(res[0]["id"], res[0]);
     },
     async getFlimList(class_id = "", data) {
+
+      if (!this.isfm) {
+        this.list = [];
+      }
       let res = await getFlimList(class_id && { class_id });
       res = res.map(item => {
         item['desc'] = data['desc']
         return item
       })
       console.log(res)
+      if (this.isfm) {
+        res = this.list.concat(res)
+      }
       this.list = res;
       this.splitList = this.splitList.filter((item) => item.id != class_id);
       this.getBanner();
@@ -553,8 +489,10 @@ export default {
     handleSelect(key, keyPath) {
       this.tabId = keyPath[0];
       this.tabsonId = key;
+      this.isfm = false
       if (keyPath[0] == 2) {
         let array = this.classList.filter((item) => item.id == key);
+        console.log(1111111111111111111111111111111111)
         this.getClass(key.split("-")[1]);
         this.value = array[0].title;
       } else {
@@ -579,11 +517,12 @@ export default {
         height: 100%;
         box-sizing: border-box;
         position: relative;
-        background: #333;
         //   头部
         .nav {
-            position: absolute;
-            top: 60px;
+            position: fixed;
+            top: 0;
+            height: 100px;
+            // background: #fff;
             z-index: 10;
             width: 100%;
             display: flex;
@@ -596,49 +535,9 @@ export default {
                 // height: 60px;
                 // background: rgba(0, 0, 0, 0.1);
                 // padding: 15px;
-
                 img {
                     // width: 100%;
                     height: 100%;
-                }
-            }
-            .navList {
-                display: flex;
-                justify-content: flex-start;
-                .navli {
-                    width: 160px;
-                    height: 40px;
-                    text-align: center;
-                    // background: #edeceb;
-                    margin-left: 20px;
-                    color: #fff;
-                    font-size: 16px;
-                    font-weight: bold;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    position: relative;
-                    .icon-sanjiao {
-                        font-size: 12px;
-                        transform: scale(0.5);
-                        margin-left: 5px;
-                    }
-                }
-                .navblock {
-                    position: absolute;
-                    top: 40px;
-                    width: 100%;
-                    li {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        background: #e37a11;
-                        height: 40px;
-                        margin-top: 4px;
-                    }
-                }
-                :hover {
-                    background: #e37a11;
                 }
             }
             .context {
@@ -962,8 +861,27 @@ export default {
 .el-menu--horizontal .el-menu .el-menu-item,
 .el-menu--horizontal .el-menu .el-submenu__title {
     text-align: center;
-    height: 40px;
-    line-height: 40px;
+    line-height: 44px;
+    height: 44px;
+    &:hover {
+        // background:#e37a11 ;
+        color: #e37a11;
+    }
+}
+.el-menu-item:hover {
+    background: #e37a11 !important ;
+}
+
+.el-submenu__title {
+    text-align: center;
+    background: #b5b5b5 !important;
+    height: 44px !important;
+    line-height: 44px !important;
+    color: #fff;
+    border: 0 !important;
+    .el-submenu__icon-arrow {
+        display: none;
+    }
 }
 .nav {
     .menudie {
@@ -971,10 +889,11 @@ export default {
         font-weight: 600;
         background: rgba(0, 0, 0, 0) !important;
         .el-submenu__icon-arrow {
-            // display: none;
+            // display: none;#B5B5B5
         }
         .el-submenu {
             // background: rgba(0, 0, 0, 0.2);
+            // background: #fff;
             width: 200px;
             margin-right: 10px;
         }
@@ -982,12 +901,22 @@ export default {
             font-size: 18px;
             margin-right: 10px;
             width: 200px;
+            height: 44px;
+            line-height: 44px;
         }
+        // 选中
         .is-active {
-            background: rgba(0, 0, 0, 0.8);
+            background: #df7924 !important;
+            border: none !important;
+            .el-submenu__title {
+                border: none !important;
+
+                background: #df7924 !important;
+                color: #fff !important;
+            }
         }
         .submenuStyle {
-            font-size: 20px;
+            font-size: 18px;
             .el-menu {
                 .el-menu-item {
                     font-weight: 600;
@@ -1001,10 +930,15 @@ export default {
         font-size: 18px;
         // width: 180px;
         text-align: center;
+        height: 44px;
+        line-height: 44px;
         &:hover {
             background: #ff0000;
         }
     }
+}
+// 选项
+.el-menu--horizontal {
 }
 /* 整个滚动条 */
 ::-webkit-scrollbar {

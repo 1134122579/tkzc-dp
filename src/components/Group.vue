@@ -4,7 +4,7 @@
     <div id="stars2"></div>
     <div id="stars3"></div>
     <!-- 　　　　//这里往下的class类一定不要改变，改变就会报错　　　　// -->
-    <div class="swiper-container">
+    <!-- <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in list" :key="index">
           <div class="pagecontent">
@@ -22,31 +22,14 @@
           </div>
         </div>
       </div>
+
       <div class="swiper-pagination"></div>
-      <!--分页器。如果放置在swiper-container外面，需要自定义样式。-->
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
-    </div>
+    </div> -->
 
-    <el-dialog :visible.sync="dialogVisible" width="70%" :show-close="false">
-      <!-- <el-image :src="headerimage" style="display: block"></el-image> -->
-      <div class="sjsStyle">
-        <div id="stars"></div>
-        <div id="stars2"></div>
-        <div id="stars3"></div>
-        <div class="content_sis">
-          <div class="sjs_left">
-            <div class="username">{{ userInfo.name }}</div>
-            <!-- <h4>{{ userInfo.p }}</h4> -->
-            <p>
-              中央美术学院建筑学院副教授；清华大学建筑学学士，德国斯图加特大学 建筑与城市规划硕士，中央美术学院设计艺术学博士；中国建筑学会建筑师分会地区建筑专委会委员，北京照明学会环境艺术照明委员会副主任；长期从事建筑、城市、艺术、灯光等跨领域研究和创作，曾获WA中国建筑奖社会公平奖优胜奖，WA中国建筑奖设计实验奖入围奖，金点设计奖，光华龙腾奖2014中国设计业青年百人榜等奖项；在国内外专业刊物发表论文数十篇；研究和创作作品多次参加国内外设计和艺术展览并获奖。
-            </p>
-          </div>
-          <div class="sjs_right">
-            <img :src="userInfo.photos" alt="" />
-          </div>
-        </div>
-      </div>
+    <el-dialog :visible.sync="dialogVisible" width="80%">
+      <el-image :src="headerimage" style="display: block"></el-image>
     </el-dialog>
   </div>
 </template>
@@ -60,7 +43,6 @@ export default {
       dialogVisible: false,
       list: [],
       headerimage,
-      userInfo: {},
     };
   },
   computed: {
@@ -75,8 +57,7 @@ export default {
     this.getBanner(); //轮播
   },
   methods: {
-    lookButton(item) {
-      this.userInfo = item;
+    lookButton() {
       this.dialogVisible = true;
     },
     //封装轮播函数
@@ -187,70 +168,6 @@ export default {
       }
     }
   }
-  .sjsStyle {
-    width: 100%;
-    background: #000;
-    box-shadow: 0 0 10px #ccc;
-    // border-radius: 10px;
-    height: 55vh;
-    overflow: hidden;
-    box-sizing: border-box;
-    .content_sis {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 20px;
-      box-sizing: border-box;
-
-      .sjs_left {
-        width: 70%;
-        flex-shrink: 0;
-        color: #fff;
-        padding: 20px;
-        box-sizing: border-box;
-        flex-shrink: 0;
-        height: 100%;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        flex-direction: column;
-        .username {
-          border-bottom: 2px solid #fff;
-          font-size: 40px;
-          color: #333;
-          padding: 10px 20px;
-          border-radius: 5px;
-          text-align: left;
-          background: #fff;
-        }
-        p {
-          text-indent: 40px;
-          line-height: 1.8;
-          text-align: left;
-          margin-top: 20px;
-          border-top: 2px solid #fff;
-          font-size: 20px;
-        }
-      }
-      .sjs_right {
-        width: 30%;
-        height: 100%;
-        box-sizing: border-box;
-        flex-shrink: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        overflow: hidden;
-        img {
-          width: 100%;
-          display: block;
-        }
-      }
-    }
-  }
 }
 // .swiper-container
 //   border 1px solid #0f0
@@ -260,14 +177,11 @@ export default {
 //     height 400px
 </style>
 <style>
-.el-dialog {
-  background: rgba(0, 0, 0, 1);
-}
 .el-dialog .el-dialog__header {
   padding: 0;
 }
 .el-dialog .el-dialog__body {
   padding: 0;
-  background: rgba(0, 0, 0, 1);
+  background: rgba(0, 0, 0, 0);
 }
 </style>

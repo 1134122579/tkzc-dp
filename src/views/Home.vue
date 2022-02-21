@@ -4,41 +4,19 @@
       <!-- 头部 -->
       <div class="nav" ref="nav">
         <div class="logo">
-          <el-image :src="logo" style="width: 100%; height: 100%"></el-image>
+          <!-- <el-image :src="logo" fit="fit" style="height: 100%"></el-image> -->
+          <img :src="logo" style="height: 100%;display:block"></img>
         </div>
         <!-- 选项 -->
-        <el-menu
-          mode="horizontal"
-          class="menudie"
-          :default-active="activeIndex"
-          @select="handleSelect"
-          :background-color="backgroundcolor"
-          :active-text-color="textcolor"
-          :text-color="textcolor"
-        >
-          <el-submenu
-            popper-class="submenuStyle"
-            v-for="item in navlist"
-            :key="item.id"
-            v-if="item.children.length > 0"
-            :index="item.id"
-          >
+        <el-menu mode="horizontal" class="menudie" :default-active="activeIndex" @select="handleSelect" :background-color="backgroundcolor"
+                 :active-text-color="textcolor" :text-color="textcolor">
+          <el-submenu popper-class="submenuStyle" v-for="item in navlist" :key="item.id" v-if="item.children.length > 0" :index="item.id">
             <template slot="title"> {{ item.title }} </template>
-            <el-menu-item
-              v-for="childrenitem in item.children"
-              :index="childrenitem.id"
-              :key="childrenitem.id"
-              >{{ childrenitem.title }}</el-menu-item
-            >
+            <el-menu-item v-for="childrenitem in item.children" :index="childrenitem.id" :key="childrenitem.id">{{ childrenitem.title }}
+            </el-menu-item>
           </el-submenu>
-          <el-menu-item
-            popper-class="submenuStyle"
-            v-for="item in navlist"
-            :key="item.id"
-            v-if="item.children.length <= 0"
-            :index="item.id"
-            >{{ item.title }}</el-menu-item
-          >
+          <el-menu-item popper-class="submenuStyle" v-for="item in navlist" :key="item.id" v-if="item.children.length <= 0" :index="item.id">
+            {{ item.title }}</el-menu-item>
         </el-menu>
       </div>
       <!-- 设计案例 -->
@@ -74,11 +52,7 @@
               <p class="swipername">{{ value }}</p>
               <!-- v-show="istypelist" -->
               <ul class="typeList">
-                <li
-                  v-for="item in sonlist"
-                  :key="item.id"
-                  @click="sureType(item)"
-                >
+                <li v-for="item in sonlist" :key="item.id" @click="sureType(item)">
                   {{ item.name }}
                 </li>
               </ul>
@@ -99,16 +73,11 @@
       <!-- 天空之橙 -->
       <div class="tkzc_home" v-show="tabId == 1 && tabsonId == '1-1'">
         <!-- :src="videourl" -->
-        <video
-          src="http://video.greatorange.cn/zm_design.mp4"
-          class="video"
-          autoplay
-          loop
-          muted
-          object-fit="cover"
-        ></video>
+        <video src="http://video.greatorange.cn/zm_design.mp4" class="video" autoplay loop muted object-fit="cover"></video>
         <div class="Desigin">
-          <div class="Desiginbutton" @click="goDesigin">天空之橙Desigin</div>
+          <div class="Desiginbutton" @click="goDesigin">
+            天空之橙 <span>·</span> DESIGN
+          </div>
         </div>
       </div>
       <!-- 精英 -->
@@ -167,30 +136,27 @@
           <SwiperModel />
         </div>
       </div>
+      <!-- 集团构架 -->
+      <div class="tkzc_home" v-if="tabId == 1 && tabsonId == '1-2'">
+        <Group />
+      </div>
       <!--集团动态 -->
-      <div class="tkzc_home" v-show="tabId == 3">
+      <div class="tkzc_home" v-if="tabId == 3">
         <!-- :src="videourl" -->
-        <div class="jtdt_content">
+        <!-- <div class="jtdt_content">
           <div class="swiper-container1">
             <div class="swiper-wrapper">
               <div class="swiper-slide" v-for="item in 10" :key="item">
                 <div class="jtdt_content_page">
-                  <img
-                    src="../assets/sjsimages/sjs05.png"
-                    class="jtdt_content_page_img"
-                    alt=""
-                  />
+                  <img src="../assets/sjsimages/sjs05.png" class="jtdt_content_page_img" alt="" />
                 </div>
               </div>
             </div>
-            <!--分页器。如果放置在swiper-container外面，需要自定义样式。-->
-            <!-- <div class="swiper-pagination"></div> -->
-            <!--分页器。如果放置在swiper-container外面，需要自定义样式。-->
-            <!-- 翻页 -->
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
           </div>
-        </div>
+        </div> -->
+        <Group />
       </div>
       <!-- 联系我们 -->
       <div class="tkzcabout" v-if="tabId == 4">
@@ -200,20 +166,12 @@
     <!-- 密码页 -->
     <div class="suosttyle" v-else>
       <div class="suoblock">
-        <p class="title">天空之橙Desigin</p>
+        <p class="title">天空之橙 · DESIGN</p>
         <img src="../assets/auth-icon.png" alt="" />
         <div class="inputstyle">
-          <el-input
-            placeholder="请输入密码"
-            v-model="passwordvalue"
-            show-password
-            @change="passwordchange"
-            center
-          ></el-input>
+          <el-input placeholder="请输入密码" v-model="passwordvalue" show-password @change="passwordchange" center></el-input>
         </div>
-        <el-button color="#000" size="small" @click.enter="passwordchange" round
-          >立即进入</el-button
-        >
+        <el-button color="#000" size="small" @click.enter="passwordchange" round>立即进入</el-button>
       </div>
     </div>
   </div>
@@ -222,9 +180,11 @@
 <script>
 import Swiper from "swiper"; // 引入swiper依赖  在使用过程中我发现有时候开头字母大写可以成功 、有时候小写 若报错就换成另一个，两者引入取其一
 import logo from "@/assets/logo.png";
-import videourl from "@/assets/tkzc.mp4";
+// import videourl from "@/assets/tkzc.mp4";
 import ProperModel from "@/components/ProperModel.vue";
 import SwiperModel from "@/components/SwiperModel.vue";
+import Group from "@/components/Group.vue";
+
 
 import {
   getTopClass,
@@ -246,13 +206,14 @@ export default {
     ChinaEcharts,
     ProperModel,
     SwiperModel,
+    Group
   },
   data() {
     return {
       tabsonId: "1-1",
       isauto: false,
       passwordvalue: "",
-      videourl,
+      //   videourl,
       tabId: 1,
       activeIndex: "1-1",
       textcolor: "#fdb732",
@@ -392,7 +353,7 @@ export default {
       navlist: [
         {
           id: "1",
-          title: "天空之橙Desigin",
+          title: "天空·Design",
           children: [
             {
               id: "1-1",
@@ -430,7 +391,7 @@ export default {
     };
   },
   created() {
-    if (getToken() == "123456") {
+    if (getToken() == "tiancheng88") {
       this.isauto = true;
       this.getall();
     }
@@ -443,19 +404,24 @@ export default {
     },
   },
   mounted() {
-    // document.onclick =
-    //   document.onkeydown =
-    //   document.onmousemove =
-    //     function () {
-    //       (document.body || document.documentElement).requestFullscreen();
-    //     };
-    // document.onclick();
+    document.title = "天空之橙·Design";
+    try {
+      //   document.onclick =
+      //     document.onkeydown =
+      //     document.onmousemove =
+      //     function() {
+      //       (document.body || document.documentElement).requestFullscreen();
+      //     };
+      //   document.onclick();
+    } catch (error) {
+    }
+
     // this.getBanner();
   },
   methods: {
     //   输入密码
     passwordchange(e) {
-      if (this.passwordvalue == "123456") {
+      if (this.passwordvalue == "tiancheng88") {
         this.isauto = true;
         setToken(this.passwordvalue);
       } else {
@@ -498,10 +464,21 @@ export default {
       //调用延迟加载 $nextTick
       let that = this;
       this.swiperconfig.on = {
-        reachEnd: function () {
+        init: function(swiper) {
+          console.log(this, swiper)
+          //   this.slides[0]
+        },
+        transitionStart: function(swiper) {
+          console.log(this, swiper, 'transitionStart')
+        },
+        transitionEnd: function() {
+          // slide=this.slides.eq(this.activeIndex);
+          // slide.addClass('ani-slide');
+
+        },
+        reachEnd: function() {
           console.log("到了最后一个slide");
           let length = that.splitList.length;
-          console.log(length, that.numindex);
           if (length > 0) {
             that.getFlimList(that.splitList[0]["id"]);
           } else {
@@ -513,7 +490,7 @@ export default {
             that.getClass(that.classList[that.numindex].pid);
           }
         },
-        observerUpdate: function (Swiper) {
+        observerUpdate: function(Swiper) {
           console.log(Swiper, "observer监测到了不可描述的事情发生");
           //   alert("observer监测到了不可描述的事情发生");
         },
@@ -537,8 +514,28 @@ export default {
         );
 
         // that.jytdswiper = new Swiper(".swiper-container1", that.swiperconfig2);
+        that.swipercaeated.slideTo(0, 1000, false)
       });
     },
+    animateCSS(element, animation, prefix = 'animate__') {
+      new Promise((resolve, reject) => {
+        const animationName = `${prefix}${animation}`;
+        const node = document.querySelector(element);
+
+        node.classList.add(`${prefix}animated`, animationName);
+
+        // When the animation ends, we clean the classes and resolve the Promise
+        function handleAnimationEnd(event) {
+          event.stopPropagation();
+          node.classList.remove(`${prefix}animated`, animationName);
+          resolve('Animation ended');
+        }
+
+        node.addEventListener('animationend', handleAnimationEnd, { once: true });
+      })
+    }
+    ,
+
     getdomStyle() {
       let { offsetHeight } = this.$refs["nav"];
       this.navheight = offsetHeight;
@@ -560,7 +557,6 @@ export default {
       });
       let index = this.navlist.findIndex((item) => item.title == "设计案例");
       this.classList = res;
-      console.log(this.classList);
       this.$nextTick(() => {
         this.navlist[index].children = res;
       });
@@ -576,11 +572,12 @@ export default {
     async getFlimList(class_id = "") {
       let res = await getFlimList(class_id && { class_id });
       this.list = res;
-      console.log(this.splitList, 1);
       this.splitList = this.splitList.filter((item) => item.id != class_id);
-      console.log(this.splitList, 2, this.list);
-      let index = this.getRandomNumberByRange(0, this.raneffectlist.length);
+      //   let index = this.getRandomNumberByRange(0, this.raneffectlist.length);
       this.getBanner();
+      //   this.swipercaeated.slideTo(1, 1000, false)
+      //   this.swipercaeated.reLoop();
+      //   this.swipercaeated.autoplayStart()
       //   setTimeout(() => {
       //     this.swipercaeated.forEach((item) => {
       //       item.updateSlides(); //更新slide
@@ -623,443 +620,460 @@ export default {
 </script>
 <style lang="scss">
 .page {
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  //   内容
-  .home {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    position: relative;
-    background: #333;
-    //   头部
-    .nav {
-      position: absolute;
-      top: 60px;
-      z-index: 10;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 5rem;
-      align-items: center;
-      box-sizing: border-box;
-      .logo {
-        height: 40px;
-        // background: rgba(0, 0, 0, 0.1);
-        // padding: 15px;
+    //   内容
+    .home {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        position: relative;
+        background: #333;
+        //   头部
+        .nav {
+            position: absolute;
+            top: 60px;
+            z-index: 10;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 5rem;
+            align-items: center;
+            box-sizing: border-box;
+            .logo {
+                height: 44px;
+                // background: rgba(0, 0, 0, 0.1);
+                // padding: 15px;
 
-        img {
-          // width: 100%;
-          height: 100%;
-        }
-      }
-      .navList {
-        display: flex;
-        justify-content: flex-start;
-        .navli {
-          width: 160px;
-          height: 40px;
-          text-align: center;
-          // background: #edeceb;
-          margin-left: 20px;
-          color: #fff;
-          font-size: 16px;
-          font-weight: bold;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          position: relative;
-          .icon-sanjiao {
-            font-size: 12px;
-            transform: scale(0.5);
-            margin-left: 5px;
-          }
-        }
-        .navblock {
-          position: absolute;
-          top: 40px;
-          width: 100%;
-          li {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #e37a11;
-            height: 40px;
-            margin-top: 4px;
-          }
-        }
-        :hover {
-          background: #e37a11;
-        }
-      }
-      .context {
-        background: burlywood;
-      }
-    }
-    .app-content {
-      flex: 1;
-      width: 100%;
-      position: relative;
-      background: #333;
-      .carouselSyle {
-        height: 100%;
-        .el-carousel__container {
-          height: 100%;
-          .imgallstyle {
-            width: 100vw;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            .imgstyle {
-              width: 100%;
-              display: block;
-            }
-          }
-        }
-      }
-    }
-    //   设计案例
-    .SwiperModelStyle {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      .swiper-container {
-        width: 100%;
-        height: 100%;
-        .swiper-wrapper {
-          width: 100%;
-          height: 100%;
-          position: relative;
-        }
-        //   翻页
-        .dropdownStyle {
-          width: 100%;
-          display: flex;
-          justify-content: flex-end;
-          position: absolute;
-          z-index: 55;
-          bottom: 100px;
-          right: 60px;
-          height: 60px;
-          // border-radius: 5px;
-          .flexStyle {
-            display: flex;
-            align-items: center;
-            width: 260px;
-            font-size: 18px;
-            line-height: 1.5;
-            text-align: center;
-            font-weight: 600;
-            position: relative;
-            background: rgba(0, 0, 0, 0.35);
-            p {
-              padding: 0;
-              margin: 0;
-              width: 100%;
-              display: inline-block;
-              color: #fff;
-            }
-            &:hover .typeList {
-              display: block;
-            }
-            .swipername {
-              padding: 0 10px;
-            }
-            .typeList {
-              display: none;
-              position: absolute;
-              width: 100%;
-              bottom: 60px;
-              height: 400px;
-              overflow-y: scroll;
-              background: rgba(0, 0, 0, 0.4);
-              color: #fff;
-              line-height: 1.5;
-              overflow-x: hidden;
-              li {
-                padding: 10px 0;
-                overflow-x: hidden;
-                word-wrap: normal;
-                &:hover {
-                  background: #fdb732;
-                  color: #595656;
+                img {
+                    // width: 100%;
+                    height: 100%;
                 }
-              }
-              /*修改某个div的滚动条样式*/
-              &::-webkit-scrollbar {
-                width: 5px;
-                height: 5px;
-                /**/
-              }
-              &::-webkit-scrollbar-track {
-                background: #fff;
-                border-radius: 2px;
-              }
-              &::-webkit-scrollbar-thumb {
-                background: #fdb732;
-                border-radius: 10px;
-              }
-              &::-webkit-scrollbar-thumb:hover {
-                background: #999;
-              }
-              &::-webkit-scrollbar-corner {
-                background: #204754;
-              }
             }
-            .flexStylebutton {
-              background: #595656;
-              width: 60px;
-              height: 100%;
-              flex-shrink: 0;
-              font-size: 25px;
-              color: #fff;
-              display: flex;
-              align-items: center;
-              justify-content: center;
+            .navList {
+                display: flex;
+                justify-content: flex-start;
+                .navli {
+                    width: 160px;
+                    height: 40px;
+                    text-align: center;
+                    // background: #edeceb;
+                    margin-left: 20px;
+                    color: #fff;
+                    font-size: 16px;
+                    font-weight: bold;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+                    .icon-sanjiao {
+                        font-size: 12px;
+                        transform: scale(0.5);
+                        margin-left: 5px;
+                    }
+                }
+                .navblock {
+                    position: absolute;
+                    top: 40px;
+                    width: 100%;
+                    li {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background: #e37a11;
+                        height: 40px;
+                        margin-top: 4px;
+                    }
+                }
+                :hover {
+                    background: #e37a11;
+                }
             }
-          }
+            .context {
+                background: burlywood;
+            }
         }
-      }
-    }
-    .swiperContent {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      flex-direction: column;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: 50%;
-      background-repeat: no-repeat;
-      .swiperContent_text {
-        margin-left: 40px;
-        padding: 20px;
-        background: rgba(0, 0, 0, 0.2);
-        width: 250px;
-        height: 180px;
-        color: #fff;
-        font-size: 18px;
-        h5 {
-          font-size: 30px;
-          line-height: 1.5;
+        .app-content {
+            flex: 1;
+            width: 100%;
+            position: relative;
+            background: #333;
+            .carouselSyle {
+                height: 100%;
+                .el-carousel__container {
+                    height: 100%;
+                    .imgallstyle {
+                        width: 100vw;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .imgstyle {
+                            width: 100%;
+                            display: block;
+                        }
+                    }
+                }
+            }
         }
-      }
-      .swiper-slide {
-        transform: translateX(-200px);
-        opacity: 0;
-        transition: all 0.4s;
-      }
-      .ani-slide {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-    // 首页
-    .tkzc_home {
-      width: 100%;
-      height: 100%;
-      background: #fff;
-      position: relative;
-      video {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: cover;
-      }
-      .video {
-        height: auto;
-        max-width: 100%;
-        width: 100%;
-        height: 100%;
-      }
-      .Desigin {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        margin: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .Desiginbutton {
-          font-size: 24px;
-          border-radius: 200px;
-          border: 3px solid #ccc;
-          width: 300px;
-          height: 70px;
-          line-height: 70px;
-          background: rgba(0, 0, 0, 0.4);
-          color: #fff;
-          margin-top: 500px;
-          &:hover {
-            background: #e37a11;
-          }
-        }
-      }
-    }
-    //   联系我
-    .tkzcabout {
-      width: 100%;
-      height: 100%;
-      background: #fff;
-      position: relative;
-    }
-    // 精英团队
-    .jytdswiper {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      .swiper-container2 {
-        width: 100%;
-        height: 100%;
-      }
-      .el-carousel__container {
-        height: 100%;
-      }
-      .proper {
-        width: 100%;
-        height: 100%;
-        display: block;
-      }
-      .carouselSyle {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .jtdt_content {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #0000;
-      .jtdt_title {
-        font-size: 24px;
-        font-weight: 600;
-      }
-      .swiper-container1 {
-        width: 100%;
-        height: 100%;
-        .jtdt_content_page {
-          width: 100%;
-          height: 100%;
-          background: #0000;
-          .jtdt_content_page_img {
+        //   设计案例
+        .SwiperModelStyle {
             width: 100%;
             height: 100%;
-            display: block;
-            object-fit: cover;
-          }
+            position: relative;
+            .swiper-container {
+                width: 100%;
+                height: 100%;
+                .swiper-wrapper {
+                    width: 100%;
+                    height: 100%;
+                    position: relative;
+                }
+                //   翻页
+                .dropdownStyle {
+                    width: 100%;
+                    display: flex;
+                    justify-content: flex-end;
+                    position: absolute;
+                    z-index: 55;
+                    bottom: 100px;
+                    right: 60px;
+                    height: 60px;
+                    // border-radius: 5px;
+                    .flexStyle {
+                        display: flex;
+                        align-items: center;
+                        width: 260px;
+                        font-size: 18px;
+                        line-height: 1.5;
+                        text-align: center;
+                        font-weight: 600;
+                        position: relative;
+                        background: rgba(0, 0, 0, 0.35);
+                        p {
+                            padding: 0;
+                            margin: 0;
+                            width: 100%;
+                            display: inline-block;
+                            color: #fff;
+                        }
+                        &:hover .typeList {
+                            display: block;
+                            animation: fadeIn;
+                            animation-duration: 1s;
+                        }
+                        .swipername {
+                            padding: 0 10px;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 2;
+                            overflow: hidden;
+                        }
+                        .typeList {
+                            display: none;
+                            position: absolute;
+                            width: 100%;
+                            bottom: 60px;
+                            max-height: 400px;
+                            overflow-y: scroll;
+                            background: rgba(0, 0, 0, 0.5);
+                            color: #fff;
+                            line-height: 1.5;
+                            overflow-x: hidden;
+                            li {
+                                padding: 10px 0;
+                                overflow-x: hidden;
+                                word-wrap: normal;
+                                display: -webkit-box;
+                                -webkit-box-orient: vertical;
+                                -webkit-line-clamp: 2;
+                                overflow: hidden;
+
+                                &:hover {
+                                    background: #fdb732;
+                                    color: #fff;
+                                }
+                            }
+                            /*修改某个div的滚动条样式*/
+                            &::-webkit-scrollbar {
+                                width: 5px;
+                                height: 5px;
+                                /**/
+                            }
+                            &::-webkit-scrollbar-track {
+                                background: #fff;
+                                border-radius: 2px;
+                            }
+                            &::-webkit-scrollbar-thumb {
+                                background: #fdb732;
+                                border-radius: 10px;
+                            }
+                            &::-webkit-scrollbar-thumb:hover {
+                                background: #999;
+                            }
+                            &::-webkit-scrollbar-corner {
+                                background: #204754;
+                            }
+                        }
+                        .flexStylebutton {
+                            background: #595656;
+                            width: 60px;
+                            height: 100%;
+                            flex-shrink: 0;
+                            font-size: 25px;
+                            color: #fff;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                    }
+                }
+            }
         }
-      }
+        .swiperContent {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: 50%;
+            background-repeat: no-repeat;
+            .swiperContent_text {
+                margin-left: 40px;
+                padding: 20px;
+                background: rgba(0, 0, 0, 0.2);
+                width: 250px;
+                height: 180px;
+                color: #fff;
+                font-size: 18px;
+                h5 {
+                    font-size: 30px;
+                    line-height: 1.5;
+                }
+            }
+
+            .swiper-slide {
+                transform: translateX(-200px);
+                opacity: 0;
+                transition: all 0.4s;
+            }
+        }
+        .ani-slide .swiperContent_text {
+            animation: bounceIn;
+            animation-duration: 1.2s;
+        }
+        // 首页
+        .tkzc_home {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            position: relative;
+            video {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: cover;
+            }
+            .video {
+                height: auto;
+                max-width: 100%;
+                width: 100%;
+                height: 100%;
+            }
+            .Desigin {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                margin: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .Desiginbutton {
+                    cursor: pointer; //鼠标变小手
+                    font-size: 24px;
+                    border-radius: 200px;
+                    border: 3px solid #ccc;
+                    width: 300px;
+                    height: 70px;
+                    line-height: 70px;
+                    background: rgba(0, 0, 0, 0.4);
+                    color: #fff;
+                    margin-top: 500px;
+                    span {
+                        font-weight: 600;
+                        font-size: 24px;
+                    }
+                    &:hover {
+                        background: #e37a11;
+                    }
+                }
+            }
+        }
+        //   联系我
+        .tkzcabout {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            position: relative;
+        }
+        // 精英团队
+        .jytdswiper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            .swiper-container2 {
+                width: 100%;
+                height: 100%;
+            }
+            .el-carousel__container {
+                height: 100%;
+            }
+            .proper {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+            .carouselSyle {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .jtdt_content {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0000;
+            .jtdt_title {
+                font-size: 24px;
+                font-weight: 600;
+            }
+            .swiper-container1 {
+                width: 100%;
+                height: 100%;
+                .jtdt_content_page {
+                    width: 100%;
+                    height: 100%;
+                    background: #0000;
+                    .jtdt_content_page_img {
+                        width: 100%;
+                        height: 100%;
+                        display: block;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
     }
-  }
-  // 锁屏页
-  .suosttyle {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    background: #eef3fa;
-    .suoblock {
-      //   background: rgba(255, 255, 255, 0.22);
-      box-shadow: 0 0 10px #c4c1c1;
-      border-radius: 10px;
-      width: 350px;
-      min-height: 400px;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      .title {
-        font-size: 24px;
-      }
-      img {
-        display: block;
-        width: 60%;
-        height: auto;
-        margin: 20px 0;
-      }
-      .inputstyle {
-        margin-bottom: 20px;
-        text-align: center;
-      }
+    // 锁屏页
+    .suosttyle {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        background: #eef3fa;
+        .suoblock {
+            //   background: rgba(255, 255, 255, 0.22);
+            box-shadow: 0 0 10px #c4c1c1;
+            border-radius: 10px;
+            width: 350px;
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            .title {
+                font-size: 24px;
+            }
+            img {
+                display: block;
+                width: 60%;
+                height: auto;
+                margin: 20px 0;
+            }
+            .inputstyle {
+                margin-bottom: 20px;
+                text-align: center;
+            }
+        }
     }
-  }
 }
 </style>
 
 <style lang="scss">
 .el-menu--horizontal .el-menu .el-menu-item,
 .el-menu--horizontal .el-menu .el-submenu__title {
-  text-align: center;
-  height: 80px;
-  line-height: 40px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
 }
 .nav {
-  .menudie {
-    border: none !important;
-    font-weight: 600;
-    .el-submenu {
-      background: rgba(0, 0, 0, 0.2);
-      width: 200px;
-      //   margin-right: 10px;
-    }
-    .el-menu-item {
-      font-size: 20px;
-      width: 200px;
-    }
-    .is-active {
-      background: rgba(0, 0, 0, 0.8);
-    }
-    .submenuStyle {
-      font-size: 20px;
-      .el-menu {
-        .el-menu-item {
-          font-weight: 600;
-          text-align: center;
+    .menudie {
+        border: none !important;
+        font-weight: 600;
+        .el-submenu {
+            background: rgba(0, 0, 0, 0.2);
+            width: 200px;
+            //   margin-right: 10px;
         }
-      }
+        .el-menu-item {
+            font-size: 20px;
+            width: 200px;
+        }
+        .is-active {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .submenuStyle {
+            font-size: 20px;
+            .el-menu {
+                .el-menu-item {
+                    font-weight: 600;
+                    text-align: center;
+                }
+            }
+        }
     }
-  }
-  .el-submenu__title {
-    font-weight: 600;
-    font-size: 18px;
-    // width: 180px;
-    text-align: center;
-    &:hover {
-      background: #ff0000;
+    .el-submenu__title {
+        font-weight: 600;
+        font-size: 18px;
+        // width: 180px;
+        text-align: center;
+        &:hover {
+            background: #ff0000;
+        }
     }
-  }
 }
 /* 整个滚动条 */
 ::-webkit-scrollbar {
-  width: 1px;
-  //   height: 0px;
+    width: 1px;
+    //   height: 0px;
 }
 
 /* 滚动条有滑块的轨道部分 */
 ::-webkit-scrollbar-track-piece {
-  background-color: transparent;
-  border-radius: 5px;
+    background-color: transparent;
+    border-radius: 5px;
 }
 
 /* 滚动条滑块(竖向:vertical 横向:horizontal) */
 ::-webkit-scrollbar-thumb {
-  cursor: pointer;
-  background-color: #f2f2f2;
-  border-radius: 5px;
+    cursor: pointer;
+    background-color: #f2f2f2;
+    border-radius: 5px;
 }
 
 /* 滚动条滑块hover */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #999999;
+    background-color: #999999;
 }
 
 /* 同时有垂直和水平滚动条时交汇的部分 */
 ::-webkit-scrollbar-corner {
-  display: block; /* 修复交汇时出现的白块 */
+    display: block; /* 修复交汇时出现的白块 */
 }
 </style>

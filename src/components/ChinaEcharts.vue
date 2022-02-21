@@ -1,6 +1,23 @@
 <template>
   <div id="china_map_box">
     <div id="china_map"></div>
+    <div class="citylist">
+      <img
+        :src="logo"
+        style="height: 30px; display: block; margin-left: 14px"
+      />
+      <div class="textli">
+        <div v-for="item in citylist" :key="item.id" class="list">
+          {{ item.city }}
+        </div>
+        <span class="sl">... ...</span>
+      </div>
+    </div>
+    <div class="left">
+      <p class="num">30 <span>+</span></p>
+      <p>THE BRANCH SERVICE AGENCY</p>
+      <p>分支服务机构</p>
+    </div>
   </div>
 </template>
 
@@ -8,10 +25,12 @@
 import * as echarts from "echarts";
 import "@/assets/china.js";
 import { getCity } from "@/api/swiperApi.js";
+import logo from "@/assets/logo.png";
 
 export default {
   data() {
     return {
+      logo,
       //echart 配制option
       options: {
         // tooltip: {
@@ -128,8 +147,18 @@ export default {
               symbolSize: 40,
               animation: true,
               animationEasing: "bounceIn",
+              select: {
+                itemStyle: {
+                  borderColor: "red",
+                  borderWidth: "2",
+                  color: "RGBA(100, 100, 100,.8)", //设置地图点击后的颜色
+                },
+              },
               itemStyle: {
                 color: "RGBA(100, 100, 100,.8)",
+                // borderColor: "red",
+                borderWidth: "2",
+                // color: this.clickcolor, //设置地图点击后的颜色
               },
               animationDuration: function (idx) {
                 // 越往后的数据时长越大
@@ -147,16 +176,7 @@ export default {
                   },
                 },
               },
-              data: [
-                {
-                  name: "武汉",
-                  coord: [114.31, 30.52],
-                },
-                {
-                  name: "武汉",
-                  coord: [115.31, 30.52],
-                },
-              ],
+              data: [],
             },
           },
         ],
@@ -305,6 +325,7 @@ export default {
         item["coord"] = [Number(item.lng), Number(item.lat)];
         return item;
       });
+      this.citylist = res;
       this.options.series[0]["data"] = this.dataList;
       this.options.series[0]["markPoint"]["data"] = res;
 
@@ -340,10 +361,60 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #china_map_box {
   height: 100%;
   position: relative;
+}
+/* 城市 */
+.citylist {
+  color: rgb(80, 78, 78);
+  position: absolute;
+  top: 48%;
+  transform: rotate(50%);
+  right: 9%;
+  width: 450px;
+  font-size: 16px;
+  .textli {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .list {
+    padding: 4px 10px;
+  }
+  .sl {
+    font-weight: 600;
+  }
+}
+.left {
+  color: #000;
+  position: absolute;
+  top: 50%;
+  transform: rotate(50%);
+  left: 14%;
+  font-size: 24px;
+  color: rgb(80, 78, 78);
+  letter-spacing: 8px;
+  p {
+    text-align: right;
+    line-height: 1.8;
+  }
+  .num {
+    font-size: 140px;
+    font-weight: 800;
+    padding: 10px 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    line-height: 1;
+    span {
+      color: #e46400;
+      font-size: 50px;
+      padding-bottom: 10px;
+    }
+  }
 }
 #china_map_box #china_map {
   height: 100%;

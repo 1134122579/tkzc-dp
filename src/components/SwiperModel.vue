@@ -38,9 +38,7 @@
           <div class="sjs_left">
             <div class="username">{{ userInfo.name }}</div>
             <!-- <h4>{{ userInfo.p }}</h4> -->
-            <p>
-              {{ userInfo.desc }}
-            </p>
+            <p v-html="userInfo.desc"></p>
           </div>
           <div class="sjs_right">
             <img :src="userInfo.photos" alt="" />
@@ -191,8 +189,8 @@ export default {
   }
   .sjsStyle {
     width: 100%;
-    background: #000;
-    box-shadow: 0 0 10px #ccc;
+    background: #504e4e;
+    box-shadow: 0 0 20px #504e4e;
     // border-radius: 10px;
     height: 65vh;
     overflow: hidden;
@@ -228,13 +226,13 @@ export default {
           background: #fff;
         }
         p {
-          text-indent: 40px;
+          // text-indent: 40px;
           line-height: 1.8;
           text-align: left;
           margin-top: 20px;
           border-top: 2px solid #fff;
-          font-size: 20px;
-          overflow-y: auto;
+          // font-size: 20px;
+          // overflow-y: auto;
         }
       }
       .sjs_right {

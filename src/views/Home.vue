@@ -4,7 +4,8 @@
       <!-- 头部 -->
       <div class="nav" ref="nav">
         <div class="logo" @click="gohome">
-          <img :src="logo" style="height: 100%;display:block"></img>
+          <img v-if="tabId!=2" :src="logo" style="height: 100%;display:block"></img>
+          <img v-if="tabId==2" :src="b_logo" style="height: 100%;display:block"></img>
         </div>
         <!-- 选项 -->
         <el-menu mode="horizontal" class="menudie" :default-active="activeIndex" @select="handleSelect" :background-color="backgroundcolor"
@@ -26,9 +27,10 @@
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="(item,index) in list" :key="item.id">
               <div class="swiperContent" :style="item.img | filterBack">
-                <div class="swiperContent_text " v-show="index==currentIndex&&item.name">
+                <!-- index==currentIndex&& -->
+                <div class="swiperContent_text" v-show="item.name">
                   <h5>{{ item.name }}</h5>
-                  <p>{{item.desc}}</p>
+                  <div class="desc" v-html="item.desc"></div>
                 </div>
               </div>
             </div>
@@ -121,6 +123,8 @@
 <script>
 import Swiper from "swiper"; // 引入swiper依赖  在使用过程中我发现有时候开头字母大写可以成功 、有时候小写 若报错就换成另一个，两者引入取其一
 import logo from "@/assets/logo2.png";
+import b_logo from "@/assets/logo.png";
+
 // import videourl from "@/assets/tkzc.mp4";
 import ProperModel from "@/components/ProperModel.vue";
 import SwiperModel from "@/components/SwiperModel.vue";
@@ -156,6 +160,7 @@ export default {
   },
   data() {
     return {
+      b_logo,
       currentIndex: '',
       tabsonId: "1-1",
       isauto: false,
@@ -329,7 +334,6 @@ export default {
         // this.getFlimList();
       }
       if (this.activeIndex.split("-")[0] == 2) {
-
         this.getClass(this.activeIndex.split("-")[1]);
       }
     },
@@ -346,7 +350,7 @@ export default {
     //   切换分类
     sureType(item) {
       //   this.value = item.name;
-      this.getFlimList(item.id, item);
+      this.getFlimList(item.id, item, true);
     },
     //封装轮播函数
     getBanner() {
@@ -438,9 +442,9 @@ export default {
       this.splitList = res;
       this.getFlimList(res[0]["id"], res[0]);
     },
-    async getFlimList(class_id = "", data) {
+    async getFlimList(class_id = "", data, trueNull) {
       let that = this
-      if (!this.isfm) {
+      if (!this.isfm || trueNull) {
         this.list = [];
       }
       //   that.swipercaeated.detachEvents(); //移除所有slide监听事件
@@ -665,7 +669,7 @@ export default {
         }
         .swiperContent {
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: flex-start;
             flex-direction: column;
             width: 100%;
@@ -675,33 +679,35 @@ export default {
             background-repeat: no-repeat;
             .swiperContent_text {
                 margin-left: 80px;
-                padding: 20px;
+                padding: 16px;
                 background: rgba(0, 0, 0, 0.3);
-                width: 450px;
-                max-height: 280px;
+                width: 280px;
+                height: 220px;
                 color: #fff;
                 border-radius: 5px;
-                font-size: 18px;
                 display: flex;
                 justify-content: flex-start;
                 flex-direction: column;
                 animation: zoomInDown;
                 // animation: slideInDown;
-                animation-duration: 0.8s;
-
+                animation-duration: 1.5s;
+                margin-bottom: 100px;
+                text-align: left;
+                box-sizing: border-box;
                 h5 {
-                    font-size: 26px;
+                    font-size: 20px;
                     line-height: 1.5;
+                    font-weight: 600;
                     width: 100%;
                 }
-                p {
-                    margin-top: 20px;
+                .desc {
+                    margin-top: 10px;
                     flex: 1;
                     flex-wrap: wrap;
                     overflow-y: auto;
                     flex-shrink: 0;
                     text-align: left;
-                    text-indent: 36px;
+                    // text-indent: 36px;
                     line-height: 1.5;
                 }
             }
@@ -934,7 +940,7 @@ export default {
 .el-menu--horizontal {
     .el-menu-item {
         font-size: 18px;
-        font-weight: 600;
+        // font-weight: 600;
         line-height: 44px !important;
         height: 44px !important;
     }

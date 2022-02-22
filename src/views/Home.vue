@@ -9,11 +9,13 @@
         <!-- 选项 -->
         <el-menu mode="horizontal" class="menudie" :default-active="activeIndex" @select="handleSelect" :background-color="backgroundcolor"
                  :active-text-color="activetextcolor" :text-color="textcolor">
-          <el-submenu popper-class="submenuStyle" v-for="item in navlist" :key="item.id" v-if="item.children.length > 0" :index="item.id">
+          <el-submenu @click.native="onhandleClick(item)" popper-class="submenuStyle" v-for="item in navlist" :key="item.id"
+                      v-if="item.children.length > 0" :index="item.id">
             <template slot="title"> {{ item.title }} <i class="el-icon-caret-bottom" style="color:#fff"></i></template>
             <el-menu-item v-for="childrenitem in item.children" :index="childrenitem.id" :key="childrenitem.id">{{ childrenitem.title }}
             </el-menu-item>
           </el-submenu>
+
           <el-menu-item popper-class="submenuStyle" v-for="item in navlist" :key="item.id" v-if="item.children.length <= 0" :index="item.id">
             {{ item.title }}</el-menu-item>
         </el-menu>
@@ -75,7 +77,13 @@
       </div>
       <!-- 关于我们-->
       <div class="tkzc_home" v-if="tabId == 1 && tabsonId == '1-1'">
-        <About />
+        <!-- <About /> -->
+        <video src="http://video.greatorange.cn/zm_design.mp4" class="video" autoplay loop muted object-fit="cover"></video>
+        <div class="Desigin">
+          <div class="Desiginbutton" @click="goDesigin">
+            天空之橙 <span>·</span> DESIGN
+          </div>
+        </div>
       </div>
       <!-- 集团构架 -->
       <div class="tkzc_home" v-if="tabId == 1 && tabsonId == '1-2'">
@@ -188,7 +196,7 @@ export default {
           //   disableOnInteraction: false,
           disableOnInteraction: false,
           // 自动播放时间：毫秒
-          delay: 6500,
+          delay: 6000,
         },
         // pagination: {
         //   //小圆点
@@ -283,6 +291,21 @@ export default {
     gohome() {
       this.tabId = "home"
     },
+    // 点击
+    onhandleClick(data) {
+      console.log("点击", data)
+      if (data.id == 2) {
+        this.tabId = 2;
+        this.isfm = true
+        this.value = this.classList[0].title;
+        this.activeIndex = this.classList[0].id;
+        this.list = [{
+          img: require('../assets/fm.png')
+        }];
+        this.getClass(this.activeIndex.split("-")[1]);
+      }
+    },
+
     //   输入密码
     passwordchange(e) {
       if (this.passwordvalue == "tiancheng88") {
@@ -848,6 +871,15 @@ export default {
         border: none !important;
         font-weight: 600;
         background: rgba(0, 0, 0, 0) !important;
+        .el-submenu__title {
+            padding-right: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .el-icon-caret-bottom {
+                margin-right: 0;
+            }
+        }
         .el-submenu__icon-arrow {
             // display: none;#B5B5B5
         }
@@ -899,6 +931,12 @@ export default {
 }
 // 选项
 .el-menu--horizontal {
+    .el-menu-item {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 44px !important;
+        height: 44px !important;
+    }
 }
 /* 整个滚动条 */
 ::-webkit-scrollbar {

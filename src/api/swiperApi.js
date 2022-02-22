@@ -43,3 +43,11 @@ export function getAbout(params) {
     params,
   });
 }
+
+export function getjiagou(params) {
+  return request({
+    url: "getjiagou",
+    method: "get",
+    params,
+  });
+}

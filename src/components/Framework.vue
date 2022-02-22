@@ -1,52 +1,40 @@
 <template>
   <div class="box">
-    <div id="stars"></div>
-    <div id="stars2"></div>
-    <div id="stars3"></div>
     <!-- 　　　　//这里往下的class类一定不要改变，改变就会报错　　　　// -->
-    <!-- <div class="swiper-container">
+    <div class="swiper-containerjtjg">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in list" :key="index">
-          <div class="pagecontent">
-            <div class="left">
-              <div class="left_block">
-                <img :src="item.cover" alt="">
-                <h5>{{item.title}}</h5>
-              </div>
-            </div>
+          <div class="swiperContent" :style="item | filterBack">
           </div>
         </div>
       </div>
-
-      <div class="swiper-pagination"></div>
+      <!-- <div class="swiper-pagination"></div> -->
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
-    </div> -->
-    <!-- <el-dialog :visible.sync="dialogVisible" width="80%">
-      <el-image :src="headerimage" style="display: block"></el-image>
-    </el-dialog> -->
+    </div>
   </div>
 </template>
 <script>
 import headerimage from "@/assets/sjsimages/sjs05.png";
-import { getDesigner } from "@/api/swiperApi.js";
+import { getjiagou } from "@/api/swiperApi.js";
+let img = require('@/assets/groupimg/20220221170353.jpg')
 import Swiper from "swiper";
 export default {
   data() {
     return {
       dialogVisible: false,
-      list: [{
-        title: '天橙书写新答卷，赋能五好新淄博',
-        link: 'https://mp.weixin.qq.com/s/zosvylLZnJt_P3TCg9qxdg',
-        cover: require('../assets/groupimg/20220221170353.jpg')
-
-      }],
+      list: [],
       headerimage,
     };
   },
+  filters: {
+    filterBack(data) {
+      return `background-image: url('${data}')`;
+    },
+  },
   computed: {
     classname() {
-      return "swiper-container" + new Date().getTime();
+      return "swiper-containerjtjg" + new Date().getTime();
     },
   },
   created() {
@@ -63,16 +51,16 @@ export default {
     getBanner() {
       //调用延迟加载 $nextTick
       this.$nextTick(() => {
-        let swiper = new Swiper(".swiper-container", {
+        let swiper = new Swiper(".swiper-containerjtjg", {
           //是否循环
-          loop: false,
+          loop: true,
           observer: true,
           observeParents: false,
           autoplay: {
             //swiper手动滑动之后自动轮播失效的解决方法,包括触碰，拖动，点击pagination,重新启动自动播放
             disableOnInteraction: false,
             // 自动播放时间：毫秒
-            delay: 6000,
+            delay: 5000,
           },
           navigation: {
             prevEl: ".swiper-button-prev",
@@ -88,14 +76,8 @@ export default {
 
     // h获取人像
     getDesigner() {
-      getDesigner().then((res) => {
-        let newlist = [];
-        let num = parseInt(res.length / 8);
-        for (let index = 0; index <= num; index++) {
-          newlist.push({ list: res.slice(index * 8, (index + 1) * 8) });
-        }
-        console.log(newlist);
-        // this.list = newlist;
+      getjiagou().then((res) => {
+        this.list = res;
       });
     },
   },
@@ -107,9 +89,9 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #000;
+    background: #fff;
     overflow: hidden;
-    .swiper-container {
+    .swiper-containerjtjg {
         width: 100%;
         height: 100%;
         // background: #000;
@@ -119,19 +101,25 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
-            .pagecontent {
-                margin-top: 100px;
-                width: 100%;
+            .swiperContent {
                 display: flex;
+                justify-content: center;
                 align-items: flex-start;
-                justify-content: flex-start;
-                flex-wrap: wrap;
-                padding: 0 40px;
-                box-sizing: border-box;
-                .left {
-                }
+                flex-direction: column;
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-position: 50%;
+                background-repeat: no-repeat;
             }
         }
+    }
+    .swiper-button-prev,
+    .swiper-button-next {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 5px;
+        color: #fff;
     }
 }
 </style>

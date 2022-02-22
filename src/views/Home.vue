@@ -17,12 +17,13 @@
             </el-menu-item>
           </el-submenu>
 
-          <el-menu-item popper-class="submenuStyle" v-for="item in navlist" :key="item.id" v-if="item.children.length <= 0" :index="item.id">
+          <el-menu-item popper-class="submenuStyle" v-for="item in navlist" :key="item.id" v-if="item.children.length <= 0" :index="item.id"
+                        @click.native="onhandleClick(item)">
             {{ item.title }}</el-menu-item>
         </el-menu>
       </div>
       <!-- 设计案例 -->
-      <div class="SwiperModelStyle" v-show="tabId == 2">
+      <div class=" SwiperModelStyle" v-show="tabId == 2">
         <div class="swiper-containersjal">
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="(item,index) in list" :key="item.id">
@@ -36,10 +37,10 @@
             </div>
           </div>
           <!-- <div class="swiper-pagination"></div> -->
-          <div class="dropdownStyle">
+          <div class="dropdownStyle" v-show="!ishome">
             <div class="flexStyle">
               <div class="flexStylebutton">
-                <div class="swiperbuttonprev" slot="button-prev">
+                <div class="swiperbuttonprev " slot="button-prev">
                   <i class="el-icon-caret-left"></i>
                 </div>
                 <div class="swiperbuttonnext" slot="button-next">
@@ -66,7 +67,24 @@
             </div>
           </div>
         </div>
+        <!-- 缩略图 -->
+        <div class="fz_stop" v-show="!ishome">
+          <div class="swiper-containerJT">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="(item,index) in list" :key="item.id">
+                <div class="slt_image">
+                  <img :src="item.img" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <!-- 案例首页 -->
+      <div class="SwiperModelStye" :style="sjanfm_img|filterBack" v-show="isfm">
+        2123123
+      </div>
+
       <!-- 天空之橙 首页 -->
       <div class="tkzc_home" v-show="tabId == 'home'">
         <!-- :src="videourl" -->
@@ -148,6 +166,9 @@ export default {
     filterBack(data) {
       return `background-image: url('${data}')`;
     },
+    filterJtBack(data) {
+      return `background-image: url('${data}?imageView/1/w/300/h/300')`;
+    },
   },
   components: {
     ChinaEcharts,
@@ -160,6 +181,8 @@ export default {
   },
   data() {
     return {
+      ishome: false,
+      sjanfm_img: require('../assets/fm.png'),
       b_logo,
       currentIndex: '',
       tabsonId: "1-1",
@@ -175,6 +198,7 @@ export default {
       logo,
       type: 2,
       raneffectlist: ["cards", "fade", "flip", "creative"],
+      swipercaeatedJT: null,
       swiperconfig: {
         //是否循环
         speed: 1000, //默认就是300毫秒
@@ -217,6 +241,7 @@ export default {
       swipercaeated: null,
       swipercaeated2: null,
       list: [{
+        ishome: true,
         img: require('../assets/fm.png')
       }],
       sonlist: [],
@@ -300,14 +325,19 @@ export default {
     onhandleClick(data) {
       console.log("点击", data)
       if (data.id == 2) {
-        this.tabId = 2;
         this.isfm = true
+        this.tabId = 2;
+        this.ishome = true
         this.value = this.classList[0].title;
         this.activeIndex = this.classList[0].id;
+        console.log(this.activeIndex)
         this.list = [{
+          ishome: true,
           img: require('../assets/fm.png')
         }];
         this.getClass(this.activeIndex.split("-")[1]);
+      } else {
+        this.activeIndex = null
       }
     },
 
@@ -340,9 +370,11 @@ export default {
     goDesigin() {
       this.tabId = 2;
       this.isfm = true
+      this.ishome = true
       this.value = this.classList[0].title;
       this.activeIndex = this.classList[0].id;
       this.list = [{
+        ishome: true,
         img: require('../assets/fm.png')
       }];
       this.getClass(this.activeIndex.split("-")[1]);
@@ -363,6 +395,7 @@ export default {
           let length = that.splitList.length;
           let swiperlength = this.slides.length
           that.currentIndex = this.activeIndex
+          that.ishome = false
           if (this.activeIndex < swiperlength - 1) {
             return
           }
@@ -385,7 +418,27 @@ export default {
           console.log("到了最后一个slide");
         },
       };
+
       this.$nextTick(() => {
+        that.swipercaeatedJT = new Swiper(".swiper-containerJT", {
+          observer: true,
+          effect: 'cards',
+          spaceBetween: 5,
+          slidesPerView: 8,
+          freeMode: true,
+          watchSlidesProgress: true,
+          observeParents: true,
+          centeredSlidesBounds: true,
+          speed: 300,
+          onClick: function(e) {
+            //点击导航之后，设置导航相应的样式
+            console.log(e)
+            that.swipercaeated.slideTo(e.clickedIndex);
+          }
+        });
+        that.swiperconfig.thumbs = {
+          swiper: that.swipercaeatedJT,
+        }
         that.swipercaeated = new Swiper(".swiper-containersjal", that.swiperconfig);
 
       });
@@ -474,7 +527,6 @@ export default {
       this.isfm = false
       if (keyPath[0] == 2) {
         let array = this.classList.filter((item) => item.id == key);
-        console.log(1111111111111111111111111111111111)
         this.getClass(key.split("-")[1]);
         this.value = array[0].title;
       } else {
@@ -556,6 +608,7 @@ export default {
             height: 100%;
             position: relative;
             background: #000;
+            // 案例
             .swiper-containersjal {
                 width: 100%;
                 height: 100%;
@@ -666,6 +719,48 @@ export default {
                     }
                 }
             }
+            // 缩略图
+            .fz_stop {
+                position: absolute;
+                z-index: 56;
+                bottom: 100px;
+                height: 40px;
+                left: 0;
+                right: 0;
+                width: 24%;
+                margin: auto;
+                overflow: hidden;
+                box-sizing: border-box;
+                .swiper-containerJT {
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(255, 255, 255, 0.7);
+                    box-sizing: border-box;
+                    padding: 5px;
+                    border-radius: 5px;
+                    .swiper-wrapper {
+                        .swiper-slide {
+                            width: 14%;
+                            height: 100%;
+                            opacity: 0.4;
+                            .slt_image {
+                                width: 100%;
+                                height: 100%;
+                                img {
+                                    display: block;
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: cover;
+                                }
+                            }
+                        }
+                        .swiper-slide-thumb-active {
+                            opacity: 1;
+                            // border: 1px solid #ff0000;
+                        }
+                    }
+                }
+            }
         }
         .swiperContent {
             display: flex;
@@ -681,16 +776,16 @@ export default {
                 margin-left: 80px;
                 padding: 16px;
                 background: rgba(0, 0, 0, 0.3);
-                width: 280px;
-                height: 220px;
+                width: 320px;
+                max-height: 220px;
                 color: #fff;
                 border-radius: 5px;
                 display: flex;
                 justify-content: flex-start;
                 flex-direction: column;
-                animation: zoomInDown;
+                animation: fadeInLeft;
                 // animation: slideInDown;
-                animation-duration: 1.5s;
+                animation-duration: 1s;
                 margin-bottom: 100px;
                 text-align: left;
                 box-sizing: border-box;

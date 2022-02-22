@@ -297,215 +297,215 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/xkcss/style.css";
 .box {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  overflow: hidden;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  flex-direction: column;
-  // 标题
-  .page_title {
-    font-weight: 700;
-    width: 18vw;
-    // color: rgb(255, 255, 255);
-    color: #b5b5b5;
-    height: 7vh;
-    line-height: 7vh;
-    padding-left: 2.5vw;
-    font-size: 2vw;
-    text-align: left;
-    margin: auto;
-    margin-top: 20vh;
-    // background: url("https://www.v-can.cn/img/木牌.6be3f934.png") 50% center /
-    //   cover no-repeat;
-    background-position: 50% center;
-  }
-  // 轮播
-  .swiper-containerDT {
+    position: absolute;
     width: 100%;
-    flex: 1;
     height: 100%;
-    flex-shrink: 0;
-    // background: #000;
-    .swiper-wrapper {
-      height: 100%;
-    }
-    .swiper-slide {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-sizing: border-box;
-      overflow: hidden;
-      .contentStyle {
-        flex: 1;
-        width: 100%;
-        height: 100%;
-        flex-direction: 0;
-      }
-      .pagecontent {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        margin: 0 100px;
-        padding: 0 30px;
-        box-sizing: border-box;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 5px;
-        position: relative;
-        // 第一套模板
-        .left {
-          width: 50%;
-          height: 100%;
-          flex-shrink: 0;
-          color: #333;
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-around;
-          flex-direction: column;
-          flex-wrap: wrap;
-          // background: #fff;
-          .left_block {
-            width: 100%;
-            height: 30%;
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
-            margin-top: 10px;
-            position: relative;
-            // 图片
-            .imagesty {
-              width: 40%;
-              max-height: 220px;
-              flex-shrink: 0;
-              overflow: hidden;
-              border-radius: 5px;
-            }
-            .text_content {
-              padding: 0 20px;
-              text-align: left;
-              flex: 1;
-              flex-shrink: 0;
-              overflow-y: auto;
-              box-sizing: border-box;
-              display: flex;
-              flex-direction: column;
-              color: rgb(83, 83, 83);
-              p {
-                line-height: 1.5;
-                margin-top: 14px;
-                overflow-y: auto;
-              }
-            }
-          }
-        }
-        .left_logo {
-          margin: 0 auto;
-          // margin-bottom: 10px;
-        }
-        .text_content2 {
-          position: absolute;
-          bottom: 20px;
-          left: 20px;
-          background: rgba(0, 0, 0, 0.3);
-          padding: 20px;
-          border-radius: 5px;
-          color: #fff;
-          p {
-            margin-top: 20px;
-          }
-        }
-        // 第二套
-      }
-      // 第二套模板
-      .pagecontent2 {
-        text-align: left;
-        .left {
-          width: 45%;
-        }
-        .right {
-          flex: 1;
-          flex-shrink: 0;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-content: center;
-          flex-direction: column;
-          .right_block {
-            width: 100%;
-            max-height: 80%;
-            position: relative;
-            .imagesty {
-              width: 100%;
-              overflow: hidden;
-              position: relative;
-            }
-            .title {
-              position: absolute;
-              top: 20px;
-              background: rgba(0, 0, 0, 0.2);
-              border-radius: 5px;
-              width: 250px;
-              max-height: 180px;
-              overflow-y: auto;
-              right: 20px;
-              z-index: 5;
-              color: #fff;
-              line-height: 1.8;
-              text-align: left;
-            }
-          }
-        }
-      }
-    }
-  }
-  .swiper-button-next,
-  .swiper-button-prev {
     background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    color: #fdb732;
-    box-shadow: 0 0 5px rgb(153, 152, 152);
-  }
-  // 文本
-  h5 {
-    font-size: 20px;
-    font-weight: 600;
-  }
-  img:hover {
-    transform: scale(1.5, 1.5);
-  }
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    border-radius: 5px;
-    transition: all 0.6s ease-out;
-    /* 过度 所有css属性 1秒过度 结束慢*/
-    -moz-transition: all 0.6s ease-out;
-    /* Firefox 4 */
-    -webkit-transition: all 0.6s ease-out;
-    /* Safari 和 Chrome */
-    -o-transition: all 0.6s ease-out;
-    /* Opera */
-  }
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    // 标题
+    .page_title {
+        font-weight: 700;
+        width: 18vw;
+        // color: rgb(255, 255, 255);
+        color: #535353;
+        height: 7vh;
+        line-height: 7vh;
+        padding-left: 2.5vw;
+        font-size: 2vw;
+        text-align: center;
+        margin: auto;
+        margin-top: 20vh;
+        // background: url("https://www.v-can.cn/img/木牌.6be3f934.png") 50% center /
+        //   cover no-repeat;
+        background-position: 50% center;
+    }
+    // 轮播
+    .swiper-containerDT {
+        width: 100%;
+        flex: 1;
+        height: 100%;
+        flex-shrink: 0;
+        // background: #000;
+        .swiper-wrapper {
+            height: 100%;
+        }
+        .swiper-slide {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            overflow: hidden;
+            .contentStyle {
+                flex: 1;
+                width: 100%;
+                height: 100%;
+                flex-direction: 0;
+            }
+            .pagecontent {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                margin: 0 100px;
+                padding: 0 30px;
+                box-sizing: border-box;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 5px;
+                position: relative;
+                // 第一套模板
+                .left {
+                    width: 50%;
+                    height: 100%;
+                    flex-shrink: 0;
+                    color: #333;
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-around;
+                    flex-direction: column;
+                    flex-wrap: wrap;
+                    // background: #fff;
+                    .left_block {
+                        width: 100%;
+                        height: 30%;
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        margin-top: 10px;
+                        position: relative;
+                        // 图片
+                        .imagesty {
+                            width: 40%;
+                            max-height: 220px;
+                            flex-shrink: 0;
+                            overflow: hidden;
+                            border-radius: 5px;
+                        }
+                        .text_content {
+                            padding: 0 20px;
+                            text-align: left;
+                            flex: 1;
+                            flex-shrink: 0;
+                            overflow-y: auto;
+                            box-sizing: border-box;
+                            display: flex;
+                            flex-direction: column;
+                            color: rgb(83, 83, 83);
+                            p {
+                                line-height: 1.5;
+                                margin-top: 14px;
+                                overflow-y: auto;
+                            }
+                        }
+                    }
+                }
+                .left_logo {
+                    margin: 0 auto;
+                    // margin-bottom: 10px;
+                }
+                .text_content2 {
+                    position: absolute;
+                    bottom: 20px;
+                    left: 20px;
+                    background: rgba(0, 0, 0, 0.3);
+                    padding: 20px;
+                    border-radius: 5px;
+                    color: #fff;
+                    p {
+                        margin-top: 20px;
+                    }
+                }
+                // 第二套
+            }
+            // 第二套模板
+            .pagecontent2 {
+                text-align: left;
+                .left {
+                    width: 45%;
+                }
+                .right {
+                    flex: 1;
+                    flex-shrink: 0;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-content: center;
+                    flex-direction: column;
+                    .right_block {
+                        width: 100%;
+                        max-height: 80%;
+                        position: relative;
+                        .imagesty {
+                            width: 100%;
+                            overflow: hidden;
+                            position: relative;
+                        }
+                        .title {
+                            position: absolute;
+                            top: 20px;
+                            background: rgba(0, 0, 0, 0.2);
+                            border-radius: 5px;
+                            width: 250px;
+                            max-height: 180px;
+                            overflow-y: auto;
+                            right: 20px;
+                            z-index: 5;
+                            color: #fff;
+                            line-height: 1.8;
+                            text-align: left;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .swiper-button-next,
+    .swiper-button-prev {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        color: #fdb732;
+        box-shadow: 0 0 5px rgb(153, 152, 152);
+    }
+    // 文本
+    h5 {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    img:hover {
+        transform: scale(1.5, 1.5);
+    }
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 5px;
+        transition: all 0.6s ease-out;
+        /* 过度 所有css属性 1秒过度 结束慢*/
+        -moz-transition: all 0.6s ease-out;
+        /* Firefox 4 */
+        -webkit-transition: all 0.6s ease-out;
+        /* Safari 和 Chrome */
+        -o-transition: all 0.6s ease-out;
+        /* Opera */
+    }
 }
 </style>
 <style>
 .el-dialog .el-dialog__header {
-  padding: 0;
+    padding: 0;
 }
 .el-dialog .el-dialog__body {
-  padding: 0;
-  background: rgba(0, 0, 0, 0);
+    padding: 0;
+    background: rgba(0, 0, 0, 0);
 }
 </style>

@@ -10,6 +10,7 @@ import "element-ui/lib/theme-chalk/index.css";
 import "animate.css/animate.css";
 import "swiper/js/swiper.min.js";
 import "swiper/css/swiper.min.css";
+import "@/utils/swiper.animate.js";
 // 适配
 // import "lib-flexible";
 // import VueAwesomeSwiper from "vue-awesome-swiper";

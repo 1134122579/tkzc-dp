@@ -1,18 +1,16 @@
 <template>
   <div class="box">
-
     <!-- 　　　　//这里往下的class类一定不要改变，改变就会报错　　　　// -->
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in list" :key="index">
           <div class="swiperContent" :style="item | filterBack">
-            <div class="left">
-              <p>{{desc}}</p>
+            <div class="left" v-show="index == currentIndex">
+              <p>{{ desc }}</p>
             </div>
           </div>
         </div>
       </div>
-
       <div class="swiper-pagination"></div>
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
@@ -30,9 +28,10 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      desc: '',
+      desc: "",
       list: [],
       headerimage,
+      currentIndex: "",
     };
   },
   computed: {
@@ -58,10 +57,11 @@ export default {
     //封装轮播函数
     getBanner() {
       //调用延迟加载 $nextTick
+      let that = this;
       this.$nextTick(() => {
         let swiper = new Swiper(".swiper-container", {
           //是否循环
-          loop: false,
+          loop: true,
           observer: true,
           observeParents: false,
           autoplay: {
@@ -74,10 +74,15 @@ export default {
             prevEl: ".swiper-button-prev",
             nextEl: ".swiper-button-next",
           },
-          pagination: {
-            //小圆点
-            el: ".swiper-pagination",
+          on: {
+            slideChangeTransitionEnd: function () {
+              that.currentIndex = this.activeIndex;
+            },
           },
+          //   pagination: {
+          //     //小圆点
+          //     el: ".swiper-pagination",
+          //   },
         });
       });
     },
@@ -85,7 +90,7 @@ export default {
     // h获取人像
     getAbout() {
       getAbout().then((res) => {
-        this.desc = res.desc
+        this.desc = res.desc;
         this.list = res.imgs;
       });
     },
@@ -94,68 +99,72 @@ export default {
 </script>
 <style lang="scss" scoped>
 .box {
-    position: absolute;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #fafafa;
+  overflow: hidden;
+  .swiper-container {
     width: 100%;
     height: 100%;
-    background: #fafafa;
-    overflow: hidden;
-    .swiper-container {
+    // background: #000;
+    .swiper-slide {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .swiperContent {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
         width: 100%;
         height: 100%;
-        // background: #000;
-        .swiper-slide {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            .swiperContent {
-                display: flex;
-                justify-content: center;
-                align-items: flex-start;
-                flex-direction: column;
-                width: 100%;
-                height: 100%;
-                background-size: cover;
-                background-position: 50%;
-                background-repeat: no-repeat;
-                .left {
-                    background: rgba(0, 0, 0, 0.4);
-                    width: 450px;
-                    height: 280px;
-                    overflow-y: auto;
-                    margin-left: 100px;
-                    color: #fff;
-                    line-height: 1.5;
-                    text-indent: 40px;
-                    font-size: 20px;
-                    padding: 10px;
-                    text-align: left;
-                    border-radius: 5px;
-                }
-            }
-            .pagecontent {
-                // margin-top: 100px;
-                width: 100%;
-                display: flex;
-                align-items: flex-start;
-                justify-content: flex-start;
-                flex-wrap: wrap;
-                padding: 0 40px;
-                box-sizing: border-box;
-                .left {
-                }
-            }
+        background-size: cover;
+        background-position: 50%;
+        background-repeat: no-repeat;
+        .left {
+          background: rgba(0, 0, 0, 0.4);
+          width: 450px;
+          height: 280px;
+          overflow-y: auto;
+          margin-left: 100px;
+          color: #fff;
+          line-height: 1.5;
+          text-indent: 40px;
+          font-size: 20px;
+          padding: 10px;
+          text-align: left;
+          border-radius: 5px;
+          //   animation: zoomInDown;
+          //   animation: slideInDown;
+          animation: zoomInLeft;
+          animation-duration: 0.8s;
         }
+      }
+      .pagecontent {
+        // margin-top: 100px;
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        padding: 0 40px;
+        box-sizing: border-box;
+        .left {
+        }
+      }
     }
+  }
 }
 </style>
 <style>
 .el-dialog .el-dialog__header {
-    padding: 0;
+  padding: 0;
 }
 .el-dialog .el-dialog__body {
-    padding: 0;
-    background: rgba(0, 0, 0, 0);
+  padding: 0;
+  background: rgba(0, 0, 0, 0);
 }
 </style>

@@ -26,15 +26,15 @@
     <el-dialog :visible.sync="dialogVisible" width="70%" :show-close="false">
       <!-- <el-image :src="headerimage" style="display: block"></el-image> -->
       <div class="sjsStyle">
-        <div id="stars"></div>
+        <!-- <div id="stars"></div>
         <div id="stars2"></div>
-        <div id="stars3"></div>
+        <div id="stars3"></div> -->
         <div class="content_sis">
           <div class="sjs_left">
             <div class="username">{{ userInfo.name }}</div>
             <!-- <h4>{{ userInfo.p }}</h4> -->
             <p>
-              中央美术学院建筑学院副教授；清华大学建筑学学士，德国斯图加特大学 建筑与城市规划硕士，中央美术学院设计艺术学博士；中国建筑学会建筑师分会地区建筑专委会委员，北京照明学会环境艺术照明委员会副主任；长期从事建筑、城市、艺术、灯光等跨领域研究和创作，曾获WA中国建筑奖社会公平奖优胜奖，WA中国建筑奖设计实验奖入围奖，金点设计奖，光华龙腾奖2014中国设计业青年百人榜等奖项；在国内外专业刊物发表论文数十篇；研究和创作作品多次参加国内外设计和艺术展览并获奖。
+              {{userInfo.desc}}
             </p>
           </div>
           <div class="sjs_right">
@@ -189,7 +189,7 @@ export default {
         background: #000;
         box-shadow: 0 0 10px #ccc;
         // border-radius: 10px;
-        height: 55vh;
+        height: 65vh;
         overflow: hidden;
         box-sizing: border-box;
         .content_sis {
@@ -229,6 +229,7 @@ export default {
                     margin-top: 20px;
                     border-top: 2px solid #fff;
                     font-size: 20px;
+                    overflow-y: auto;
                 }
             }
             .sjs_right {

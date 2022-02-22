@@ -19,19 +19,19 @@
         </el-menu>
       </div>
       <!-- 设计案例 -->
-      <div class="SwiperModelStyle" v-if="tabId == 2">
-        <div class="swiper-container">
+      <div class="SwiperModelStyle" v-show="tabId == 2">
+        <div class="swiper-containersjal">
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="item in list" :key="item.id">
+            <div class="swiper-slide" v-for="(item,index) in list" :key="item.id">
               <div class="swiperContent" :style="item.img | filterBack">
-                <div class="swiperContent_text">
+                <div class="swiperContent_text " v-show="index==currentIndex&&item.name">
                   <h5>{{ item.name }}</h5>
                   <p>{{item.desc}}</p>
                 </div>
               </div>
             </div>
           </div>
-          <div class="swiper-pagination"></div>
+          <!-- <div class="swiper-pagination"></div> -->
           <div class="dropdownStyle">
             <div class="flexStyle">
               <div class="flexStylebutton">
@@ -84,56 +84,6 @@
       <!-- 精英 团队 -->
       <div class="tkzc_home" v-if="tabId == 1 && tabsonId == '1-3'">
         <div class="jytdswiper">
-          <!-- <el-carousel
-            class="carouselSyle"
-            :interval="3000"
-            indicator-position="none"
-            :autoplay="true"
-            ref="carousel"
-          >
-            <el-carousel-item>
-              <div class="imgallstyle">
-                <img src="../assets/sjsimages/sjs.png" class="proper" alt="" />
-              </div>
-            </el-carousel-item>
-                <el-carousel-item>
-              <div class="imgallstyle">
-                <img src="../assets/sjsimages/sjs05.png" class="proper" alt="" />
-              </div>
-            </el-carousel-item>
-                 </el-carousel-item>
-                <el-carousel-item>
-              <div class="imgallstyle">
-                <img src="../assets/sjsimages/sjs06.png" class="proper" alt="" />
-              </div>
-            </el-carousel-item>
-          </el-carousel> -->
-          <!-- <div class="swiper-container">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <img class="proper" src="../assets/sjsimages/sjs.png" alt="" />
-              </div>
-              <div class="swiper-slide">
-                <img
-                  class="proper"
-                  src="../assets/sjsimages/sjs05.png"
-                  alt=""
-                />
-              </div>
-              <div class="swiper-slide">
-                <img
-                  class="proper"
-                  src="../assets/sjsimages/sjs06.png"
-                  alt=""
-                />
-              </div>
-            </div>
-
-            <div class="swiper-pagination"></div>
-
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-          </div> -->
           <SwiperModel />
         </div>
       </div>
@@ -198,6 +148,7 @@ export default {
   },
   data() {
     return {
+      currentIndex: '',
       tabsonId: "1-1",
       isauto: false,
       passwordvalue: "",
@@ -244,8 +195,8 @@ export default {
         //   el: ".swiper-pagination",
         // },
         navigation: {
-          prevEl: ".el-icon-caret-left",
-          nextEl: ".el-icon-caret-right",
+          prevEl: ".swiperbuttonprev",
+          nextEl: ".swiperbuttonnext",
         },
       },
 
@@ -305,6 +256,9 @@ export default {
     }
   },
   watch: {
+    // tabId(neWv, oldV) {
+    //   neWv == 2 && this.getBanner()
+    // },
     isauto(nvwv, oldv) {
       if (nvwv) {
         this.getall();
@@ -323,8 +277,7 @@ export default {
       //   document.onclick();
     } catch (error) {
     }
-
-    // this.getBanner();
+    this.getBanner();
   },
   methods: {
     gohome() {
@@ -377,20 +330,15 @@ export default {
       //调用延迟加载 $nextTick
       let that = this;
       this.swiperconfig.on = {
-        init: function(swiper) {
-          console.log(this, swiper)
-          //   this.slides[0]
-        },
-        transitionStart: function(swiper) {
-          console.log(this, swiper, 'transitionStart')
-        },
-        transitionEnd: function() {
-          // slide=this.slides.eq(this.activeIndex);
-          // slide.addClass('ani-slide');
-        },
-        reachEnd: function() {
-          console.log("到了最后一个slide");
+
+        slideChangeTransitionEnd: function() {
+
           let length = that.splitList.length;
+          let swiperlength = this.slides.length
+          that.currentIndex = this.activeIndex
+          if (this.activeIndex < swiperlength - 1) {
+            return
+          }
           if (length > 0) {
             that.getFlimList(that.splitList[0]["id"], that.splitList[0]);
           } else {
@@ -404,15 +352,15 @@ export default {
             that.value = that.classList[that.numindex].name;
             that.getClass(that.classList[that.numindex].pid);
           }
+
+        },
+        reachEnd: function() {
+          console.log("到了最后一个slide");
         },
       };
       this.$nextTick(() => {
-        that.swipercaeated = new Swiper(".swiper-container", that.swiperconfig);
-        that.swipercaeated.slideTo(0, 1000, false)
-        that.swipercaeated.updateSlides()
-        that.swipercaeated.setGrabCursor()
-        that.swipercaeated.autoplay.start()
-        that.swipercaeated.update()
+        that.swipercaeated = new Swiper(".swiper-containersjal", that.swiperconfig);
+
       });
     },
     animateCSS(element, animation, prefix = 'animate__') {
@@ -468,10 +416,11 @@ export default {
       this.getFlimList(res[0]["id"], res[0]);
     },
     async getFlimList(class_id = "", data) {
-
+      let that = this
       if (!this.isfm) {
         this.list = [];
       }
+      //   that.swipercaeated.detachEvents(); //移除所有slide监听事件
       let res = await getFlimList(class_id && { class_id });
       res = res.map(item => {
         item['desc'] = data['desc']
@@ -483,7 +432,13 @@ export default {
       }
       this.list = res;
       this.splitList = this.splitList.filter((item) => item.id != class_id);
-      this.getBanner();
+      //   this.getBanner();
+      that.swipercaeated.slideTo(0, 1000, false)
+      that.swipercaeated.updateSlides()
+      that.swipercaeated.setGrabCursor()
+      that.swipercaeated.autoplay.start()
+      that.swipercaeated.attachEvents();//重新绑定所有监听事件。
+      that.swipercaeated.update()
     },
     // nav 切换
     handleSelect(key, keyPath) {
@@ -572,7 +527,8 @@ export default {
             width: 100%;
             height: 100%;
             position: relative;
-            .swiper-container {
+            background: #000;
+            .swiper-containersjal {
                 width: 100%;
                 height: 100%;
                 .swiper-wrapper {
@@ -705,6 +661,10 @@ export default {
                 display: flex;
                 justify-content: flex-start;
                 flex-direction: column;
+                animation: zoomInDown;
+                // animation: slideInDown;
+                animation-duration: 0.8s;
+
                 h5 {
                     font-size: 26px;
                     line-height: 1.5;

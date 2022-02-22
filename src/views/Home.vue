@@ -120,7 +120,7 @@
 
 <script>
 import Swiper from "swiper"; // 引入swiper依赖  在使用过程中我发现有时候开头字母大写可以成功 、有时候小写 若报错就换成另一个，两者引入取其一
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo2.png";
 // import videourl from "@/assets/tkzc.mp4";
 import ProperModel from "@/components/ProperModel.vue";
 import SwiperModel from "@/components/SwiperModel.vue";
@@ -499,7 +499,8 @@ export default {
         .nav {
             position: fixed;
             top: 0;
-            height: 100px;
+            // height: 100px;
+            height: 170px;
             // background: #fff;
             z-index: 10;
             width: 100%;

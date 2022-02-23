@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      list: [],
+      list: ["http://mfyfile.greatorange.cn/Design/jtjg2.png", "http://mfyfile.greatorange.cn/Design/jtjg4.png"],
       headerimage,
     };
   },
@@ -56,12 +56,13 @@ export default {
           loop: true,
           observer: true,
           observeParents: false,
-          autoplay: {
-            //swiper手动滑动之后自动轮播失效的解决方法,包括触碰，拖动，点击pagination,重新启动自动播放
-            disableOnInteraction: false,
-            // 自动播放时间：毫秒
-            delay: 5000,
-          },
+          autoplay: false,
+          // autoplay: {
+          //   //swiper手动滑动之后自动轮播失效的解决方法,包括触碰，拖动，点击pagination,重新启动自动播放
+          //   disableOnInteraction: false,
+          //   // 自动播放时间：毫秒
+          //   delay: 5000,
+          // },
           navigation: {
             prevEl: ".swiper-button-prev",
             nextEl: ".swiper-button-next",
@@ -77,7 +78,7 @@ export default {
     // h获取人像
     getDesigner() {
       getjiagou().then((res) => {
-        this.list = res;
+        // this.list = res;
       });
     },
   },
@@ -109,7 +110,7 @@ export default {
                 width: 100%;
                 height: 100%;
                 background-size: cover;
-                background-position: 50%;
+                background-position: top;
                 background-repeat: no-repeat;
             }
         }

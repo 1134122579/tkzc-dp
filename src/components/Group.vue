@@ -356,6 +356,7 @@ export default {
                 flex-wrap: wrap;
                 margin: 0 100px;
                 padding: 0 30px;
+                padding-bottom: 40px;
                 box-sizing: border-box;
                 background: rgba(255, 255, 255, 0.1);
                 border-radius: 5px;
@@ -374,7 +375,7 @@ export default {
                     // background: #fff;
                     .left_block {
                         width: 100%;
-                        height: 30%;
+                        height: 31%;
                         display: flex;
                         justify-content: flex-start;
                         align-items: flex-start;
@@ -467,13 +468,12 @@ export default {
             }
         }
     }
-    .swiper-button-next,
-    .swiper-button-prev {
-        background: #fff;
+    .swiper-button-prev,
+    .swiper-button-next {
+        background: rgba(0, 0, 0, 0.7);
         padding: 20px;
-        border-radius: 10px;
-        color: #fdb732;
-        box-shadow: 0 0 5px rgb(153, 152, 152);
+        border-radius: 5px;
+        color: #fff;
     }
     // 文本
     h5 {

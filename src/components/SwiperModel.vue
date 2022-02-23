@@ -81,12 +81,13 @@ export default {
           loop: true,
           observer: true,
           observeParents: false,
-          autoplay: {
-            //swiper手动滑动之后自动轮播失效的解决方法,包括触碰，拖动，点击pagination,重新启动自动播放
-            disableOnInteraction: false,
-            // 自动播放时间：毫秒
-            delay: 6000,
-          },
+          autoplay: false,
+          // autoplay: {
+          //   //swiper手动滑动之后自动轮播失效的解决方法,包括触碰，拖动，点击pagination,重新启动自动播放
+          //   disableOnInteraction: false,
+          //   // 自动播放时间：毫秒
+          //   delay: 6000,
+          // },
           navigation: {
             prevEl: ".swiper-button-prev",
             nextEl: ".swiper-button-next",
@@ -249,7 +250,7 @@ export default {
     }
     .swiper-button-prev,
     .swiper-button-next {
-        background: rgba(75, 74, 74, 0.9);
+        background: rgba(0, 0, 0, 0.7);
         padding: 20px;
         border-radius: 5px;
         color: #fff;

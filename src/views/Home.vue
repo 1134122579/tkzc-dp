@@ -29,7 +29,7 @@
             <div class="swiper-slide" v-for="(item,index) in list" :key="item.id">
               <div class="swiperContent" :style="item.img | filterBack">
                 <!-- index==currentIndex&& -->
-                <div class="swiperContent_text" v-show="item.name">
+                <div class="swiperContent_text" v-show="!item.ishome">
                   <h5>{{ item.name }}</h5>
                   <div class="desc" v-html="item.desc"></div>
                 </div>
@@ -105,7 +105,7 @@
           </div>
         </div>
       </div>
-      <!-- 集团构架 -->
+      <!-- 集团架构 -->
       <div class="tkzc_home" v-if="tabId == 1 && tabsonId == '1-2'">
         <Framework />
       </div>
@@ -258,7 +258,7 @@ export default {
             },
             {
               id: "1-2",
-              title: "集团构架",
+              title: "集团架构",
             },
             {
               id: "1-3",
@@ -496,6 +496,8 @@ export default {
       this.getFlimList(res[0]["id"], res[0]);
     },
     async getFlimList(class_id = "", data, trueNull) {
+      console.log(data, 121231)
+
       let that = this
       if (!this.isfm || trueNull) {
         this.list = [];
@@ -504,9 +506,9 @@ export default {
       let res = await getFlimList(class_id && { class_id });
       res = res.map(item => {
         item['desc'] = data['desc']
+        item['name'] = data['name']
         return item
       })
-      console.log(res)
       if (this.isfm) {
         res = this.list.concat(res)
       }
@@ -522,9 +524,11 @@ export default {
     },
     // nav 切换
     handleSelect(key, keyPath) {
+      console.log(key, keyPath)
       this.tabId = keyPath[0];
       this.tabsonId = key;
       this.isfm = false
+      this.ishome = false
       if (keyPath[0] == 2) {
         let array = this.classList.filter((item) => item.id == key);
         this.getClass(key.split("-")[1]);
@@ -938,6 +942,13 @@ export default {
                 text-align: center;
             }
         }
+    }
+    .swiper-button-prev,
+    .swiper-button-next {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 5px;
+        color: #fff;
     }
 }
 </style>

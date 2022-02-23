@@ -81,9 +81,11 @@
         </div>
       </div>
       <!-- 案例首页 -->
-      <div class="SwiperModelStye" :style="sjanfm_img|filterBack" v-show="isfm">
-        2123123
-      </div>
+      <!-- <div class="SwiperModelStye" :style="sjanfm_img|filterBack" v-show="isfm">
+
+      </div> -->
+
+
 
       <!-- 天空之橙 首页 -->
       <div class="tkzc_home" v-show="tabId == 'home'">
@@ -396,6 +398,14 @@ export default {
           let swiperlength = this.slides.length
           that.currentIndex = this.activeIndex
           that.ishome = false
+          let onelenght= that.list.length
+          let two=that.list.filter(item=>!item.ishome)
+          that.list=two
+          let twolenght=two.length
+                  if(onelenght!=twolenght){
+      that.swipercaeated.slideTo(0, 1000, false)
+
+                  }
           if (this.activeIndex < swiperlength - 1) {
             return
           }
@@ -443,24 +453,6 @@ export default {
 
       });
     },
-    animateCSS(element, animation, prefix = 'animate__') {
-      new Promise((resolve, reject) => {
-        const animationName = `${prefix}${animation}`;
-        const node = document.querySelector(element);
-
-        node.classList.add(`${prefix}animated`, animationName);
-
-        // When the animation ends, we clean the classes and resolve the Promise
-        function handleAnimationEnd(event) {
-          event.stopPropagation();
-          node.classList.remove(`${prefix}animated`, animationName);
-          resolve('Animation ended');
-        }
-
-        node.addEventListener('animationend', handleAnimationEnd, { once: true });
-      })
-    }
-    ,
 
     getdomStyle() {
       let { offsetHeight } = this.$refs["nav"];
@@ -755,12 +747,15 @@ export default {
                                     width: 100%;
                                     height: 100%;
                                     object-fit: cover;
+                            border-radius: 4px;
                                 }
                             }
                         }
                         .swiper-slide-thumb-active {
                             opacity: 1;
-                            // border: 1px solid #ff0000;
+                            border: 2px solid #fdb732;
+                            margin-top: -4px;
+                            border-radius: 5px;
                         }
                     }
                 }

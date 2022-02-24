@@ -4,8 +4,9 @@
       <!-- 头部 -->
       <div class="nav" ref="nav">
         <div class="logo" @click="gohome">
-          <img v-if="tabId!=2" :src="logo" style="height: 100%;display:block"></img>
-          <img v-if="tabId==2" :src="b_logo" style="height: 100%;display:block"></img>
+          <img v-if="tabId==2||tabId=='home'" :src="b_logo" style="height: 100%;display:block"></img>
+          <img v-else :src="logo" style="height: 100%;display:block"></img>
+
         </div>
         <!-- 选项 -->
         <el-menu mode="horizontal" class="menudie" :default-active="activeIndex" @select="handleSelect" :background-color="backgroundcolor"
@@ -36,18 +37,19 @@
               </div>
             </div>
           </div>
-          <!-- <div class="swiper-pagination"></div> -->
+          <!-- 分类 -->
           <div class="dropdownStyle" v-show="!ishome">
             <div class="flexStyle">
               <div class="flexStylebutton">
-                <div class="swiperbuttonprev " slot="button-prev">
+                <!-- class="swiperbuttonprev " -->
+                <div slot="button-prev" @click="calssbuttonprev">
                   <i class="el-icon-caret-left"></i>
                 </div>
-                <div class="swiperbuttonnext" slot="button-next">
+                <!-- class="swiperbuttonnext"  -->
+                <div slot="button-next" @click="calssbuttonnext">
                   <i class="el-icon-caret-right"></i>
                 </div>
               </div>
-
               <p class="swipername">{{ value }}</p>
               <ul class="typeList">
                 <li v-for="item in sonlist" :key="item.id" @click="sureType(item)">
@@ -73,7 +75,7 @@
             <div class="swiper-wrapper">
               <div class="swiper-slide" v-for="(item,index) in list" :key="item.id">
                 <div class="slt_image">
-                  <img :src="item.img" alt="">
+                  <img :src="item.img_jt" alt="">
                 </div>
               </div>
             </div>
@@ -84,8 +86,6 @@
       <!-- <div class="SwiperModelStye" :style="sjanfm_img|filterBack" v-show="isfm">
 
       </div> -->
-
-
 
       <!-- 天空之橙 首页 -->
       <div class="tkzc_home" v-show="tabId == 'home'">
@@ -320,6 +320,30 @@ export default {
     this.getBanner();
   },
   methods: {
+    // 切换分类
+    calssbuttonprev() {
+      // this.value
+      let index = this.classList.findIndex(item => item.title == this.value) - 1
+      if (index < 1) {
+        this.getClass(this.classList[this.classList.length - 1].pid);
+        this.value = this.classList[this.classList.length - 1].title
+      }
+      console.log(this.classList, index, 'calssbuttonprev')
+      this.value = this.classList[index].title
+      this.getClass(this.classList[index].pid);
+    },
+    calssbuttonnext() {
+      console.log('calssbuttonnext')
+      // this.value
+      let index = this.classList.findIndex(item => item.title == this.value) + 1
+      if (index > this.classList.length) {
+        this.getClass(this.classList[0].pid);
+        this.value = this.classList[0].title
+      }
+      console.log(this.classList, index, 'calssbuttonprev')
+      this.getClass(this.classList[index].pid);
+      this.value = this.classList[index].title
+    },
     gohome() {
       this.tabId = "home"
     },
@@ -398,14 +422,14 @@ export default {
           let swiperlength = this.slides.length
           that.currentIndex = this.activeIndex
           that.ishome = false
-          let onelenght= that.list.length
-          let two=that.list.filter(item=>!item.ishome)
-          that.list=two
-          let twolenght=two.length
-                  if(onelenght!=twolenght){
-      that.swipercaeated.slideTo(0, 1000, false)
+          let onelenght = that.list.length
+          let two = that.list.filter(item => !item.ishome)
+          that.list = two
+          let twolenght = two.length
+          if (onelenght != twolenght) {
+            that.swipercaeated.slideTo(0, 1000, false)
 
-                  }
+          }
           if (this.activeIndex < swiperlength - 1) {
             return
           }
@@ -499,6 +523,7 @@ export default {
       res = res.map(item => {
         item['desc'] = data['desc']
         item['name'] = data['name']
+        item['img_jt'] = item['img'] + '?imageView/1/w/300/h/300'
         return item
       })
       if (this.isfm) {
@@ -747,7 +772,7 @@ export default {
                                     width: 100%;
                                     height: 100%;
                                     object-fit: cover;
-                            border-radius: 4px;
+                                    border-radius: 4px;
                                 }
                             }
                         }

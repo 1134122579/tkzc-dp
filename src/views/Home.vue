@@ -28,12 +28,21 @@
         <div class="swiper-containersjal">
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="(item,index) in list" :key="item.id">
-              <div class="swiperContent" :style="item.img | filterBack">
+              <div class="swiperContent" v-if="!item.ishome" :style="{'--bgurl':  'url('+item.img+')'}">
+                <!-- :style="item.img | filterBack" -->
+                <!-- <img class="swiperIMg" :src="item.img" alt=""> -->
+                <!-- <el-image
+      src="https://img1.baidu.com/it/u=3635277030,1190318822&fm=26&fmt=auto"
+      fit="contain"></el-image> -->
+                <el-image :src="item.img" fit="contain"></el-image>
                 <!-- index==currentIndex&& -->
                 <div class="swiperContent_text" v-show="!item.ishome">
                   <h5>{{ item.name }}</h5>
                   <div class="desc" v-html="item.desc"></div>
                 </div>
+              </div>
+                <div class="swiperContent" v-if="item.ishome" :style="item.img | filterBack">
+                <!-- :style="item.img | filterBack" -->
               </div>
             </div>
           </div>
@@ -143,7 +152,9 @@
 <script>
 import Swiper from "swiper"; // 引入swiper依赖  在使用过程中我发现有时候开头字母大写可以成功 、有时候小写 若报错就换成另一个，两者引入取其一
 import logo from "@/assets/logo2.png";
-import b_logo from "@/assets/logo.png";
+// import b_logo from "@/assets/logo.png";
+import b_logo from "@/assets/logo3.png";
+
 
 // import videourl from "@/assets/tkzc.mp4";
 import ProperModel from "@/components/ProperModel.vue";
@@ -788,15 +799,38 @@ export default {
         }
         .swiperContent {
             display: flex;
-            justify-content: flex-end;
-            align-items: flex-start;
+            justify-content: center;
+            align-items: center;
             flex-direction: column;
             width: 100%;
             height: 100%;
             background-size: cover;
             background-position: 50%;
-            background-repeat: no-repeat;
+            // background-repeat: no-repeat;
+            //  filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: transparent var(--bgurl) center center no-repeat;
+                filter: blur(8px);
+                z-index: -1;
+                background-size: cover;
+            }
+            .swiperIMg {
+                width: 98%;
+                display: block;
+            }
             .swiperContent_text {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                z-index: 5;
                 margin-left: 80px;
                 padding: 16px;
                 background: rgba(0, 0, 0, 0.3);
@@ -977,8 +1011,8 @@ export default {
 .el-menu--horizontal .el-menu .el-menu-item,
 .el-menu--horizontal .el-menu .el-submenu__title {
     text-align: center;
-    line-height: 44px;
-    height: 44px;
+    line-height: 40px;
+    height: 40px;
     &:hover {
         // background:#e37a11 ;
         color: #e37a11;
@@ -991,8 +1025,8 @@ export default {
 .el-submenu__title {
     text-align: center;
     background: #b5b5b5 !important;
-    height: 44px !important;
-    line-height: 44px !important;
+    height: 40px !important;
+    line-height: 40px !important;
     color: #fff;
     border: 0 !important;
     .el-submenu__icon-arrow {
@@ -1002,13 +1036,15 @@ export default {
 .nav {
     .menudie {
         border: none !important;
-        font-weight: 600;
+        // font-weight: 600;
         background: rgba(0, 0, 0, 0) !important;
         .el-submenu__title {
-            padding-right: 5px;
+            padding-right: 4px;
             display: flex;
             justify-content: center;
             align-items: center;
+            font-size: 16px;
+
             .el-icon-caret-bottom {
                 margin-right: 0;
             }
@@ -1019,15 +1055,15 @@ export default {
         .el-submenu {
             // background: rgba(0, 0, 0, 0.2);
             // background: #fff;
-            width: 200px;
+            width: 140px;
             margin-right: 10px;
         }
         .el-menu-item {
-            font-size: 18px;
+            font-size: 16px;
             margin-right: 10px;
-            width: 200px;
-            height: 44px;
-            line-height: 44px;
+            width: 130px;
+            // height: 44px;
+            // line-height: 44px;
         }
         // 选中
         .is-active {
@@ -1041,34 +1077,42 @@ export default {
             }
         }
         .submenuStyle {
-            font-size: 18px;
+            font-size: 16px;
             .el-menu {
                 .el-menu-item {
-                    font-weight: 600;
+                    // font-weight: 600;
                     text-align: center;
                 }
             }
         }
     }
-    .el-submenu__title {
-        font-weight: 600;
-        font-size: 18px;
-        // width: 180px;
-        text-align: center;
-        height: 44px;
-        line-height: 44px;
-        &:hover {
-            background: #ff0000;
-        }
-    }
+    // .el-submenu__title {
+    //     font-weight: 600;
+    //     font-size: 16px;
+    //     // width: 180px;
+    //     text-align: center;
+    //     height: 44px;
+    //     line-height: 44px;
+    //     &:hover {
+    //         background: #ff0000;
+    //     }
+    // }
 }
 // 选项
+.el-menu--collapse .el-menu .el-submenu,
+.el-menu--popup {
+    width: 140px;
+}
 .el-menu--horizontal {
+    .el-menu {
+        min-width: 140px !important;
+    }
     .el-menu-item {
-        font-size: 18px;
+        width: 140px;
+        font-size: 14px;
         // font-weight: 600;
-        line-height: 44px !important;
-        height: 44px !important;
+        line-height: 40px !important;
+        height: 40px !important;
     }
 }
 /* 整个滚动条 */

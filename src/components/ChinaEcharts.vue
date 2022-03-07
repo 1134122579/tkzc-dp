@@ -18,6 +18,29 @@
       <p>THE BRANCH SERVICE AGENCY</p>
       <p>分支服务机构</p>
     </div>
+
+    <!-- <div class="userinfo">
+      <div class="userinfoname">
+        <div class="header_l">
+          <img
+            class="headrimage"
+            src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2Fbd%2Fbb%2F6f%2Fbdbb6fede8497ddb835ce5630db28be0.jpeg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649215663&t=345894f0afe7515c91501a31209de558"
+          />
+          <div class="username">某某某</div>
+        </div>
+        <div class="user">
+          <div class="descimage">
+            <img
+              class="descimage"
+              src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2Fbd%2Fbb%2F6f%2Fbdbb6fede8497ddb835ce5630db28be0.jpeg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649215663&t=345894f0afe7515c91501a31209de558"
+            />
+          </div>
+          <div class="useradress">
+            某某某某某某某某某某某某某某某某某某某某某某某某某某某某某某地址
+          </div>
+        </div>
+      </div>
+    </div> -->
   </div>
 </template>
 
@@ -33,39 +56,71 @@ export default {
       logo,
       //echart 配制option
       options: {
-        // tooltip: {
-        //   triggerOn: "mousemove", //mousemove、click
-        //   padding: 8,
-        //   borderWidth: 1,
-        //   borderColor: "#409eff",
-        //   backgroundColor: "rgba(255,255,255,0.7)",
-        //   textStyle: {
-        //     color: "#000000",
-        //     fontSize: 13,
-        //   },
-        //   formatter: function (e, t, n) {
-        //     let data = e.data;
-        //     //模拟数据
-        //     data.specialImportant = (Math.random() * 1000) | 0;
-        //     data.import = (Math.random() * 1000) | 0;
-        //     data.compare = (Math.random() * 1000) | 0;
-        //     data.common = (Math.random() * 1000) | 0;
-        //     data.specail = (Math.random() * 1000) | 0;
+        tooltip: {
+          triggerOn: "click", //mousemove、 click
+          padding: 8,
+          borderWidth: 1,
+          borderColor: "#409eff",
+          backgroundColor: "rgba(255,255,255,0.7)",
+          textStyle: {
+            color: "#000000",
+            fontSize: 13,
+          },
+          extraCssText: "word-wrap: break-word;",
 
-        //     let context = `
-        //        <div>
-        //            <p><b style="font-size:15px;">${data.name}</b>(2020年第一季度)</p>
-        //            <p class="tooltip_style"><span class="tooltip_left">事件总数</span><span class="tooltip_right">${data.value}</span></p>
-        //            <p class="tooltip_style"><span class="tooltip_left">特别重大事件</span><span class="tooltip_right">${data.specialImportant}</span></p>
-        //            <p class="tooltip_style"><span class="tooltip_left">重大事件</span><span class="tooltip_right">${data.import}</span></p>
-        //            <p class="tooltip_style"><span class="tooltip_left">较大事件</span><span class="tooltip_right">${data.compare}</span></p>
-        //            <p class="tooltip_style"><span class="tooltip_left">一般事件</span><span class="tooltip_right">${data.common}</span></p>
-        //            <p class="tooltip_style"><span class="tooltip_left">特写事件</span><span class="tooltip_right">${data.specail}</span></p>
-        //        </div>
-        //     `;
-        //     return context;
-        //   },
-        // },
+          formatter: function (e, t, n) {
+            let data = e.data;
+            console.log(e, data.address);
+            let str = "";
+            let num = Math.floor(data.address.length / 14);
+            for (let index = 0; index < num; index++) {
+              str =
+                str +
+                `<span>${data.address.slice(
+                  14 * index,
+                  14 * (index + 1)
+                )}</span>` +
+                "<br/>";
+            }
+            console.log(str);
+            // let context = `
+            //    <div>
+            //        <p><b style="font-size:15px;">${data.name}</b>(2020年第一季度)</p>
+            //        <p class="tooltip_style"><span class="tooltip_left">事件总数</span><span class="tooltip_right">${data.value}</span></p>
+            //        <p class="tooltip_style"><span class="tooltip_left">特别重大事件</span><span class="tooltip_right">${data.specialImportant}</span></p>
+            //        <p class="tooltip_style"><span class="tooltip_left">重大事件</span><span class="tooltip_right">${data.import}</span></p>
+            //        <p class="tooltip_style"><span class="tooltip_left">较大事件</span><span class="tooltip_right">${data.compare}</span></p>
+            //        <p class="tooltip_style"><span class="tooltip_left">一般事件</span><span class="tooltip_right">${data.common}</span></p>
+            //        <p class="tooltip_style"><span class="tooltip_left">特写事件</span><span class="tooltip_right">${data.specail}</span></p>
+            //    </div>
+            // `;
+            let context = `
+             <div class="userinfo">
+      <div class="userinfoname">
+        <div class="header_l">
+          <img
+            class="headrimage"
+            src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2Fbd%2Fbb%2F6f%2Fbdbb6fede8497ddb835ce5630db28be0.jpeg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649215663&t=345894f0afe7515c91501a31209de558"
+          />
+          <div class="username">${data.user_name}</div>
+        </div>
+        <div class="user">
+          <div class="descimage">
+            <img
+              class="descimage"
+              src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2Fbd%2Fbb%2F6f%2Fbdbb6fede8497ddb835ce5630db28be0.jpeg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649215663&t=345894f0afe7515c91501a31209de558"
+            />
+          </div>
+          <p class="useradress">
+                ${str}
+          </p>
+        </div>
+      </div>
+    </div>
+            `;
+            return context;
+          },
+        },
         visualMap: {
           show: false,
           left: 26,
@@ -113,7 +168,7 @@ export default {
           label: {
             normal: {
               show: false,
-              fontSize: "14",
+              fontSize: "12",
               color: "rgba(0,0,0,0.3)",
             },
           },
@@ -141,24 +196,23 @@ export default {
             data: [],
             markPoint: {
               symbol: "pin",
-              //   symbol:
-              //     "image://https://img95.699pic.com/photo/40121/6173.gif_wh860.gif",
+              // symbol:
+              //   "image://https://img95.699pic.com/photo/40121/6173.gif_wh860.gif",
               image: "",
               symbolSize: 40,
               animation: true,
               animationEasing: "bounceIn",
               select: {
-                itemStyle: {
-                  borderColor: "red",
-                  borderWidth: "2",
-                  color: "RGBA(100, 100, 100,.8)", //设置地图点击后的颜色
-                },
+                // itemStyle: {
+                //   borderColor: "red",
+                //   borderWidth: "2",
+                //   color: "RGBA(100, 100, 100,.8)", //设置地图点击后的颜色
+                // },
               },
               itemStyle: {
                 color: "RGBA(100, 100, 100,.8)",
                 // borderColor: "red",
                 borderWidth: "2",
-                // color: this.clickcolor, //设置地图点击后的颜色
               },
               animationDuration: function (idx) {
                 // 越往后的数据时长越大
@@ -323,12 +377,17 @@ export default {
       res = res.map((item) => {
         item["name"] = item.city;
         item["coord"] = [Number(item.lng), Number(item.lat)];
+        item["headerImage"] =
+          "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2Fbd%2Fbb%2F6f%2Fbdbb6fede8497ddb835ce5630db28be0.jpeg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649215663&t=345894f0afe7515c91501a31209de558";
+        item["address"] =
+          "我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊";
+        item["user_name"] = "某某某";
         return item;
       });
+      console.log(res);
       this.citylist = res;
       this.options.series[0]["data"] = this.dataList;
       this.options.series[0]["markPoint"]["data"] = res;
-
       //   this.setEchartOption();
       this.$nextTick(() => {
         this.initEchartMap();
@@ -416,6 +475,7 @@ export default {
     }
   }
 }
+
 #china_map_box #china_map {
   height: 100%;
 }
@@ -436,5 +496,63 @@ export default {
 }
 #china_map .tooltip_right {
   float: right;
+}
+</style>
+
+<style lang="scss">
+.userinfo {
+  background: #e46400;
+  padding: 10px;
+  border-radius: 5px;
+  width: 240px;
+  .userinfoname {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    // width: ;
+    .header_l {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin-right: 10px;
+      .headrimage {
+        width: 40px;
+        height: 40px;
+        display: block;
+        overflow: hidden;
+        flex-direction: 0;
+        border-radius: 50%;
+      }
+      .username {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.8;
+        text-align: center;
+        writing-mode: vertical-lr; /*从左向右 从右向左是 writing-mode: vertical-rl;*/
+        writing-mode: tb-lr; /*IE浏览器的从左向右 从右向左是 writing-mode: tb-rl；*/
+      }
+    }
+    .user {
+      flex: 1;
+      width: 180px;
+      font-size: 14px;
+      text-align: left;
+      .descimage {
+        width: 100%;
+        height: 150px;
+        overflow: hidden;
+        // img {
+        //   width: 100%;
+        // }
+      }
+      .useradress {
+        width: 180px;
+        text-align: left;
+        word-wrap: break-word;
+      }
+    }
+  }
 }
 </style>

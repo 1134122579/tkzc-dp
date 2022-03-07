@@ -5,37 +5,36 @@
         <div class="imagesty imagesty1">
           <img :src="newdata.cover1" />
         </div>
-        <div class="text_content text_content1">
+        <div class="text_content text_content2">
           <h5>{{ newdata.title1 }}</h5>
           <p>{{ newdata.desc1 }}</p>
         </div>
       </div>
       <div class="left_block">
-        <div class="text_content">
-          <h5>{{ newdata.title }}</h5>
-          <p>{{ newdata.desc }}</p>
+        <div class="imagesty imagesty1">
+          <img :src="newdata.cover1" />
         </div>
-        <div class="imagesty">
-          <img :src="newdata.cover" />
+        <div class="text_content text_content1">
+          <h5>{{ newdata.title1 }}</h5>
+          <p>{{ newdata.desc1 }}</p>
         </div>
       </div>
-
     </div>
     <div class="right">
       <div class="right_block">
         <div class="imagesty imagesty1">
           <img :src="newdata.cover2" />
         </div>
-        <div class="text_content text_content1">
+        <div class="text_content text_content3">
           <h5>{{ newdata.title2 }}</h5>
           <p>{{ newdata.desc2 }}</p>
         </div>
       </div>
-      <div class="right_block2">
+      <div class="right_block">
         <div class="imagesty">
           <img :src="newdata.cover3" />
         </div>
-        <div class="text_content text_content2">
+        <div class="text_content text_content4">
           <h5>{{ newdata.title3 }}</h5>
           <p>{{ newdata.desc3 }}</p>
         </div>
@@ -108,8 +107,8 @@ export default {
       headerimage,
     };
   },
-  created() { },
-  mounted() { },
+  created() {},
+  mounted() {},
   methods: {},
 };
 </script>
@@ -117,259 +116,291 @@ export default {
 <style lang="scss" scoped>
 // 第3套模板
 .pagecontent3 {
-    width: 100%;
-    height: 80vh;
-    display: flex;
-    box-sizing: border-box;
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 20px 130px;
+  padding-bottom: 40px;
+  .left {
     overflow: hidden;
-    padding: 20px 130px;
-    padding-bottom: 40px;
-    .left {
+    width: 60%;
+    padding: 0 20px;
+    height: 100%;
+    flex-shrink: 0;
+    flex: 1;
+    color: #333;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
+    // background: #fff;
+
+    .left_block {
+      width: 100%;
+      height: 49%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      position: relative;
+      background: #fff;
+      // 图片
+      .imagesty {
+        width: 74%;
+        height: 100%;
+        flex-shrink: 0;
         overflow: hidden;
-        width: 60%;
-        padding: 0 20px;
-        height: 100%;
-        flex-shrink: 0;
-        flex: 1;
-        color: #333;
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        flex-direction: column;
-        flex-wrap: wrap;
-        // background: #fff;
-
-        .left_block {
-            width: 100%;
-            height: 49%;
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
-            position: relative;
-            background: #fff;
-            // 图片
-            .imagesty {
-                width: 74%;
-                height: 100%;
-                flex-shrink: 0;
-                overflow: hidden;
-                border-radius: 5px;
-            }
-            .text_content {
-                padding: 0 10px;
-                text-align: left;
-                flex: 1;
-                flex-shrink: 0;
-                overflow-y: auto;
-                box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
-                line-height: 1.5;
-                color: rgb(83, 83, 83);
-                p {
-                    line-height: 1.5;
-                    margin-top: 14px;
-                    overflow-y: auto;
-                }
-            }
-
-            .imagesty1 {
-                width: 100%;
-            }
-
-            .text_content1 {
-                position: absolute;
-                bottom: 10px;
-                left: 10px;
-                color: #fff;
-                background: rgba(0, 0, 0, 0.3);
-                width: 400px;
-                border-radius: 10px;
-                padding: 20px;
-            }
-        }
-    }
-    .right {
-        flex: 1;
-        height: 100%;
-        flex-shrink: 0;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        // 上
-        .right_block {
-            width: 100%;
-            height: 49%;
-            position: relative;
-            .imagesty {
-                width: 100%;
-                height: 100%;
-                border-radius: 5px;
-                overflow: hidden;
-            }
-            .imagesty1 {
-                width: 100%;
-            }
-            .text_content {
-                padding: 0 10px;
-                text-align: left;
-                flex: 1;
-                flex-shrink: 0;
-                overflow-y: auto;
-                box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
-                line-height: 1.5;
-                color: rgb(83, 83, 83);
-                p {
-                    line-height: 1.5;
-                    margin-top: 14px;
-                    overflow-y: auto;
-                }
-            }
-
-            .text_content1 {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                color: #fff;
-                background: rgba(0, 0, 0, 0.3);
-                width: 400px;
-                border-radius: 10px;
-                padding: 20px;
-            }
-        }
-        .bottom_sytle {
-            position: absolute;
-            z-index: 2;
-            bottom: -10px;
-            width: 80%;
-            // background: rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            .left_block {
-                width: 100%;
-                height: 30%;
-                display: flex;
-                justify-content: flex-start;
-                align-items: flex-end;
-                position: relative;
-                padding: 5px 10px;
-                // 图片
-                .imagesty {
-                    width: 50%;
-                    height: 100%;
-                    flex-shrink: 0;
-                    overflow: hidden;
-                    border-radius: 5px 5px 0 5px;
-                    padding: 10px;
-                    background: #fff;
-                }
-                .text_content {
-                    padding: 0 10px;
-                    background: #fff;
-                    width: 250px;
-                    text-align: left;
-                    padding: 10px;
-                    flex-shrink: 0;
-                    overflow-y: auto;
-                    box-sizing: border-box;
-                    display: flex;
-                    flex-direction: column;
-                    color: rgb(83, 83, 83);
-                    border-radius: 0 5px 5px 0;
-                    p {
-                        line-height: 1.5;
-                        margin-top: 14px;
-                        overflow-y: auto;
-                    }
-                }
-            }
-        }
-        .right_block2 {
-            width: 100%;
-            height: 48%;
-            position: relative;
-            .imagesty {
-                width: 100%;
-                height: 100%;
-                border-radius: 5px;
-                overflow: hidden;
-            }
-            .imagesty1 {
-                width: 100%;
-            }
-            .text_content {
-                padding: 0 10px;
-                text-align: left;
-                flex: 1;
-                flex-shrink: 0;
-                overflow-y: auto;
-                box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
-                line-height: 1.5;
-                color: rgb(83, 83, 83);
-                p {
-                    line-height: 1.5;
-                    margin-top: 14px;
-                    overflow-y: auto;
-                }
-            }
-            .text_content2 {
-                position: absolute;
-                bottom: 10px;
-                left: 10px;
-                color: #fff;
-                background: rgba(0, 0, 0, 0.3);
-                width: 400px;
-                border-radius: 10px;
-                padding: 20px;
-            }
-        }
-    }
-    .left_logo {
-        margin: 0 auto;
-        // margin-bottom: 10px;
-    }
-    .text_content2 {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        background: rgba(0, 0, 0, 0.3);
-        padding: 16px;
         border-radius: 5px;
-        color: #fff;
+      }
+      .text_content {
+        padding: 0 10px;
+        text-align: left;
+        flex: 1;
+        flex-shrink: 0;
+        overflow-y: auto;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        line-height: 1.5;
+        color: rgb(83, 83, 83);
         p {
-            margin-top: 20px;
+          line-height: 1.5;
+          margin-top: 14px;
+          overflow-y: auto;
         }
+      }
+
+      .imagesty1 {
+        width: 100%;
+      }
+
+      .text_content1 {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.3);
+        width: 400px;
+        height: 180px;
+        overflow-y: auto;
+        border-radius: 5px;
+        padding: 20px;
+      }
+      .text_content2 {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.3);
+        width: 400px;
+        overflow-y: auto;
+        height: 180px;
+        border-radius: 5px;
+        padding: 20px;
+        overflow-y: auto;
+      }
     }
-    // 第二套
+  }
+  .right {
+    flex: 1;
+    height: 100%;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    // 上
+    .right_block {
+      width: 100%;
+      height: 49%;
+      position: relative;
+      .imagesty {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .imagesty1 {
+        width: 100%;
+      }
+      .text_content {
+        padding: 0 10px;
+        text-align: left;
+        flex: 1;
+        flex-shrink: 0;
+        overflow-y: auto;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        line-height: 1.5;
+        color: rgb(83, 83, 83);
+        p {
+          line-height: 1.5;
+          margin-top: 14px;
+          overflow-y: auto;
+        }
+      }
+
+      .text_content3 {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.3);
+        width: 400px;
+        overflow-y: auto;
+        height: 180px;
+        overflow-y: auto;
+        border-radius: 5px;
+        padding: 20px;
+      }
+      .text_content4 {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.3);
+        width: 400px;
+        height: 180px;
+        overflow-y: auto;
+        border-radius: 5px;
+        padding: 20px;
+      }
+    }
+    .bottom_sytle {
+      position: absolute;
+      z-index: 2;
+      bottom: -10px;
+      width: 80%;
+      // background: rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      .left_block {
+        width: 100%;
+        height: 30%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
+        position: relative;
+        padding: 5px 10px;
+        // 图片
+        .imagesty {
+          width: 50%;
+          height: 100%;
+          flex-shrink: 0;
+          overflow: hidden;
+          border-radius: 5px 5px 0 5px;
+          padding: 10px;
+          background: #fff;
+        }
+        .text_content {
+          padding: 0 10px;
+          background: #fff;
+          width: 250px;
+          text-align: left;
+          padding: 10px;
+          flex-shrink: 0;
+          overflow-y: auto;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          color: rgb(83, 83, 83);
+          border-radius: 0 5px 5px 0;
+          p {
+            line-height: 1.5;
+            margin-top: 14px;
+            overflow-y: auto;
+          }
+        }
+      }
+    }
+    .right_block2 {
+      width: 100%;
+      height: 48%;
+      position: relative;
+      .imagesty {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .imagesty1 {
+        width: 100%;
+      }
+      .text_content {
+        padding: 0 10px;
+        text-align: left;
+        flex: 1;
+        flex-shrink: 0;
+        overflow-y: auto;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        line-height: 1.5;
+        color: rgb(83, 83, 83);
+        p {
+          line-height: 1.5;
+          margin-top: 14px;
+          overflow-y: auto;
+        }
+      }
+      .text_content2 {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.3);
+        width: 400px;
+        height: 180px;
+        overflow-y: auto;
+        border-radius: 5px;
+        padding: 20px;
+      }
+    }
+  }
+  .left_logo {
+    margin: 0 auto;
+    // margin-bottom: 10px;
+  }
+  .text_content2 {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 16px;
+    border-radius: 5px;
+    color: #fff;
+    p {
+      margin-top: 20px;
+    }
+  }
+  // 第二套
 }
 h5 {
-    font-weight: 600;
-    font-size: 20px;
+  font-weight: 600;
+  font-size: 18px;
 }
 p {
-    font-size: 16px;
+  font-size: 14px;
 }
 img:hover {
-    transform: scale(1.5, 1.5);
+  transform: scale(1.2, 1.2);
 }
 img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    border-radius: 5px;
-    transition: all 0.6s ease-out;
-    /* 过度 所有css属性 1秒过度 结束慢*/
-    -moz-transition: all 0.6s ease-out;
-    /* Firefox 4 */
-    -webkit-transition: all 0.6s ease-out;
-    /* Safari 和 Chrome */
-    -o-transition: all 0.6s ease-out;
-    /* Opera */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 5px;
+  transition: all 0.8s ease-out;
+  /* 过度 所有css属性 1秒过度 结束慢*/
+  -moz-transition: all 0.8s ease-out;
+  /* Firefox 4 */
+  -webkit-transition: all 0.8s ease-out;
+  /* Safari 和 Chrome */
+  -o-transition: all 0.8s ease-out;
+  /* Opera */
 }
 </style>

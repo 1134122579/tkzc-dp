@@ -10,15 +10,15 @@
         </div>
         <!-- 选项 -->
         <el-menu mode="horizontal" class="menudie" :default-active="activeIndex" @select="handleSelect" :background-color="backgroundcolor"
-                 :active-text-color="activetextcolor" :text-color="textcolor">
-          <el-submenu @click.native="onhandleClick(item)" popper-class="submenuStyle" v-for="item in navlist" :key="item.id"
-                      v-if="item.children.length > 0" :index="item.id">
-            <template slot="title"> {{ item.title }} <i class="el-icon-caret-bottom" style="color:#fff"></i></template>
+            :active-text-color="activetextcolor" :text-color="textcolor">
+          <el-submenu @click.native="onhandleClick(item)" popper-class="submenuStyle" v-for="item in navlist"
+          v-if="item.children.length > 1"  :key="item.id" :index="item.id">
+            <template slot="title"> {{ item.title }} <i v-if="item.children.length >0" class="el-icon-caret-bottom" style="color:#fff"></i></template>
             <el-menu-item v-for="childrenitem in item.children" :index="childrenitem.id" :key="childrenitem.id">{{ childrenitem.title }}
             </el-menu-item>
           </el-submenu>
 
-          <el-menu-item popper-class="submenuStyle" v-for="item in navlist" :key="item.id" v-if="item.children.length <= 0" :index="item.id"
+          <el-menu-item popper-class="submenuStyle" v-for="item in navlist" :key="item.id" v-if="item.children.length < 1" :index="item.id"
                         @click.native="onhandleClick(item)">
             {{ item.title }}</el-menu-item>
         </el-menu>
@@ -171,7 +171,7 @@ import {
   getCity,
 } from "@/api/swiperApi.js";
 import ChinaEcharts from "@/components/ChinaEcharts.vue";
-import { getToken, setToken, removeToken,getdetail,removedetail } from "@/utils/auth.js";
+import { getToken, setToken, removeToken, getdetail, removedetail } from "@/utils/auth.js";
 
 export default {
   name: "carrousel",
@@ -304,12 +304,12 @@ export default {
     if (getToken() == "tiancheng88") {
       this.isauto = true;
       this.getall();
-      console.log("getdetail",getdetail())
-     if(getdetail()){
-      this.tabId =getdetail();
-      this.tabsonId = getdetail();
-      this.activeIndex=getdetail()
-     }
+      console.log("getdetail", getdetail())
+      if (getdetail()) {
+        this.tabId = getdetail();
+        this.tabsonId = getdetail();
+        this.activeIndex = getdetail()
+      }
     }
   },
   watch: {
@@ -354,6 +354,7 @@ export default {
     // 点击
     onhandleClick(data) {
       console.log("点击", data)
+      console.log(this.activeIndex)
       if (data.id == 2) {
         this.isfm = true
         this.tabId = 2;
@@ -367,7 +368,8 @@ export default {
         }];
         this.getClass(this.activeIndex.split("-")[1]);
       } else {
-        this.activeIndex = null
+           this.activeIndex=data.id
+
       }
     },
 
@@ -551,9 +553,10 @@ export default {
     },
     // nav 切换
     handleSelect(key, keyPath) {
-      console.log(key, keyPath)
+      console.log(key, keyPath, 2121231321323)
       this.tabId = keyPath[0];
       this.tabsonId = key;
+      this.activeIndex = key
       this.isfm = false
       this.ishome = false
       removedetail()
@@ -803,6 +806,7 @@ export default {
             align-items: center;
             flex-direction: column;
             width: 100%;
+
             height: 100%;
             background-size: cover;
             background-position: 50%;

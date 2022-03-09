@@ -335,8 +335,8 @@ export default {
     padding-left: 2.5vw;
     font-size: 2vw;
     text-align: center;
-    margin: auto;
-    margin-top: 20vh;
+    margin: 0 auto;
+    // margin-top: 20vh;
     background-position: 50% center;
   }
   // 轮播

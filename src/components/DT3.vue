@@ -159,12 +159,11 @@ export default {
 // 第3套模板
 .pagecontent3 {
   width: 100%;
-  height: 80vh;
+  height: 71vh;
   display: flex;
   box-sizing: border-box;
   overflow: hidden;
-  padding: 20px 11vw;
-  padding-bottom: 12vh;
+  padding: 20px 8vw;
   .left {
     overflow: hidden;
     padding: 0 14px;
@@ -391,11 +390,13 @@ export default {
     }
     .bottom {
       // height: 100%;
+      width: 100%;
       display: flex;
       box-sizing: border-box;
       padding-top: 11px;
       justify-content: space-between;
       align-items: center;
+      height: 40%;
       .right_block {
         width: 50%;
         height: 100%;
@@ -406,10 +407,23 @@ export default {
           width: 100%;
           background: #df7924;
         }
+        .text_content {
+          bottom: 0;
+          right: 0;
+          text-align: left;
+          overflow-y: auto;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          line-height: 1.5;
+          color: #fff;
+          max-height: 130px;
+          border-radius: 5px;
+        }
       }
     }
     .block3 {
-      // height: 80%;
+      height: 60%;
       overflow: hidden;
     }
   }

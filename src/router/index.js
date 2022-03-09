@@ -23,6 +23,15 @@ const routes = [
     },
   },
   {
+    path: "/list",
+    name: "List",
+    component: () => import(/* webpackChunkName: "about" */ "@/views/list.vue"),
+    meta: {
+      iskeeplive: false,
+    },
+  },
+
+  {
     path: "/dtdetail",
     name: "Dtdetail",
     component: () =>
@@ -39,7 +48,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: "history",
-  //   base: "/design",
+  base: "/design",
   routes,
 });
 

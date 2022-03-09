@@ -21,7 +21,8 @@
     </div>
 
     <div class="foolter" @click="back">
-      <img class="animate__animated  animate__fadeOutLeft animate__slower animate__infinite" src="../assets/backicon1.png" alt="">
+      <!-- animate__animated  animate__rotateOut animate__slower animate__infinite -->
+      <img class="animate__animated  animate__rotateOut animate__slower animate__infinite" src="../assets/backicon2.png" alt="">
     </div>
   </div>
 </template>
@@ -172,7 +173,7 @@ export default {
         position: absolute;
         bottom: 50px;
         right: 50px;
-        height: 70px;
+        height: 50px;
         z-index: 999;
         cursor: pointer;
         img {

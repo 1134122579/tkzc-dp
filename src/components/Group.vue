@@ -1,124 +1,90 @@
 <template>
   <div class="box_jtdt">
-    <!-- <div id="stars"></div>
-    <div id="stars2"></div>
-    <div id="stars3"></div> -->
-    <!-- 　　　　//这里往下的class类一定不要改变，改变就会报错　　　　// -->
     <h4 class="page_title">集团动态</h4>
     <div class="swiper-containerDT">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in list" :key="index">
           <!-- 第一套模板 -->
-          <div class="pagecontent" v-if="item.type == 1">
+          <!-- <div class="pagecontent">
             <div class="left">
-              <div class="left_block">
+              <div
+                class="left_block"
+                v-for="(dataitem, dataindex) in item.list"
+                :key="dataindex"
+                @click="godetail(dataitem)"
+              >
                 <div class="imagesty">
-                  <img :src="item.cover" />
+                  <img :src="dataitem.cover" />
                 </div>
                 <div class="text_content">
-                  <h5>{{ item.title }}</h5>
-                  <p>{{ item.desc }}</p>
-                </div>
-              </div>
-
-              <div class="left_block">
-                <div class="imagesty">
-                  <img :src="item.cover1" />
-                </div>
-                <div class="text_content">
-                  <h5>{{ item.title1 }}</h5>
-                  <p>{{ item.desc1 }}</p>
-                </div>
-              </div>
-              <div class="left_block">
-                <div class="imagesty">
-                  <img :src="item.cover2" />
-                </div>
-                <div class="text_content">
-                  <h5>{{ item.title2 }}</h5>
-                  <p>{{ item.desc2 }}</p>
+                  <h5>{{ dataitem.title }}</h5>
+                  <p v-html="dataitem.desc"></p>
                 </div>
               </div>
             </div>
-            <div class="left">
-              <div class="left_block">
-                <div class="imagesty">
-                  <img :src="item.cover3" />
-                </div>
-                <div class="text_content">
-                  <h5>{{ item.title3 }}</h5>
-                  <p>{{ item.desc3 }}</p>
-                </div>
-              </div>
-              <div class="left_block">
-                <div class="imagesty">
-                  <img :src="item.cover4" />
-                </div>
-                <div class="text_content">
-                  <h5>{{ item.title4 }}</h5>
-                  <p>{{ item.desc4 }}</p>
-                </div>
-              </div>
-              <div class="left_block">
-                <div class="imagesty">
-                  <img :src="item.cover5" />
-                </div>
-                <div class="text_content">
-                  <h5>{{ item.title5 }}</h5>
-                  <p>{{ item.desc5 }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          </div> -->
           <!-- 第二套模板 -->
-          <div class="pagecontent pagecontent2" v-if="item.type == 2">
+          <!-- <div class="pagecontent pagecontent2" v-if="item.type == 5">
             <div class="left">
-              <div class="left_block">
+              <div
+                class="left_block"
+                @click="godetail(item.list['0'])"
+                v-if="item.list['0']"
+              >
                 <div class="imagesty">
-                  <img :src="item.cover" />
+                  <img :src="item.list['0']['cover']" />
                 </div>
                 <div class="text_content">
-                  <h5>{{ item.title }}</h5>
-                  <p>{{ item.desc }}</p>
+                  <h5>{{ item.list["0"]["title"] }}</h5>
+                  <p v-html="item.list['0']['desc']"></p>
                 </div>
               </div>
-              <div class="left_block">
+              <div
+                class="left_block"
+                @click="godetail(item.list[1])"
+                v-if="item.list[1]"
+              >
                 <div class="imagesty">
-                  <img :src="item.cover1" />
+                  <img :src="item.list[1].cover" />
                 </div>
                 <div class="text_content">
-                  <h5>{{ item.title1 }}</h5>
-                  <p>{{ item.desc1 }}</p>
+                  <h5>{{ item.list[1].title }}</h5>
+                  <p v-html="item.list[1].desc"></p>
                 </div>
               </div>
-              <div class="left_block">
+              <div
+                class="left_block"
+                @click="godetail(item.list[2])"
+                v-if="item.list[2]"
+              >
                 <div class="imagesty">
-                  <img :src="item.cover2" />
+                  <img :src="item.list[2].cover" />
                 </div>
                 <div class="text_content">
-                  <h5>{{ item.title2 }}</h5>
-                  <p>{{ item.desc2 }}</p>
+                  <h5>{{ item.list[2].title }}</h5>
+                  <p v-html="item.list[2].desc"></p>
                 </div>
               </div>
             </div>
             <div class="right">
-              <div class="right_block">
+              <div
+                class="right_block"
+                @click="godetail(item.list[3])"
+                v-if="item.list[3]"
+              >
                 <div class="imagesty">
-                  <img :src="item.cover3" />
+                  <img :src="item.list[3].cover" />
                   <div class="text_content text_content2">
-                    <h5>{{ item.title3 }}</h5>
-                    <p>{{ item.desc3 }}</p>
+                    <h5>{{ item.list[3].title }}</h5>
+                    <p v-html="item.list[3].desc"></p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <!-- 三套模板 -->
-          <div class="contentStyle" v-if="item.type == 3">
-            <DT3 :objdata="item" />
-          </div>
-          <div class="contentStyle" v-if="item.type == 4">
-            <DT4 :objdata="item" />
+          <div class="contentStyle">
+            <DT3 :objdata="item.list" />
           </div>
         </div>
       </div>
@@ -131,25 +97,25 @@
 <script>
 import logo from "@/assets/logo2.png";
 import DT3 from "@/components/DT3.vue";
-import DT4 from "@/components/DT3.vue";
+// import DT4 from "@/components/DT3.vue";
 import headerimage from "@/assets/sjsimages/sjs05.png";
-import { getDesigner } from "@/api/swiperApi.js";
+import { getDynamicList } from "@/api/swiperApi.js";
 import Swiper from "swiper";
 export default {
   components: {
     DT3,
-    DT4,
+    // DT4,
   },
   data() {
     return {
       logo,
       dialogVisible: false,
       list: [
+        // {
+        //   type: 4,
+        // },
         {
-          type: 4,
-        },
-        {
-          type: 1,
+          type: 6,
           title: "天空之橙·跨界融合正式启动",
           desc: "天橙书写新答卷，赋能五好新淄博天橙书写新答卷，赋能五好新淄博天橙书写新答卷，",
           link: "https://mp.weixin.qq.com/s/PtN29zWC90AiITObxXNCmg",
@@ -177,7 +143,7 @@ export default {
           desc5: "淄博市委书记江敦涛莅临「天空之橙」调研指导",
         },
         {
-          type: 2,
+          type: 5,
           title: "天橙书写新答卷，赋能五好新淄博",
           desc: "天橙书写新答卷，赋能五好新淄博天橙书写新答卷，赋能五好新淄博天橙书写新答卷，",
           link: "https://mp.weixin.qq.com/s/zosvylLZnJt_P3TCg9qxdg",
@@ -209,7 +175,7 @@ export default {
           desc5: "青春当燃，不燃怎young",
         },
         {
-          type: 3,
+          type: 4,
           title: "天橙书写新答卷，赋能五好新淄博",
           desc: "天橙书写新答卷，赋能五好新淄博天橙书写新答卷，赋能五好新淄博天橙书写新答卷，",
           link: "https://mp.weixin.qq.com/s/zosvylLZnJt_P3TCg9qxdg",
@@ -240,12 +206,22 @@ export default {
     },
   },
   created() {
-    this.getDesigner();
+    this.getDynamicList();
   },
   mounted() {
     this.getBanner(); //轮播
   },
   methods: {
+    godetail(data) {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      this.$router.push({ path: "/dtdetail", query: { id: data.id } });
+      loading.close();
+    },
     lookButton() {
       this.dialogVisible = true;
     },
@@ -280,22 +256,64 @@ export default {
     },
 
     // h获取人像
-    getDesigner() {
-      getDesigner().then((res) => {
-        let newlist = [];
-        let num = parseInt(res.length / 8);
-        for (let index = 0; index <= num; index++) {
-          newlist.push({ list: res.slice(index * 8, (index + 1) * 8) });
-        }
-        console.log(newlist);
-        // this.list = newlist;
+    getDynamicList() {
+      getDynamicList().then((res) => {
+        // let newlist = [];
+        // let num = parseInt(res.length / 8);
+        // for (let index = 0; index <= num; index++) {
+        //   newlist.push({ list: res.slice(index * 8, (index + 1) * 8) });
+        // }
+        console.log(res);
+        // res = res.map((item) => {
+        //   item["desc"] =
+        //     " 按时打算大大多 按时打算大大多 按时打算大大多 按时打算大大多按时打算大大多 按时打算大大多 按时打算大大多 按时打算大大多按时打算大大多按时打算大大多 按时打算大大多 按时打算大大多 按时打算大大多按时打算大大多 按时打算大大多 按时打算大大多 按时打算大大多按时打算大大多按时打算大大多 按时打算大大多 按时打算大大多 按时打算大大多按时打算大大多 按时打算大大多 按时打算大大多 按时打算大大多按时打算大大多";
+        //   return item;
+        // });
+        // if (res.length < 5) {
+        //   this.list = [{type:this.randomNum(4,6),list:res}];
+        // }
+        this.list = this.froEachFilter(res);
+        console.log(this.list, "froEachFilter");
       });
+    },
+    randomNum(minNum, maxNum) {
+      switch (arguments.length) {
+        case 1:
+          return parseInt(Math.random() * minNum + 1, 10);
+          break;
+        case 2:
+          return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+          break;
+        default:
+          return 0;
+          break;
+      }
+    },
+    froEachFilter(list, newdata) {
+      newdata = newdata || [];
+      let num = this.randomNum(5, 5);
+      let newlist = [];
+      for (let index = 0; index < num; index++) {
+        let one = list.shift();
+        if (!one) {
+          break;
+        }
+        newlist.push(one);
+      }
+      newdata.push({
+        type: num,
+        list: newlist,
+      });
+      if (list.length > 0) {
+        return this.froEachFilter(list, newdata);
+      } else {
+        return newdata;
+      }
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-@import "../assets/xkcss/style.css";
 .box_jtdt {
   position: absolute;
   width: 100%;
@@ -319,19 +337,15 @@ export default {
     text-align: center;
     margin: auto;
     margin-top: 20vh;
-    // background: url("https://www.v-can.cn/img/木牌.6be3f934.png") 50% center /
-    //   cover no-repeat;
     background-position: 50% center;
   }
   // 轮播
   .swiper-containerDT {
+    height: 80vh;
     width: 100%;
-    flex: 1;
-    height: 100%;
-    flex-shrink: 0;
-    // background: #000;
     .swiper-wrapper {
       height: 100%;
+      width: 100%;
     }
     .swiper-slide {
       width: 100%;
@@ -345,7 +359,6 @@ export default {
         flex: 1;
         width: 100%;
         height: 100%;
-        flex-direction: 0;
       }
       .pagecontent {
         width: 100%;
@@ -358,23 +371,22 @@ export default {
         padding: 0 30px;
         padding-bottom: 40px;
         box-sizing: border-box;
-        background: rgba(255, 255, 255, 0.1);
         border-radius: 5px;
         position: relative;
         // 第一套模板
         .left {
-          width: 50%;
+          width: 100%;
           height: 100%;
           flex-shrink: 0;
           color: #333;
           display: flex;
-          align-items: flex-start;
-          justify-content: space-around;
-          flex-direction: column;
+          // align-items: flex-start;
+          // justify-content: space-around;
+          // flex-direction: column;
           flex-wrap: wrap;
           // background: #fff;
           .left_block {
-            width: 100%;
+            width: 50%;
             height: 31%;
             display: flex;
             justify-content: flex-start;
@@ -384,7 +396,84 @@ export default {
             // 图片
             .imagesty {
               width: 40%;
-              max-height: 220px;
+              height: 220px;
+              flex-shrink: 0;
+              overflow: hidden;
+              border-radius: 5px;
+              img {
+                border-radius: 5px;
+              }
+            }
+            .text_content {
+              padding: 0 20px;
+              text-align: left;
+              flex: 1;
+              flex-shrink: 0;
+              overflow-y: auto;
+              box-sizing: border-box;
+              display: flex;
+              flex-direction: column;
+              color: rgb(83, 83, 83);
+              p {
+                line-height: 1.5;
+                margin-top: 14px;
+                overflow-y: auto;
+                height: 100%;
+                height: 10vh;
+              }
+            }
+          }
+        }
+        .left_logo {
+          margin: 0 auto;
+          // margin-bottom: 10px;
+        }
+        .text_content2 {
+          position: absolute;
+          bottom: 20px;
+          left: 20px;
+          background: rgba(0, 0, 0, 0.3);
+          padding: 20px;
+          border-radius: 5px;
+          color: #fff;
+          box-sizing: border-box;
+          width: 80%;
+          p {
+            margin-top: 20px;
+            height: 100%;
+            overflow-y: auto;
+            font-size: 14px;
+          }
+        }
+        // 第二套
+      }
+      // 第二套模板
+      .pagecontent2 {
+        text-align: left;
+        .left {
+          width: 45%;
+          height: 100%;
+          flex-shrink: 0;
+          color: #333;
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-start;
+          background: rgba(250, 8, 8, 0.1);
+
+          flex-direction: column;
+          .left_block {
+            width: 98%;
+            height: 31%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            margin-top: 10px;
+            position: relative;
+            // 图片
+            .imagesty {
+              width: 40%;
+              // max-height: 220px;
+              height: 100%;
               flex-shrink: 0;
               overflow: hidden;
               border-radius: 5px;
@@ -402,34 +491,12 @@ export default {
               p {
                 line-height: 1.5;
                 margin-top: 14px;
+                font-size: 14px;
                 overflow-y: auto;
+                max-height: 12.8vh;
               }
             }
           }
-        }
-        .left_logo {
-          margin: 0 auto;
-          // margin-bottom: 10px;
-        }
-        .text_content2 {
-          position: absolute;
-          bottom: 20px;
-          left: 20px;
-          background: rgba(0, 0, 0, 0.3);
-          padding: 20px;
-          border-radius: 5px;
-          color: #fff;
-          p {
-            margin-top: 20px;
-          }
-        }
-        // 第二套
-      }
-      // 第二套模板
-      .pagecontent2 {
-        text-align: left;
-        .left {
-          width: 45%;
         }
         .right {
           flex: 1;

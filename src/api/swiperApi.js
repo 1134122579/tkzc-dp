@@ -51,3 +51,17 @@ export function getjiagou(params) {
     params,
   });
 }
+export function getDynamicList(params) {
+  return request({
+    url: "getDynamicList",
+    method: "get",
+    params,
+  });
+}
+export function getDynamicDetails(params) {
+  return request({
+    url: "getDynamicDetails",
+    method: "get",
+    params,
+  });
+}

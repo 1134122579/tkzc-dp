@@ -41,7 +41,7 @@
                   <div class="desc" v-html="item.desc"></div>
                 </div>
               </div>
-                <div class="swiperContent" v-if="item.ishome" :style="item.img | filterBack">
+              <div class="swiperContent" v-if="item.ishome" :style="item.img | filterBack">
                 <!-- :style="item.img | filterBack" -->
               </div>
             </div>
@@ -171,7 +171,7 @@ import {
   getCity,
 } from "@/api/swiperApi.js";
 import ChinaEcharts from "@/components/ChinaEcharts.vue";
-import { getToken, setToken, removeToken } from "@/utils/auth.js";
+import { getToken, setToken, removeToken,getdetail,removedetail } from "@/utils/auth.js";
 
 export default {
   name: "carrousel",
@@ -304,12 +304,15 @@ export default {
     if (getToken() == "tiancheng88") {
       this.isauto = true;
       this.getall();
+      console.log("getdetail",getdetail())
+     if(getdetail()){
+      this.tabId =getdetail();
+      this.tabsonId = getdetail();
+      this.activeIndex=getdetail()
+     }
     }
   },
   watch: {
-    // tabId(neWv, oldV) {
-    //   neWv == 2 && this.getBanner()
-    // },
     isauto(nvwv, oldv) {
       if (nvwv) {
         this.getall();
@@ -317,17 +320,7 @@ export default {
     },
   },
   mounted() {
-    document.title = "天空之橙·Design";
-    try {
-      //   document.onclick =
-      //     document.onkeydown =
-      //     document.onmousemove =
-      //     function() {
-      //       (document.body || document.documentElement).requestFullscreen();
-      //     };
-      //   document.onclick();
-    } catch (error) {
-    }
+    document.title = "天空之橙·Design"
     this.getBanner();
   },
   methods: {
@@ -516,6 +509,12 @@ export default {
     },
 
     async getClass(pid) {
+      this.loading = this.$loading({
+        lock: true,
+        text: "加载中..",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
       let res = await getClass({ pid });
       this.numindex = this.classList.findIndex((item) => item.pid == pid);
       this.sonlist = res;
@@ -524,8 +523,8 @@ export default {
     },
     async getFlimList(class_id = "", data, trueNull) {
       console.log(data, 121231)
-
       let that = this
+      that.loading.close()
       if (!this.isfm || trueNull) {
         this.list = [];
       }
@@ -557,6 +556,7 @@ export default {
       this.tabsonId = key;
       this.isfm = false
       this.ishome = false
+      removedetail()
       if (keyPath[0] == 2) {
         let array = this.classList.filter((item) => item.id == key);
         this.getClass(key.split("-")[1]);
@@ -598,7 +598,7 @@ export default {
             align-items: center;
             box-sizing: border-box;
             .logo {
-                height: 44px;
+                height: 48px;
                 // height: 60px;
                 // background: rgba(0, 0, 0, 0.1);
                 // padding: 15px;
@@ -821,6 +821,7 @@ export default {
                 filter: blur(8px);
                 z-index: -1;
                 background-size: cover;
+                opacity: 0.6;
             }
             .swiperIMg {
                 width: 98%;

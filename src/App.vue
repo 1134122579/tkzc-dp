@@ -1,12 +1,27 @@
 <template>
   <div id="app">
+    <!-- <keep-alive v-if="iskeeplive">
+      <router-view />
+    </keep-alive> -->
     <router-view />
   </div>
 </template>
 <script>
 export default {
   data() {
-    return {};
+    return {
+      iskeeplive: false,
+    };
+  },
+  watch: {
+    $route: {
+      handler(to, from) {
+        console.log(to.meta.iskeeplive);
+        this.iskeeplive = to.meta.iskeeplive;
+      },
+      deep: true,
+      immediate: true,
+    },
   },
   methods: {
     handleSelect(key, keyPath) {

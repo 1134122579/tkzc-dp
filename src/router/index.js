@@ -9,14 +9,28 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    meta: {
+      iskeeplive: true,
+    },
   },
   {
     path: "/about",
     name: "About",
     component: () =>
       import(/* webpackChunkName: "about" */ "@/views/About.vue"),
+    meta: {
+      iskeeplive: false,
+    },
   },
-
+  {
+    path: "/dtdetail",
+    name: "Dtdetail",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "@/views/dtdetail.vue"),
+    meta: {
+      iskeeplive: false,
+    },
+  },
   {
     path: "*",
     redirect: "/",
@@ -25,7 +39,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: "history",
-  // base: "/design",
+  //   base: "/design",
   routes,
 });
 

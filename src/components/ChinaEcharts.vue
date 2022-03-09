@@ -67,40 +67,47 @@ export default {
             fontSize: 13,
           },
           extraCssText: "word-wrap: break-word;",
-
           formatter: function (e, t, n) {
             let data = e.data;
             console.log(e, data.address);
             let str = "";
-            let num = Math.floor(data.address.length / 14);
-            for (let index = 0; index < num; index++) {
-              str =
-                str +
-                `<span>${data.address.slice(
-                  14 * index,
-                  14 * (index + 1)
-                )}</span>` +
-                "<br/>";
+            if (data.address.length > 14) {
+              let num = Math.floor(data.address.length / 14);
+              for (let index = 0; index < num; index++) {
+                str =
+                  str +
+                  `<span>${data.address.slice(
+                    14 * index,
+                    14 * (index + 1)
+                  )}</span>` +
+                  "<br/>";
+              }
+            } else {
+              str = data.address;
             }
-            console.log(str);
-            // let context = `
-            //    <div>
-            //        <p><b style="font-size:15px;">${data.name}</b>(2020年第一季度)</p>
-            //        <p class="tooltip_style"><span class="tooltip_left">事件总数</span><span class="tooltip_right">${data.value}</span></p>
-            //        <p class="tooltip_style"><span class="tooltip_left">特别重大事件</span><span class="tooltip_right">${data.specialImportant}</span></p>
-            //        <p class="tooltip_style"><span class="tooltip_left">重大事件</span><span class="tooltip_right">${data.import}</span></p>
-            //        <p class="tooltip_style"><span class="tooltip_left">较大事件</span><span class="tooltip_right">${data.compare}</span></p>
-            //        <p class="tooltip_style"><span class="tooltip_left">一般事件</span><span class="tooltip_right">${data.common}</span></p>
-            //        <p class="tooltip_style"><span class="tooltip_left">特写事件</span><span class="tooltip_right">${data.specail}</span></p>
-            //    </div>
-            // `;
+            let strcompany_name = "";
+            if (data.company_name.length > 14) {
+              let num = Math.floor(data.company_name.length / 14);
+              for (let index = 0; index < num; index++) {
+                strcompany_name =
+                  strcompany_name +
+                  `<span>${data.company_name.slice(
+                    14 * index,
+                    14 * (index + 1)
+                  )}</span>` +
+                  "<br/>";
+              }
+            } else {
+              strcompany_name = data.company_name;
+            }
+
             let context = `
              <div class="userinfo">
       <div class="userinfoname">
         <div class="header_l">
           <img
             class="headrimage"
-            src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2Fbd%2Fbb%2F6f%2Fbdbb6fede8497ddb835ce5630db28be0.jpeg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649215663&t=345894f0afe7515c91501a31209de558"
+            src="${data.photos}"
           />
           <div class="username">${data.user_name}</div>
         </div>
@@ -108,9 +115,10 @@ export default {
           <div class="descimage">
             <img
               class="descimage"
-              src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2Fbd%2Fbb%2F6f%2Fbdbb6fede8497ddb835ce5630db28be0.jpeg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649215663&t=345894f0afe7515c91501a31209de558"
+              src="${data.company_img}"
             />
           </div>
+          <h4 class="usercompyname">${strcompany_name}</h4>
           <p class="useradress">
                 ${str}
           </p>
@@ -375,13 +383,21 @@ export default {
     async getCity() {
       let res = await getCity();
       res = res.map((item) => {
+        item["user_name"] = item["name"] || "某某某";
         item["name"] = item.city;
         item["coord"] = [Number(item.lng), Number(item.lat)];
-        item["headerImage"] =
+        item["company_name"] = item["company_name"] || "我是公司名字";
+        item["address"] = item["address"] || "我是公司地址";
+        item["photos"] =
+          item["photos"] ||
           "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2Fbd%2Fbb%2F6f%2Fbdbb6fede8497ddb835ce5630db28be0.jpeg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649215663&t=345894f0afe7515c91501a31209de558";
-        item["address"] =
-          "我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊";
-        item["user_name"] = "某某某";
+        item["company_img"] =
+          item["company_img"] ||
+          "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2Fbd%2Fbb%2F6f%2Fbdbb6fede8497ddb835ce5630db28be0.jpeg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649215663&t=345894f0afe7515c91501a31209de558";
+
+        // "";
+        // item["address"] =
+        //   "我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊";
         return item;
       });
       console.log(res);
@@ -501,7 +517,6 @@ export default {
 
 <style lang="scss">
 .userinfo {
-  background: #e46400;
   padding: 10px;
   border-radius: 5px;
   width: 240px;
@@ -546,6 +561,12 @@ export default {
         // img {
         //   width: 100%;
         // }
+      }
+      .usercompyname {
+        margin-top: 5px;
+        width: 180px;
+        text-align: left;
+        font-weight: 600;
       }
       .useradress {
         width: 180px;

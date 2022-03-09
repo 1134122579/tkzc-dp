@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 
 const TokenKey = "ADMIN-LOGIN";
+const ISDETAIL = "ISDETAIL";
 
 export function getToken() {
   return Cookies.get(TokenKey);
@@ -12,4 +13,15 @@ export function setToken(token) {
 
 export function removeToken() {
   return Cookies.remove(TokenKey);
+}
+export function getdetail() {
+  return Cookies.get(ISDETAIL);
+}
+
+export function setdetail(data) {
+  return Cookies.set(ISDETAIL, data);
+}
+
+export function removedetail() {
+  return Cookies.remove(ISDETAIL);
 }

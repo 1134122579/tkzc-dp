@@ -1,64 +1,89 @@
 <template>
   <div class="pagecontent3">
     <div class="left">
-      <div class="left_block">
+      <div
+        class="left_block block1"
+        v-if="objdata[0]"
+        @click="godetail(objdata[0])"
+      >
         <div class="imagesty imagesty1">
-          <img :src="newdata.cover1" />
+          <img :src="objdata[0].cover" />
         </div>
         <div class="text_content text_content2">
-          <h5>{{ newdata.title1 }}</h5>
-          <p>{{ newdata.desc1 }}</p>
+          <h5>{{ objdata[0].title }}</h5>
+          <p v-html="objdata[0].desc"></p>
         </div>
       </div>
-      <div class="left_block">
+      <div
+        class="left_block block2"
+        v-if="objdata[1]"
+        @click="godetail(objdata[1])"
+      >
         <div class="imagesty imagesty1">
-          <img :src="newdata.cover1" />
+          <img :src="objdata[1].cover" />
         </div>
         <div class="text_content text_content1">
-          <h5>{{ newdata.title1 }}</h5>
-          <p>{{ newdata.desc1 }}</p>
+          <h5>{{ objdata[1].title }}</h5>
+          <p v-html="objdata[1].desc"></p>
         </div>
       </div>
     </div>
     <div class="right">
-      <div class="right_block">
+      <div
+        class="right_block block3"
+        v-if="objdata[2]"
+        @click="godetail(objdata[2])"
+      >
         <div class="imagesty imagesty1">
-          <img :src="newdata.cover2" />
+          <img :src="objdata[2].cover" />
         </div>
         <div class="text_content text_content3">
-          <h5>{{ newdata.title2 }}</h5>
-          <p>{{ newdata.desc2 }}</p>
+          <h5>{{ objdata[2].title }}</h5>
+          <p v-html="objdata[2].desc"></p>
         </div>
       </div>
-      <div class="right_block">
-        <div class="imagesty">
-          <img :src="newdata.cover3" />
+      <div class="bottom">
+        <div
+          class="right_block"
+          v-if="objdata[3]"
+          @click="godetail(objdata[3])"
+        >
+          <div class="imagesty">
+            <img :src="objdata[3].cover" />
+          </div>
+          <div class="text_content text_content4">
+            <h5>{{ objdata[3].title }}</h5>
+            <p v-html="objdata[3].desc"></p>
+          </div>
         </div>
-        <div class="text_content text_content4">
-          <h5>{{ newdata.title3 }}</h5>
-          <p>{{ newdata.desc3 }}</p>
+        <div
+          class="right_block"
+          v-if="objdata[4]"
+          @click="godetail(objdata[4])"
+          style="padding-left: 14px"
+        >
+          <div class="imagesty">
+            <img :src="objdata[4].cover" />
+          </div>
+          <div class="text_content text_content4">
+            <h5>{{ objdata[4].title }}</h5>
+            <p v-html="objdata[4].desc"></p>
+          </div>
         </div>
+        <!-- <div
+          class="right_block"
+          v-show="objdata.length < 5"
+          @click="godetail()"
+          style="padding-left: 14px"
+        >
+          <div class="imagesty">
+            <img :src="objdata[4].cover" style="opacity: 0" />
+          </div>
+          <div class="text_content text_content4">
+            <h5>查看更多~</h5>
+          </div>
+        </div> -->
       </div>
-      <!-- <div class="bottom_sytle">
-        <div class="left_block">
-          <div class="imagesty">
-            <img :src="newdata.cover3" />
-          </div>
-          <div class="text_content">
-            <h5>{{ newdata.title3 }}</h5>
-            <p>{{ newdata.desc3 }}</p>
-          </div>
-        </div>
-        <div class="left_block">
-          <div class="imagesty">
-            <img :src="newdata.cover4" />
-          </div>
-          <div class="text_content">
-            <h5>{{ newdata.title1 }}</h5>
-            <p>{{ newdata.desc }}</p>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -81,7 +106,7 @@ export default {
         link1: "https://mp.weixin.qq.com/s/WGbFPzITSrD9P7DPjHY6wA",
         cover1: require("../assets/groupimg/20220222145017.jpg"),
         desc1:
-          "7月28日，全市青年企业家座谈会召开，深入学习贯彻习近平总书记“七一”重要讲话精神。",
+          "7月28日，全市青年企业家座谈会召开，深入学习贯彻习近平总书记“七一”重要讲话精神。7月28日，全市青年企业家座谈会召开，深入学习贯彻习近平总书记“七一”重要讲话精神。",
         title2: "热烈祝贺淄博「新生代企业家论坛」在「天空之橙」成功举办",
         link2: "https://mp.weixin.qq.com/s/TMiokX96AQ75Yw3mHxJniw",
         cover2: require("../assets/groupimg/20220222145211.jpg"),
@@ -109,7 +134,24 @@ export default {
   },
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    godetail(data) {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      if (data) {
+        this.$router.push({ path: "/dtdetail", query: { id: data.id } });
+      } else {
+        this.$router.push({
+          path: "/list",
+        });
+      }
+      loading.close();
+    },
+  },
 };
 </script>
 
@@ -121,12 +163,11 @@ export default {
   display: flex;
   box-sizing: border-box;
   overflow: hidden;
-  padding: 20px 130px;
-  padding-bottom: 40px;
+  padding: 20px 11vw;
+  padding-bottom: 12vh;
   .left {
     overflow: hidden;
-    width: 60%;
-    padding: 0 20px;
+    padding: 0 14px;
     height: 100%;
     flex-shrink: 0;
     flex: 1;
@@ -139,6 +180,7 @@ export default {
     // background: #fff;
 
     .left_block {
+      cursor: pointer;
       width: 100%;
       height: 49%;
       display: flex;
@@ -160,11 +202,15 @@ export default {
         flex: 1;
         flex-shrink: 0;
         overflow-y: auto;
+        max-width: 400px;
+        border-radius: 5px;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
+        max-height: 180px;
         line-height: 1.5;
-        color: rgb(83, 83, 83);
+        color: #fff;
+        cursor: pointer;
         p {
           line-height: 1.5;
           margin-top: 14px;
@@ -180,33 +226,27 @@ export default {
         position: absolute;
         bottom: 10px;
         left: 10px;
-        color: #fff;
-        background: rgba(0, 0, 0, 0.3);
-        width: 400px;
-        height: 180px;
-        overflow-y: auto;
-        border-radius: 5px;
-        padding: 20px;
       }
       .text_content2 {
         position: absolute;
         top: 10px;
         left: 10px;
         color: #fff;
-        background: rgba(0, 0, 0, 0.3);
-        width: 400px;
-        overflow-y: auto;
-        height: 180px;
-        border-radius: 5px;
-        padding: 20px;
-        overflow-y: auto;
+        // background: rgba(0, 0, 0, 0.3);
       }
+    }
+    .block1 {
+      height: 50%;
+      box-sizing: border-box;
+      padding-bottom: 10px;
+    }
+    .block2 {
+      height: 50%;
     }
   }
   .right {
     flex: 1;
     height: 100%;
-    flex-shrink: 0;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -214,8 +254,8 @@ export default {
     align-items: center;
     // 上
     .right_block {
+      cursor: pointer;
       width: 100%;
-      height: 49%;
       position: relative;
       .imagesty {
         width: 100%;
@@ -237,8 +277,10 @@ export default {
         flex-direction: column;
         line-height: 1.5;
         color: rgb(83, 83, 83);
+        max-width: 80%;
+        max-height: 180px;
+        border-radius: 5px;
         p {
-          line-height: 1.5;
           margin-top: 14px;
           overflow-y: auto;
         }
@@ -249,25 +291,13 @@ export default {
         top: 10px;
         right: 10px;
         color: #fff;
-        background: rgba(0, 0, 0, 0.3);
-        width: 400px;
-        overflow-y: auto;
-        height: 180px;
-        overflow-y: auto;
-        border-radius: 5px;
-        padding: 20px;
+        // background: rgba(0, 0, 0, 0.3);
       }
       .text_content4 {
         position: absolute;
         bottom: 10px;
         right: 10px;
         color: #fff;
-        background: rgba(0, 0, 0, 0.3);
-        width: 400px;
-        height: 180px;
-        overflow-y: auto;
-        border-radius: 5px;
-        padding: 20px;
       }
     }
     .bottom_sytle {
@@ -298,7 +328,8 @@ export default {
         .text_content {
           padding: 0 10px;
           background: #fff;
-          width: 250px;
+          max-width: 250px;
+          word-wrap: break-word;
           text-align: left;
           padding: 10px;
           flex-shrink: 0;
@@ -325,6 +356,7 @@ export default {
         height: 100%;
         border-radius: 5px;
         overflow: hidden;
+        background: cadetblue;
       }
       .imagesty1 {
         width: 100%;
@@ -340,6 +372,9 @@ export default {
         flex-direction: column;
         line-height: 1.5;
         color: rgb(83, 83, 83);
+        max-width: 80%;
+        max-height: 180px;
+        border-radius: 5px;
         p {
           line-height: 1.5;
           margin-top: 14px;
@@ -352,23 +387,41 @@ export default {
         left: 10px;
         color: #fff;
         background: rgba(0, 0, 0, 0.3);
-        width: 400px;
-        height: 180px;
-        overflow-y: auto;
-        border-radius: 5px;
-        padding: 20px;
       }
     }
+    .bottom {
+      // height: 100%;
+      display: flex;
+      box-sizing: border-box;
+      padding-top: 11px;
+      justify-content: space-between;
+      align-items: center;
+      .right_block {
+        width: 50%;
+        height: 100%;
+        flex: 1;
+        box-sizing: border-box;
+        .imagesty {
+          height: 100%;
+          width: 100%;
+          background: #df7924;
+        }
+      }
+    }
+    .block3 {
+      // height: 80%;
+      overflow: hidden;
+    }
   }
+
   .left_logo {
     margin: 0 auto;
     // margin-bottom: 10px;
   }
   .text_content2 {
     position: absolute;
-    bottom: 20px;
     left: 20px;
-    background: rgba(0, 0, 0, 0.3);
+    // background: rgba(0, 0, 0, 0.3);
     padding: 16px;
     border-radius: 5px;
     color: #fff;
@@ -377,6 +430,10 @@ export default {
     }
   }
   // 第二套
+  .text_content {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px !important;
+  }
 }
 h5 {
   font-weight: 600;
@@ -386,7 +443,7 @@ p {
   font-size: 14px;
 }
 img:hover {
-  transform: scale(1.2, 1.2);
+  transform: scale(1.08, 1.08);
 }
 img {
   width: 100%;
@@ -394,13 +451,13 @@ img {
   object-fit: cover;
   display: block;
   border-radius: 5px;
-  transition: all 0.8s ease-out;
+  transition: all 0.9s ease-out;
   /* 过度 所有css属性 1秒过度 结束慢*/
-  -moz-transition: all 0.8s ease-out;
+  -moz-transition: all 0.9s ease-out;
   /* Firefox 4 */
-  -webkit-transition: all 0.8s ease-out;
+  -webkit-transition: all 0.9s ease-out;
   /* Safari 和 Chrome */
-  -o-transition: all 0.8s ease-out;
+  -o-transition: all 0.9s ease-out;
   /* Opera */
 }
 </style>

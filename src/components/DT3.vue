@@ -9,7 +9,7 @@
         <div class="imagesty imagesty1">
           <img :src="objdata[0].cover" />
         </div>
-        <div class="text_content text_content2">
+        <div class="text_content text_content1" style="bottom: 20px">
           <h5>{{ objdata[0].title }}</h5>
           <p v-html="objdata[0].desc"></p>
         </div>
@@ -37,7 +37,7 @@
         <div class="imagesty imagesty1">
           <img :src="objdata[2].cover" />
         </div>
-        <div class="text_content text_content3">
+        <div class="text_content text_content4">
           <h5>{{ objdata[2].title }}</h5>
           <p v-html="objdata[2].desc"></p>
         </div>
@@ -210,6 +210,7 @@ export default {
         line-height: 1.5;
         color: #fff;
         cursor: pointer;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         p {
           line-height: 1.5;
           margin-top: 14px;
@@ -279,6 +280,7 @@ export default {
         max-width: 80%;
         max-height: 180px;
         border-radius: 5px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         p {
           margin-top: 14px;
           overflow-y: auto;
@@ -338,6 +340,7 @@ export default {
           flex-direction: column;
           color: rgb(83, 83, 83);
           border-radius: 0 5px 5px 0;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
           p {
             line-height: 1.5;
             margin-top: 14px;
@@ -374,6 +377,9 @@ export default {
         max-width: 80%;
         max-height: 180px;
         border-radius: 5px;
+
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
         p {
           line-height: 1.5;
           margin-top: 14px;
@@ -419,6 +425,7 @@ export default {
           color: #fff;
           max-height: 130px;
           border-radius: 5px;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
       }
     }
@@ -447,11 +454,12 @@ export default {
   .text_content {
     background: rgba(0, 0, 0, 0.3);
     padding: 20px !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   }
 }
 h5 {
   font-weight: 600;
-  font-size: 18px;
+  font-size: 17px;
 }
 p {
   font-size: 14px;

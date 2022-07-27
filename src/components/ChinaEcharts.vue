@@ -1,5 +1,6 @@
 <template>
   <div id="china_map_box">
+    <!-- 地图 -->
     <div id="china_map"></div>
     <div class="citylist">
       <img
@@ -18,29 +19,6 @@
       <p>THE BRANCH SERVICE AGENCY</p>
       <p>分支服务机构</p>
     </div>
-
-    <!-- <div class="userinfo">
-      <div class="userinfoname">
-        <div class="header_l">
-          <img
-            class="headrimage"
-            src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2Fbd%2Fbb%2F6f%2Fbdbb6fede8497ddb835ce5630db28be0.jpeg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649215663&t=345894f0afe7515c91501a31209de558"
-          />
-          <div class="username">某某某</div>
-        </div>
-        <div class="user">
-          <div class="descimage">
-            <img
-              class="descimage"
-              src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2Fbd%2Fbb%2F6f%2Fbdbb6fede8497ddb835ce5630db28be0.jpeg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649215663&t=345894f0afe7515c91501a31209de558"
-            />
-          </div>
-          <div class="useradress">
-            某某某某某某某某某某某某某某某某某某某某某某某某某某某某某某地址
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -57,7 +35,10 @@ export default {
       //echart 配制option
       options: {
         tooltip: {
-          triggerOn: "click", //mousemove、 click
+          // silent: true,
+          // trigger: "none",
+          // alwaysShowContent: true, // 提示框总是显示（不再是鼠标离开就消失）
+          triggerOn: "mousemove", //mousemove、 click
           padding: 8,
           borderWidth: 1,
           borderColor: "#409eff",
@@ -100,40 +81,40 @@ export default {
             } else {
               strcompany_name = data.company_name;
             }
-
             let context = `
-             <div class="userinfo">
-      <div class="userinfoname">
-        <div class="header_l">
-          <img
-            class="headrimage"
-            src="${data.photos}"
-          />
-          <div class="username">${data.user_name}</div>
-        </div>
-        <div class="user">
-          <div class="descimage">
-            <img
-              class="descimage"
-              src="${data.company_img}"
-            />
+                   <div class="userinfo">
+            <div class="userinfoname">
+              <div class="header_l">
+                <img
+                  class="headrimage"
+                  src="${data.photos}"
+                />
+                <div class="username">${data.user_name}</div>
+              </div>
+              <div class="user">
+                <div class="descimage">
+                  <img
+                    class="descimage"
+                    src="${data.company_img}"
+                  />
+                </div>
+                <h4 class="usercompyname">${strcompany_name}</h4>
+                <p class="useradress">
+                      ${str}
+                </p>
+              </div>
+            </div>
           </div>
-          <h4 class="usercompyname">${strcompany_name}</h4>
-          <p class="useradress">
-                ${str}
-          </p>
-        </div>
-      </div>
-    </div>
-            `;
+                  `;
             return context;
           },
         },
+
         visualMap: {
           show: false,
           left: 26,
           bottom: 40,
-          showLabel: true,
+          showLabel: false,
           pieces: [
             {
               gte: 1000,
@@ -167,39 +148,40 @@ export default {
         },
         geo: {
           map: "china",
+          silent: true,
           scaleLimit: {
             min: 1,
             max: 2,
           },
           zoom: 1,
           top: 120,
-          label: {
-            normal: {
-              show: false,
-              fontSize: "12",
-              color: "rgba(0,0,0,0.3)",
-            },
-          },
+          // label: {
+          //   normal: {
+          //     show: false,
+          //     fontSize: "12",
+          //     color: "rgba(0,0,0,0.3)",
+          //   },
+          // },
           itemStyle: {
             normal: {
-              //shadowBlur: 50,
-              borderWidth: 0, //设置外层边框
-              //shadowColor: 'rgba(0, 0, 0, 0.2)',
-              //   borderColor: "rgba(0, 0, 0, 0.2)",
+              // shadowBlur: 50,
+              borderWidth: 0.5, //设置外层边框
+              // shadowColor: "rgba(0, 0, 0, 0.2)",
+              borderColor: "rgba(0, 0, 0, 0.2)",
             },
-            emphasis: {
-              areaColor: "#f2d5ad",
-              shadowOffsetX: 0,
-              shadowOffsetY: 0,
-              borderWidth: 0,
-            },
+            // emphasis: {
+            //   // areaColor: "#f2d5ad",
+            //   shadowOffsetX: 0,
+            //   shadowOffsetY: 0,
+            //   borderWidth: 0,
+            // },
           },
         },
         series: [
           {
-            name: "分布城市",
-            type: "map",
-            geoIndex: 0,
+            type: "effectScatter",
+            // geoIndex: 0,
+            // silent: false,
             coordinateSystem: "geo",
             data: [],
             markPoint: {
@@ -211,11 +193,56 @@ export default {
               animation: true,
               animationEasing: "bounceIn",
               select: {
-                // itemStyle: {
-                //   borderColor: "red",
-                //   borderWidth: "2",
-                //   color: "RGBA(100, 100, 100,.8)", //设置地图点击后的颜色
-                // },
+                itemStyle: {
+                  borderColor: "red",
+                  borderWidth: "2",
+                  color: "RGBA(100, 100, 100,.8)", //设置地图点击后的颜色
+                },
+              },
+              itemStyle: {
+                color: "RGBA(100, 100, 100,.8)",
+                // borderColor: "red",
+                borderWidth: "2",
+              },
+              animationDuration: function (idx) {
+                // 越往后的数据时长越大
+                return idx * 100;
+              },
+              animationDelayUpdate: function (idx) {
+                // 越往后的数据延迟越大
+                return idx * 100;
+              },
+              label: {
+                normal: {
+                  show: true,
+                  formatter: function (d) {
+                    return d.name;
+                  },
+                },
+              },
+              data: [],
+            },
+          },
+          {
+            type: "map",
+            geoIndex: 0,
+            // silent: false,
+            coordinateSystem: "geo",
+            data: [],
+            markPoint: {
+              symbol: "pin",
+              // symbol:
+              //   "image://https://img95.699pic.com/photo/40121/6173.gif_wh860.gif",
+              image: "",
+              symbolSize: 40,
+              animation: true,
+              animationEasing: "bounceIn",
+              select: {
+                itemStyle: {
+                  borderColor: "red",
+                  borderWidth: "2",
+                  color: "RGBA(100, 100, 100,.8)", //设置地图点击后的颜色
+                },
               },
               itemStyle: {
                 color: "RGBA(100, 100, 100,.8)",
@@ -394,7 +421,6 @@ export default {
         item["company_img"] =
           item["company_img"] ||
           "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2Fbd%2Fbb%2F6f%2Fbdbb6fede8497ddb835ce5630db28be0.jpeg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649215663&t=345894f0afe7515c91501a31209de558";
-
         // "";
         // item["address"] =
         //   "我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊我是一个地址凑数洗啊";
@@ -402,7 +428,7 @@ export default {
       });
       console.log(res);
       this.citylist = res;
-      this.options.series[0]["data"] = this.dataList;
+      this.options.series[1]["data"] = this.dataList;
       this.options.series[0]["markPoint"]["data"] = res;
       //   this.setEchartOption();
       this.$nextTick(() => {
@@ -537,6 +563,7 @@ export default {
         display: block;
         overflow: hidden;
         flex-direction: 0;
+        object-fit: cover;
         border-radius: 50%;
       }
       .username {
@@ -558,6 +585,7 @@ export default {
         width: 100%;
         height: 150px;
         overflow: hidden;
+        object-fit: cover;
         // img {
         //   width: 100%;
         // }

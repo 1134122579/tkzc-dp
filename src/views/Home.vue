@@ -27,7 +27,7 @@
       <div class=" SwiperModelStyle" v-show="tabId == 2">
         <div class="swiper-containersjal">
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="(item,index) in list" :key="item.id">
+            <div class="swiper-slide"  v-for="(item,index) in list" :key="item.id">
               <div class="swiperContent" v-if="!item.ishome" :style="{'--bgurl':  'url('+item.img+')'}">
                 <!-- :style="item.img | filterBack" -->
                 <!-- <img class="swiperIMg" :src="item.img" alt=""> -->
@@ -36,7 +36,7 @@
       fit="contain"></el-image> -->
                 <el-image :src="item.img" fit="contain"></el-image>
                 <!-- index==currentIndex&& -->
-                <div class="swiperContent_text" v-show="!item.ishome">
+                <div class="swiperContent_text" v-show="!item.ishome" >
                   <h5>{{ item.name }}</h5>
                   <div class="desc" v-html="item.desc"></div>
                 </div>
@@ -535,9 +535,11 @@ export default {
       res = res.map(item => {
         item['desc'] = data['desc']
         item['name'] = data['name']
-        item['img_jt'] = item['img'] + '?imageView/1/w/300/h/300'
+        item['img']=  encodeURI(item['img'])
+        item['img_jt'] = encodeURI(item['img'])  + '?imageView/1/w/300/h/300'
         return item
       })
+      console.log(res)
       if (this.isfm) {
         res = this.list.concat(res)
       }

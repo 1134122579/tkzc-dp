@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="home" v-if="isauto">
+    <div class="home" v-show="isauto">
       <!-- 头部 -->
       <div class="nav" ref="nav">
         <div class="logo" @click="gohome">
@@ -28,7 +28,8 @@
         <div class="swiper-containersjal">
           <div class="swiper-wrapper">
             <div class="swiper-slide"  v-for="(item,index) in list" :key="item.id">
-              <div class="swiperContent" v-if="!item.ishome" :style="{'--bgurl':  'url('+item.img+')'}">
+              <div class="swiperContent" v-if="!item.ishome"  :style="{'--bgurl': bgimgfilter(item.img)}" >
+                <!-- :style="{'--bgurl':  'url('+item.img+')'}" -->
                 <!-- :style="item.img | filterBack" -->
                 <!-- <img class="swiperIMg" :src="item.img" alt=""> -->
                 <!-- <el-image
@@ -136,7 +137,7 @@
       </div>
     </div>
     <!-- 密码页 -->
-    <div class="suosttyle" v-else>
+    <div class="suosttyle" v-show="!isauto">
       <div class="suoblock">
         <p class="title">天空之橙 · DESIGN</p>
         <img src="../assets/auth-icon.png" alt="" />
@@ -172,10 +173,12 @@ import {
 } from "@/api/swiperApi.js";
 import ChinaEcharts from "@/components/ChinaEcharts.vue";
 import { getToken, setToken, removeToken, getdetail, removedetail } from "@/utils/auth.js";
+let time
 
 export default {
   name: "carrousel",
   filters: {
+
     filterBack(data) {
       return `background-image: url('${data}')`;
     },
@@ -238,7 +241,7 @@ export default {
           //   disableOnInteraction: false,
           disableOnInteraction: false,
           // 自动播放时间：毫秒
-          delay: 6000,
+          delay: 5000,
         },
         // pagination: {
         //   //小圆点
@@ -304,7 +307,6 @@ export default {
     if (getToken() == "tiancheng88") {
       this.isauto = true;
       this.getall();
-      console.log("getdetail", getdetail())
       if (getdetail()) {
         this.tabId = getdetail();
         this.tabsonId = getdetail();
@@ -321,9 +323,13 @@ export default {
   },
   mounted() {
     document.title = "天空之橙·Design"
+    let that=this
     this.getBanner();
   },
   methods: {
+        bgimgfilter(data){
+     return `url('${data}')`
+    },
     // 切换分类
     calssbuttonprev() {
       // this.value
@@ -332,19 +338,16 @@ export default {
         this.getClass(this.classList[this.classList.length - 1].pid);
         this.value = this.classList[this.classList.length - 1].title
       }
-      console.log(this.classList, index, 'calssbuttonprev')
       this.value = this.classList[index].title
       this.getClass(this.classList[index].pid);
     },
     calssbuttonnext() {
-      console.log('calssbuttonnext')
       // this.value
       let index = this.classList.findIndex(item => item.title == this.value) + 1
       if (index > this.classList.length) {
         this.getClass(this.classList[0].pid);
         this.value = this.classList[0].title
       }
-      console.log(this.classList, index, 'calssbuttonprev')
       this.getClass(this.classList[index].pid);
       this.value = this.classList[index].title
     },
@@ -353,15 +356,12 @@ export default {
     },
     // 点击
     onhandleClick(data) {
-      console.log("点击", data)
-      console.log(this.activeIndex)
       if (data.id == 2) {
         this.isfm = true
         this.tabId = 2;
         this.ishome = true
         this.value = this.classList[0].title;
         this.activeIndex = this.classList[0].id;
-        console.log(this.activeIndex)
         this.list = [{
           ishome: true,
           img: require('../assets/fm.png')
@@ -421,37 +421,31 @@ export default {
       //调用延迟加载 $nextTick
       let that = this;
       this.swiperconfig.on = {
-
         slideChangeTransitionEnd: function() {
-
           let length = that.splitList.length;
-          let swiperlength = this.slides.length
+          let swiperlength = this.slides?.length
           that.currentIndex = this.activeIndex
           that.ishome = false
+          clearTimeout(time)
           let onelenght = that.list.length
           let two = that.list.filter(item => !item.ishome)
           that.list = two
           let twolenght = two.length
+
           if (onelenght != twolenght) {
             that.swipercaeated.slideTo(0, 1000, false)
-
           }
           if (this.activeIndex < swiperlength - 1) {
             return
           }
-          if (length > 0) {
+        time=setTimeout(()=>{
+     if (length > 0) {
             that.getFlimList(that.splitList[0]["id"], that.splitList[0]);
           } else {
-            that.splitList = that.sonlist
+                   that.splitList = that.sonlist
             that.getFlimList(that.splitList[0]["id"], that.splitList[0]);
-            return
-            that.numindex++;
-            if (that.numindex >= that.classList.length) {
-              that.numindex = 0;
-            }
-            that.value = that.classList[that.numindex].name;
-            that.getClass(that.classList[that.numindex].pid);
           }
+        },4000)
 
         },
         reachEnd: function() {
@@ -480,6 +474,7 @@ export default {
           swiper: that.swipercaeatedJT,
         }
         that.swipercaeated = new Swiper(".swiper-containersjal", that.swiperconfig);
+      console.log( that.swipercaeatedJT ,that.swipercaeated,1233333)
 
       });
     },
@@ -524,7 +519,6 @@ export default {
       this.getFlimList(res[0]["id"], res[0]);
     },
     async getFlimList(class_id = "", data, trueNull) {
-      console.log(data, 121231)
       let that = this
       that.loading.close()
       if (!this.isfm || trueNull) {
@@ -539,23 +533,25 @@ export default {
         item['img_jt'] = encodeURI(item['img'])  + '?imageView/1/w/300/h/300'
         return item
       })
-      console.log(res)
       if (this.isfm) {
         res = this.list.concat(res)
       }
+      this.$nextTick(()=>{
       this.list = res;
+      })
       this.splitList = this.splitList.filter((item) => item.id != class_id);
-      //   this.getBanner();
-      that.swipercaeated.slideTo(0, 1000, false)
+      if(!that.swipercaeated){
+        return
+      }
       that.swipercaeated.updateSlides()
       that.swipercaeated.setGrabCursor()
+      that.swipercaeated.slideTo(0, 1000, false)
       that.swipercaeated.autoplay.start()
       that.swipercaeated.attachEvents();//重新绑定所有监听事件。
       that.swipercaeated.update()
     },
     // nav 切换
     handleSelect(key, keyPath) {
-      console.log(key, keyPath, 2121231321323)
       this.tabId = keyPath[0];
       this.tabsonId = key;
       this.activeIndex = key
